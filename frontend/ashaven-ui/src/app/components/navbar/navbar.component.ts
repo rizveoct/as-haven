@@ -50,7 +50,12 @@ export class NavbarComponent {
   }
 
   scrollToSection(sectionId: string) {
-    this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    if (this.lenisService.lenis) {
+      this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     this.sidePanel.close();
   }
 }

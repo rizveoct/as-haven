@@ -46,6 +46,23 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  width: 100%;
+}
+
+html.has-lenis {
+  height: auto;
+  overflow: hidden;
+}
+
+body.has-lenis {
+  min-height: 100vh;
+  overscroll-behavior: none;
+  overflow: hidden;
+  position: relative;
+}
+
 body {
   min-height: 100vh;
   overflow-x: hidden;

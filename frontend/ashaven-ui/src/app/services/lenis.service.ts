@@ -15,10 +15,11 @@ export class LenisService {
 
   public init() {
     this.lenis = new Lenis({
-      duration: 1.5,
+      duration: 1.05,
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      lerp: 0.1,
+      touchMultiplier: 1.1,
+      lerp: 0.075,
     });
 
     const raf = (time: number) => {

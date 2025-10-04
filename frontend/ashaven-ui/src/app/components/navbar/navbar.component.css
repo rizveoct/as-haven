@@ -81,9 +81,8 @@
     display: flex;
   }
 
-  .neo-nav__menu {
-    display: none;
-  }
+.neo-nav__links--secondary {
+  justify-self: flex-end;
 }
 
 .neo-nav__link {

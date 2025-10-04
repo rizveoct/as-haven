@@ -1,44 +1,125 @@
 import { Injectable, inject } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import Lenis from '@studio-freight/lenis';
 
+type ScrollEvent = { scroll: number };
+
 @Injectable({ providedIn: 'root' })
 export class LenisService {
-  public lenis!: Lenis;
+  public lenis?: Lenis;
   private router = inject(Router);
+  private rafId?: number;
+  private motionQuery?: MediaQueryList;
 
   constructor() {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const motionQuery = this.motionQuery;
+    const handleMotionPreference = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        this.stopLenis();
+      } else {
+        this.init();
+      }
+    };
+
+    if (typeof motionQuery.addEventListener === 'function') {
+      motionQuery.addEventListener('change', handleMotionPreference);
+    } else if (typeof motionQuery.addListener === 'function') {
+      // Safari < 14 fallback
+      motionQuery.addListener(handleMotionPreference);
+    }
+
     this.init();
     this.handleRouteChange();
   }
 
-  public init() {
+  public init(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const root = document.documentElement;
+    const body = document.body;
+    root.style.scrollBehavior = 'auto';
+    body.style.scrollBehavior = 'auto';
+
+    const prefersReducedMotion = this.motionQuery ?? window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      this.stopLenis();
+      return;
+    }
+
+    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+    this.stopLenis();
+
     this.lenis = new Lenis({
-      duration: 1.5,
-      easing: (t: number) => 1 - Math.pow(1 - t, 3),
+      duration: isFinePointer ? 0.92 : 1.05,
+      easing: (t: number) => 1 - Math.pow(1 - t, 2.2),
       smoothWheel: true,
-      lerp: 0.1,
+      wheelMultiplier: isFinePointer ? 1 : 0.85,
+      touchMultiplier: isFinePointer ? 1 : 1.05,
+      gestureOrientation: 'vertical',
+      autoResize: true,
+      lerp: isFinePointer ? 0.16 : 0.12,
     });
 
-    const raf = (time: number) => {
-      this.lenis.raf(time);
-      requestAnimationFrame(raf);
+    root.classList.add('has-lenis');
+    body.classList.add('has-lenis');
+
+    const runRaf = (time: number) => {
+      this.lenis?.raf(time);
+      this.rafId = requestAnimationFrame(runRaf);
     };
-    requestAnimationFrame(raf);
+
+    this.rafId = requestAnimationFrame(runRaf);
   }
 
-  private handleRouteChange() {
+  private stopLenis(): void {
+    if (this.rafId) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = undefined;
+    }
+
+    document.documentElement.classList.remove('has-lenis');
+    document.body.classList.remove('has-lenis');
+
+    this.lenis?.destroy();
+    this.lenis = undefined;
+  }
+
+  private handleRouteChange(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.lenis.scrollTo(0, { immediate: true }); // Reset scroll to top
+        if (!this.lenis) {
+          window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          return;
+        }
+
+        this.lenis.scrollTo(0, { immediate: true });
       });
   }
 
-  onScroll(callback: (scroll: number) => void) {
-    this.lenis.on('scroll', (event: { scroll: number }) => {
-      callback(event.scroll);
-    });
+  onScroll(callback: (scroll: number) => void): void {
+    if (this.lenis) {
+      this.lenis.on('scroll', (event: ScrollEvent) => {
+        callback(event.scroll);
+      });
+      return;
+    }
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener(
+        'scroll',
+        () => callback(window.scrollY || window.pageYOffset || 0),
+        { passive: true }
+      );
+    }
   }
 }

@@ -37,7 +37,7 @@ export class NavbarComponent {
     const target = event.target as HTMLElement;
     if (
       !target.closest('.side-panel') &&
-      !target.closest('.menu-btn-wrapper') &&
+      !target.closest('[data-menu-trigger]') &&
       !target.closest('.carousel') && // ProjectSlideComponent
       !target.closest('#splide01') && // SliderComponent
       !target.closest('.next-splide') &&
@@ -50,7 +50,12 @@ export class NavbarComponent {
   }
 
   scrollToSection(sectionId: string) {
-    this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    if (this.lenisService.lenis) {
+      this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    } else {
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
     this.sidePanel.close();
   }
 }

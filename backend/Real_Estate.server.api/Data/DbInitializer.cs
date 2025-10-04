@@ -45,12 +45,12 @@ namespace Real_Estate.server.api.Data
 
         public async Task InitializeUsers()
         {
-            if (await userManager.FindByEmailAsync("primehousing.raj@gmail.com") == null)
+            if (await userManager.FindByEmailAsync("ashavendevltd@gmail.com") == null)
             {
                 ApplicationUser applicationUser = new ApplicationUser();
-                applicationUser.Email = "primehousing.raj@gmail.com";
+                applicationUser.Email = "ashavendevltd@gmail.com";
                 applicationUser.FullName = "Super Admin";
-                applicationUser.UserName = "primehousing";
+                applicationUser.UserName = "ashavendevltd";
                 applicationUser.PhoneNumber = null;
                 applicationUser.RegistrationDate = DateTime.UtcNow;
                 applicationUser.Picture = "default_picture.png";
@@ -61,7 +61,7 @@ namespace Real_Estate.server.api.Data
                 var result = await userManager.CreateAsync(applicationUser);
                 if (result.Succeeded)
                 {
-                    await userManager.AddPasswordAsync(applicationUser, "Prime@321");
+                    await userManager.AddPasswordAsync(applicationUser, "AsHaven@321");
                     await userManager.AddToRoleAsync(applicationUser, ApplicationRoles.ROLE_SUPERADMIN);
                 }
             }

@@ -132,23 +132,13 @@
   transform: translateY(-4px) scale(1.01);
 }
 
-.neo-nav__crest {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(3rem, 6vw, 3.6rem);
-  height: clamp(3rem, 6vw, 3.6rem);
-  border-radius: 1.2rem;
-  background: linear-gradient(135deg, rgba(32, 71, 38, 0.9), rgba(18, 45, 27, 0.95));
-  color: var(--luxe-cream);
-  font-weight: 600;
-  letter-spacing: 0.22em;
-}
 
 .neo-nav__brand-copy {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  background: linear-gradient(135deg, rgba(32, 71, 38, 0.9), rgba(18, 45, 27, 0.95));
+  border-radius: 1.2rem;
+  padding: 0px 10px 0px 10px;
 }
 
 .neo-nav__brand-copy span {
@@ -215,4 +205,18 @@
 .neo-nav__menu:hover .neo-nav__menu-line,
 .neo-nav__menu:focus-visible .neo-nav__menu-line {
   background: var(--luxe-forest);
+}
+
+/* Default: show menu button (mobile first) */
+.neo-nav__menu {
+  display: inline-flex;
+}
+
+/* Hide menu button on desktop */
+@media (min-width: 768px) {
+  .neo-nav__menu {
+    display: none;
+  }
+}
+
 }

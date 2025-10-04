@@ -1,10 +1,21 @@
-<app-loading *ngIf="!hideLayout()"></app-loading>
+<div class="app-atmosphere" aria-hidden="true">
+  <div class="app-atmosphere__glow app-atmosphere__glow--one"></div>
+  <div class="app-atmosphere__glow app-atmosphere__glow--two"></div>
+  <div class="app-atmosphere__glow app-atmosphere__glow--three"></div>
+  <div class="app-atmosphere__grid"></div>
+</div>
 
-<app-navbar *ngIf="!hideLayout()"></app-navbar>
-<app-floating-social *ngIf="!hideLayout()"></app-floating-social>
+<div class="app-shell">
+  <app-loading *ngIf="!hideLayout()"></app-loading>
 
-<router-outlet></router-outlet>
+  <app-navbar *ngIf="!hideLayout()"></app-navbar>
+  <app-floating-social *ngIf="!hideLayout()"></app-floating-social>
+
+  <main class="app-main">
+    <router-outlet></router-outlet>
+  </main>
+
   <app-scroll-to-top></app-scroll-to-top>
 
-
-<app-footer *ngIf="!hideLayout()"></app-footer>
+  <app-footer *ngIf="!hideLayout()"></app-footer>
+</div>

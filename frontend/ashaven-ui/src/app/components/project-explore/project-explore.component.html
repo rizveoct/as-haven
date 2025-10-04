@@ -1,44 +1,33 @@
-<div class="py-16 bg-dark">
-  <div class="max-w-7xl mx-auto px-4">
-    <h1 class="text-4xl md:text-5xl text-white font-bold mb-12 text-center">
-      Explore Projects
-    </h1>
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div
-        *ngFor="let item of projects"
-        class="relative w-full aspect-square rounded-3xl overflow-hidden cursor-pointer
-               bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg border border-white/10
-               shadow-lg hover:shadow-2xl transition-all duration-500"
-        (mousemove)="onMouseMove($event)"
-        (mouseleave)="onMouseLeave($event)"
-      >
-        <a [routerLink]="item.route" [queryParams]="{ category: item.title.split(' ')[0] }" class="absolute inset-0">
-          <!-- Neon accent circle -->
-          <div class="absolute -top-8 -left-8 w-24 h-24 bg-accent/40 rounded-full blur-3xl animate-pulse"></div>
-          <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-accent/30 rounded-full blur-3xl animate-pulse"></div>
-
-          <!-- Card content -->
-          <div class="relative z-10 flex flex-col  items-center justify-center h-full text-center px-4">
-            <div
-              class=" w-20 h-15 md:w-24 md:h-24 mb-3 md:mb-6 flex items-center justify-center rounded-full bg-white/80 shadow-inner
-                     transition-transform duration-500 group-hover:scale-110"
-            >
-              <img [src]="item.image" [alt]="item.title + ' icon'" class="w-2/3 h-2/3 object-contain" />
-            </div>
-
-            <h2 class="text-l md:text-2xl font-bold text-white mb-2 group-hover:text-accent transition-colors duration-500">
-              {{ item.title }}
-            </h2>
-
-            <p
-              class="text-white/70 text-md md:text-lg opacity-0 translate-y-4 group-hover:opacity-100
-                     group-hover:translate-y-0 transition-all duration-700"
-            >
-              Explore →
-            </p>
-          </div>
-        </a>
-      </div>
-    </div>
+<section class="neo-section" id="projects">
+  <div class="neo-section__header">
+    <span class="neo-section__tag">Curated Collection</span>
+    <h2 class="neo-section__title">Explore Our Signature Projects</h2>
+    <p class="neo-section__subtitle">
+      Discover the communities, residences, and visionary spaces defining Prime Housing’s next chapter.
+    </p>
   </div>
-</div>
+
+  <div class="neo-projects-grid">
+    <article
+      *ngFor="let item of projects"
+      class="neo-project-card"
+      (mousemove)="onMouseMove($event)"
+      (mouseleave)="onMouseLeave($event)"
+    >
+      <a
+        [routerLink]="item.route"
+        [queryParams]="{ category: item.title.split(' ')[0] }"
+        class="neo-project-card__inner"
+      >
+        <div class="neo-project-card__halo" aria-hidden="true"></div>
+        <div class="neo-project-card__media">
+          <img [src]="item.image" [alt]="item.title + ' icon'" />
+        </div>
+        <div class="neo-project-card__content">
+          <h3>{{ item.title }}</h3>
+          <p>Explore ↗</p>
+        </div>
+      </a>
+    </article>
+  </div>
+</section>

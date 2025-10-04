@@ -45,8 +45,13 @@ export class ProjectExploreComponent {
   ];
 
   onMouseMove(event: MouseEvent) {
-    const card = event.currentTarget as HTMLElement | null;
-    if (!card) return;
+    const wrapper = event.currentTarget as HTMLElement | null;
+    const card = wrapper?.querySelector(
+      '.neo-project-card__inner'
+    ) as HTMLElement | null;
+    if (!wrapper || !card) {
+      return;
+    }
 
     const rect = card.getBoundingClientRect();
     const x = event.clientX - rect.left;
@@ -56,14 +61,18 @@ export class ProjectExploreComponent {
     const rotateX = ((y - centerY) / centerY) * 12; // max 12deg tilt
     const rotateY = ((x - centerX) / centerX) * -12;
 
-    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   }
 
   onMouseLeave(event: MouseEvent) {
-    const card = event.currentTarget as HTMLElement | null;
-    if (!card) return;
+    const wrapper = event.currentTarget as HTMLElement | null;
+    const card = wrapper?.querySelector(
+      '.neo-project-card__inner'
+    ) as HTMLElement | null;
+    if (!card) {
+      return;
+    }
 
-    card.style.transform =
-      'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)';
+    card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
   }
 }

@@ -47,7 +47,7 @@ export class ProjectExploreComponent {
   onMouseMove(event: MouseEvent) {
     const wrapper = event.currentTarget as HTMLElement | null;
     const card = wrapper?.querySelector(
-      '.luxe-explore__inner'
+      '.neo-project-card__inner'
     ) as HTMLElement | null;
     if (!wrapper || !card) {
       return;
@@ -61,13 +61,13 @@ export class ProjectExploreComponent {
     const rotateX = ((y - centerY) / centerY) * 10;
     const rotateY = ((x - centerX) / centerX) * -10;
 
-    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   }
 
   onMouseLeave(event: MouseEvent) {
     const wrapper = event.currentTarget as HTMLElement | null;
     const card = wrapper?.querySelector(
-      '.luxe-explore__inner'
+      '.neo-project-card__inner'
     ) as HTMLElement | null;
     if (!card) {
       return;

@@ -1,35 +1,33 @@
-<section class="luxe-section luxe-explore">
-  <span class="luxe-ornament" aria-hidden="true"></span>
-  <span class="luxe-ornament luxe-ornament--right" aria-hidden="true"></span>
-
-  <header class="luxe-section__header">
-    <span class="luxe-eyebrow luxe-reveal">The Portfolio</span>
-    <h2 class="luxe-title luxe-reveal" data-delay="1">Curated residences for discerning collectors</h2>
-    <p class="luxe-subtitle luxe-reveal" data-delay="2">
-      Navigate through our living portfolio — hand-picked estates with exquisite architecture,
-      sculpted landscapes, and investment narratives designed to appreciate in value and lifestyle.
+<section class="neo-section" id="projects">
+  <div class="neo-section__header">
+    <span class="neo-section__tag">Curated Collection</span>
+    <h2 class="neo-section__title">Explore Our Signature Projects</h2>
+    <p class="neo-section__subtitle">
+      Discover the communities, residences, and visionary spaces defining Prime Housing’s next chapter.
     </p>
-  </header>
+  </div>
 
-  <div class="luxe-grid luxe-grid--split">
+  <div class="neo-projects-grid">
     <article
-      class="luxe-explore__card"
-      *ngFor="let project of projects"
+      *ngFor="let item of projects"
+      class="neo-project-card"
       (mousemove)="onMouseMove($event)"
       (mouseleave)="onMouseLeave($event)"
     >
-      <div class="luxe-explore__inner">
-        <div class="luxe-explore__icon">
-          <img [src]="project.image" [alt]="project.title" loading="lazy" />
+      <a
+        [routerLink]="item.route"
+        [queryParams]="{ category: item.title.split(' ')[0] }"
+        class="neo-project-card__inner"
+      >
+        <div class="neo-project-card__halo" aria-hidden="true"></div>
+        <div class="neo-project-card__media">
+          <img [src]="item.image" [alt]="item.title + ' icon'" />
         </div>
-        <h3>{{ project.title }}</h3>
-        <p>
-          Discover floorplans, private amenities, and curated services crafted for this collection.
-        </p>
-        <a [routerLink]="project.route" class="luxe-link">
-          Explore now
-        </a>
-      </div>
+        <div class="neo-project-card__content">
+          <h3>{{ item.title }}</h3>
+          <p>Explore ↗</p>
+        </div>
+      </a>
     </article>
   </div>
 </section>

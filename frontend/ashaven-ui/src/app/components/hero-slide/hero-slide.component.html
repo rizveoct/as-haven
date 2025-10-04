@@ -1,117 +1,144 @@
-<section *ngIf="slides.length; else heroSkeleton" class="luxe-hero" aria-live="polite">
-  <div class="luxe-hero__backdrop" aria-hidden="true">
-    <div class="luxe-hero__gradient luxe-hero__gradient--left"></div>
-    <div class="luxe-hero__gradient luxe-hero__gradient--right"></div>
+<section
+  *ngIf="slides.length; else heroSkeleton"
+  class="neo-hero"
+  aria-live="polite"
+>
+  <div class="neo-hero__background" aria-hidden="true">
+    <div class="neo-hero__gradient neo-hero__gradient--primary"></div>
+    <div class="neo-hero__gradient neo-hero__gradient--secondary"></div>
     <div
-      class="luxe-hero__image"
+      class="neo-hero__background-image"
       *ngFor="let slide of slides; let i = index; trackBy: trackBySlide"
       [style.backgroundImage]="'url(' + slide.image + ')'"
       [class.is-active]="i === currentIndex"
     ></div>
-    <div class="luxe-hero__veil"></div>
+    <div class="neo-hero__pattern"></div>
   </div>
 
-  <div *ngIf="activeSlide as active" class="luxe-hero__inner">
-    <div class="luxe-hero__content">
-      <span class="luxe-eyebrow luxe-reveal">Signature Residences</span>
-      <h1 class="luxe-hero__title luxe-reveal" data-delay="1">
-        {{ active.title }}
-      </h1>
-      <p class="luxe-hero__subtitle luxe-reveal" data-delay="2">
-        {{ active.des }}
-      </p>
+  <div *ngIf="activeSlide as active" class="neo-hero__container">
+    <div class="neo-hero__grid">
+      <aside class="neo-hero__sidebar">
+        <span class="neo-hero__eyebrow">Avant-garde living</span>
+        <h1 class="neo-hero__title">
+          {{ active.title }}
+        </h1>
+        <p class="neo-hero__subtitle">
+          {{ active.topic }}
+        </p>
+        <p class="neo-hero__description">
+          {{ active.des }}
+        </p>
 
-      <div class="luxe-hero__meta luxe-reveal" data-delay="3">
-        <div>
-          <span class="luxe-hero__meta-label">Location</span>
-          <span class="luxe-hero__meta-value">{{ active.topic }}</span>
+        <div class="neo-hero__meta">
+          <div>
+            <span class="neo-hero__meta-label">Collection</span>
+            <span class="neo-hero__meta-value">
+              {{ active.author }}
+            </span>
+          </div>
+          <div>
+            <span class="neo-hero__meta-label">Signature</span>
+            <span class="neo-hero__meta-value">
+              {{ active.thumbnailDescription }}
+            </span>
+          </div>
         </div>
-        <div>
-          <span class="luxe-hero__meta-label">Collection</span>
-          <span class="luxe-hero__meta-value">{{ active.author }}</span>
+
+        <div class="neo-hero__cta">
+          <a
+            class="neo-hero__button neo-hero__button--primary"
+            [routerLink]="['/projectdetails', active.id]"
+            [attr.aria-label]="'Explore ' + active.title"
+            >Explore project</a
+          >
+          <a
+            class="neo-hero__button neo-hero__button--ghost"
+            [routerLink]="['/project']"
+            aria-label="Browse all projects"
+            >Browse all</a
+          >
         </div>
-        <div>
-          <span class="luxe-hero__meta-label">Signature Feature</span>
-          <span class="luxe-hero__meta-value">{{ active.thumbnailDescription }}</span>
+
+        <div class="neo-hero__progress">
+          <div class="neo-hero__progress-track">
+            <div
+              class="neo-hero__progress-fill"
+              [style.width.%]="progress"
+            ></div>
+          </div>
+          <span class="neo-hero__progress-index">
+            {{ currentIndex + 1 | number: '2.0' }} /
+            {{ slides.length | number: '2.0' }}
+          </span>
+        </div>
+      </aside>
+
+      <div class="neo-hero__stage" role="group" aria-label="Featured project visual">
+        <div class="neo-hero__stage-frame">
+          <img
+            [src]="active.image"
+            [alt]="active.alt || 'Project visual'"
+            loading="lazy"
+          />
+          <div class="neo-hero__stage-glow"></div>
+        </div>
+
+        <div class="neo-hero__floating-card neo-hero__floating-card--primary">
+          <span class="neo-hero__floating-label">Feature</span>
+          <strong>{{ active.author }}</strong>
+          <span>{{ active.topic }}</span>
+        </div>
+
+        <div class="neo-hero__floating-card neo-hero__floating-card--secondary">
+          <span class="neo-hero__floating-label">Status</span>
+          <strong>In focus</strong>
+          <span>{{ active.thumbnailTitle }}</span>
+        </div>
+
+        <div class="neo-hero__controls" role="group" aria-label="Slide controls">
+          <button
+            type="button"
+            class="neo-hero__control"
+            (click)="prev()"
+            aria-label="Previous highlight"
+          >
+            <span aria-hidden="true">&#8592;</span>
+          </button>
+          <button
+            type="button"
+            class="neo-hero__control"
+            (click)="next()"
+            aria-label="Next highlight"
+          >
+            <span aria-hidden="true">&#8594;</span>
+          </button>
         </div>
       </div>
 
-      <div class="luxe-hero__cta">
-        <a
-          class="luxe-button"
-          [routerLink]="['/projectdetails', active.id]"
-          [attr.aria-label]="'Explore ' + active.title"
+      <nav class="neo-hero__thumbnails" aria-label="Project quick navigation">
+        <button
+          type="button"
+          class="neo-hero__thumbnail"
+          *ngFor="let project of slides; let i = index; trackBy: trackBySlide"
+          [class.is-active]="i === currentIndex"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'Go to ' + project.thumbnailTitle"
         >
-          Explore residence
-        </a>
-        <a
-          class="luxe-button luxe-button--ghost"
-          routerLink="/projects"
-          aria-label="View all properties"
-        >
-          View the collection
-        </a>
-      </div>
-
-      <div class="luxe-hero__progress" aria-label="Slide progress">
-        <div class="luxe-hero__progress-track">
-          <div class="luxe-hero__progress-bar" [style.width.%]="progress"></div>
-        </div>
-        <span class="luxe-hero__progress-index">
-          {{ currentIndex + 1 | number: '2.0' }} / {{ slides.length | number: '2.0' }}
-        </span>
-      </div>
-    </div>
-
-    <div class="luxe-hero__stage" role="group" aria-label="Featured property visuals">
-      <div class="luxe-hero__stage-frame">
-        <img [src]="active.image" [alt]="active.alt || 'Featured property'" loading="lazy" />
-        <div class="luxe-hero__stage-shine"></div>
-      </div>
-
-      <div class="luxe-hero__floating-card luxe-hero__floating-card--primary">
-        <span class="luxe-hero__floating-label">Starting from</span>
-        <strong>{{ active.thumbnailTitle }}</strong>
-        <span>{{ active.topic }}</span>
-      </div>
-
-      <div class="luxe-hero__floating-card luxe-hero__floating-card--secondary">
-        <span class="luxe-hero__floating-label">Private viewings</span>
-        <strong>By appointment</strong>
-        <span>Concierge on request</span>
-      </div>
-
-      <div class="luxe-hero__controls" role="group" aria-label="Hero slider controls">
-        <button type="button" (click)="prev()" aria-label="Previous highlight">
-          <span aria-hidden="true">&#8592;</span>
+          <span class="neo-hero__thumbnail-index">
+            {{ (i + 1) | number: '2.0' }}
+          </span>
+          <span class="neo-hero__thumbnail-text">
+            <strong>{{ project.thumbnailTitle }}</strong>
+            <small>{{ project.thumbnailDescription }}</small>
+          </span>
         </button>
-        <button type="button" (click)="next()" aria-label="Next highlight">
-          <span aria-hidden="true">&#8594;</span>
-        </button>
-      </div>
+      </nav>
     </div>
   </div>
-
-  <nav class="luxe-hero__thumbnails" aria-label="Jump to property">
-    <button
-      type="button"
-      *ngFor="let project of slides; let i = index; trackBy: trackBySlide"
-      class="luxe-hero__thumbnail"
-      [class.is-active]="i === currentIndex"
-      (click)="goToSlide(i)"
-      [attr.aria-label]="'Go to ' + project.thumbnailTitle"
-    >
-      <span class="luxe-hero__thumbnail-index">{{ (i + 1) | number: '2.0' }}</span>
-      <span class="luxe-hero__thumbnail-text">
-        <strong>{{ project.thumbnailTitle }}</strong>
-        <small>{{ project.thumbnailDescription }}</small>
-      </span>
-    </button>
-  </nav>
 </section>
 
 <ng-template #heroSkeleton>
-  <section class="luxe-hero luxe-hero--loading" aria-busy="true">
-    <div class="luxe-hero__skeleton"></div>
+  <section class="neo-hero neo-hero--loading" aria-busy="true">
+    <div class="neo-hero__shimmer"></div>
   </section>
 </ng-template>

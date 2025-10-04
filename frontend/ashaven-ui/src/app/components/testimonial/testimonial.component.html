@@ -1,16 +1,15 @@
-<section class="luxe-section luxe-testimonial" *ngIf="testimonials.length">
-  <header class="luxe-section__header">
-    <span class="luxe-eyebrow luxe-reveal">Testimonials</span>
-    <h2 class="luxe-title luxe-reveal" data-delay="1">Voices from our residents & partners</h2>
-    <p class="luxe-subtitle luxe-reveal" data-delay="2">
-      Crafted stories from clients who entrusted us with their most significant real estate decisions —
-      from penthouse sanctuaries to expansive vineyard estates.
+<section class="neo-section neo-testimonial" *ngIf="testimonials.length">
+  <div class="neo-section__header">
+    <span class="neo-section__tag">Testimonials</span>
+    <h2 class="neo-section__title">Voices from Our Community</h2>
+    <p class="neo-section__subtitle">
+      Stories from residents, partners, and collaborators experiencing Prime Housing’s immersive approach to place-making.
     </p>
-  </header>
+  </div>
 
-  <div class="luxe-testimonial__surface">
+  <div class="neo-testimonial__surface">
     <button
-      class="luxe-testimonial__control luxe-testimonial__control--prev"
+      class="neo-testimonial__control neo-testimonial__control--prev"
       (click)="prev()"
       aria-label="Previous testimonial"
       type="button"
@@ -18,9 +17,13 @@
       <span>&larr;</span>
     </button>
 
-    <article *ngIf="currentTestimonial" class="luxe-testimonial__card" [@slideAnimation]="currentIndex">
-      <div class="luxe-testimonial__profile">
-        <div class="luxe-avatar">
+    <article
+      *ngIf="currentTestimonial"
+      class="neo-testimonial__card"
+      [@slideAnimation]="currentIndex"
+    >
+      <div class="neo-testimonial__profile">
+        <div class="neo-testimonial__avatar">
           <img
             *ngIf="currentTestimonial?.image; else placeholderImage"
             [src]="baseURL + '/api/attachment/get/' + currentTestimonial.image"
@@ -34,22 +37,20 @@
             />
           </ng-template>
         </div>
-        <div class="luxe-testimonial__quote" aria-hidden="true">”</div>
+        <div class="neo-testimonial__quote" aria-hidden="true">”</div>
       </div>
 
-      <p class="luxe-testimonial__text">
+      <p class="neo-testimonial__text">
         {{ currentTestimonial.description }}
       </p>
 
-      <div class="luxe-testimonial__meta">
+      <div class="neo-testimonial__meta">
         <h3>{{ currentTestimonial.name }}</h3>
-        <span class="luxe-testimonial__divider"></span>
-        <p>Private buyer</p>
       </div>
     </article>
 
     <button
-      class="luxe-testimonial__control luxe-testimonial__control--next"
+      class="neo-testimonial__control neo-testimonial__control--next"
       (click)="next()"
       aria-label="Next testimonial"
       type="button"
@@ -58,9 +59,7 @@
     </button>
   </div>
 
-  <div class="luxe-testimonial__pagination">
-    <span>{{ currentIndex + 1 | number: '2.0' }}</span>
-    <span class="luxe-testimonial__pagination-divider"></span>
-    <span>{{ testimonials.length | number: '2.0' }}</span>
+  <div class="neo-testimonial__pagination">
+    {{ currentIndex + 1 }} / {{ testimonials.length }}
   </div>
 </section>

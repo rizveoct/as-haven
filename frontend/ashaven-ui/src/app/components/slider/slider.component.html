@@ -1,45 +1,44 @@
-<section class="luxe-section luxe-slider">
-  <header class="luxe-section__header">
-    <span class="luxe-eyebrow luxe-reveal">Featured Collection</span>
-    <h2 class="luxe-title luxe-reveal" data-delay="1">Signature properties in the spotlight</h2>
-    <p class="luxe-subtitle luxe-reveal" data-delay="2">
-      A revolving showcase of our most coveted residences — exceptional architecture, skyline-defining views,
-      and hospitality-level services curated for a limited few.
+<section class="neo-section neo-slider">
+  <div class="neo-section__header">
+    <span class="neo-section__tag">Featured</span>
+    <h2 class="neo-section__title">Signature Properties</h2>
+    <p class="neo-section__subtitle">
+      A rotating showcase of living spaces shaped by bespoke architecture, thoughtful amenities, and luminous community design.
     </p>
-  </header>
+  </div>
 
-  <div class="luxe-slider__surface">
+  <div class="neo-slider__surface">
     <swiper-container
       #swiper
       init="false"
-      class="luxe-slider__container"
+      class="neo-slider__container"
       aria-label="Signature properties slider"
     >
-      <swiper-slide *ngFor="let slide of slides" class="luxe-slider__slide">
-        <article class="luxe-slider__card">
-          <div class="luxe-slider__media">
+      <swiper-slide *ngFor="let slide of slides" class="neo-slider__slide">
+        <article class="neo-slider__card">
+          <div class="neo-slider__media">
             <img [src]="slide.image" [alt]="slide.name" loading="lazy" />
-            <div class="luxe-slider__media-overlay"></div>
-            <span class="luxe-slider__chip">{{ slide.category }}</span>
+            <div class="neo-slider__media-overlay"></div>
           </div>
-          <div class="luxe-slider__content">
-            <span class="luxe-slider__address">{{ slide.address }}</span>
+          <div class="neo-slider__content">
+            <span class="neo-slider__badge">{{ slide.category }}</span>
             <h3>{{ slide.name }}</h3>
-            <p>{{ slide.description }}</p>
-            <a [routerLink]="['/projectdetails', slide.id]" class="luxe-button">
-              Arrange a private tour
+            <p class="neo-slider__address">{{ slide.address }}</p>
+            <p class="neo-slider__description">{{ slide.description }}</p>
+            <a [routerLink]="['/projectdetails', slide.id]" class="neo-slider__cta">
+              Explore Residence
             </a>
           </div>
         </article>
       </swiper-slide>
-      <div class="swiper-pagination luxe-slider__pagination"></div>
+      <div class="swiper-pagination neo-slider__pagination"></div>
     </swiper-container>
 
-    <div class="luxe-slider__controls" role="group" aria-label="Slider navigation">
-      <button type="button" aria-label="Previous slide" class="luxe-slider__control luxe-slider__control--prev">
+    <div class="neo-slider__controls" role="group" aria-label="Slider navigation">
+      <button type="button" aria-label="Previous slide" class="neo-slider__control neo-slider__control--prev">
         <span>&larr;</span>
       </button>
-      <button type="button" aria-label="Next slide" class="luxe-slider__control luxe-slider__control--next">
+      <button type="button" aria-label="Next slide" class="neo-slider__control neo-slider__control--next">
         <span>&rarr;</span>
       </button>
     </div>

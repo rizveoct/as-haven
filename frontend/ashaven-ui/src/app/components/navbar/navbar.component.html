@@ -1,41 +1,43 @@
 <nav
   appNavbarScroll
-  class="luxe-nav fixed inset-x-0 top-0 z-[1000]"
+  class="neo-nav fixed inset-x-0 top-0 z-[1000]"
   [class.is-top]="isTop"
 >
-  <div class="luxe-nav__glow" aria-hidden="true"></div>
-  <div class="luxe-nav__glass">
-    <a routerLink="home" class="luxe-nav__brand" aria-label="Ashaven Estates home">
-      <img src="images/logo.jpg" alt="Ashaven Estates" />
-      <span>Ashaven Estates</span>
-    </a>
-
-    <div class="luxe-nav__links">
-      <a routerLink="home" class="luxe-nav__link">Home</a>
-      <a routerLink="about" class="luxe-nav__link">About</a>
-      <a routerLink="projects" class="luxe-nav__link">Residences</a>
-      <a routerLink="gallery" class="luxe-nav__link">Gallery</a>
-      <a routerLink="primeConsultant" class="luxe-nav__link">Consultancy</a>
-      <a routerLink="contact" class="luxe-nav__link">Contact</a>
+  <div class="neo-nav__halo" aria-hidden="true"></div>
+  <div class="neo-nav__inner">
+    <div class="neo-nav__links neo-nav__links--primary">
+      <a routerLink="home" class="neo-nav__link">Home</a>
+      <a routerLink="about" class="neo-nav__link">About Us</a>
+      <a routerLink="projects" class="neo-nav__link">Projects</a>
     </div>
 
-    <div class="luxe-nav__actions">
-      <a routerLink="/dashboard" class="luxe-nav__link luxe-nav__link--muted">Dashboard</a>
-      <a routerLink="/contact" class="luxe-nav__cta">
-        Schedule a private tour
-        <span class="luxe-nav__cta-icon" aria-hidden="true">&#8594;</span>
-      </a>
+    <a routerLink="home" class="neo-nav__brand" aria-label="Prime Housing home">
+      <div class="neo-nav__brand-glow" aria-hidden="true"></div>
+      <img
+        src="images/logo.jpg"
+        srcset="images/logo.jpg 80w, images/logo.jpg 160w"
+        sizes="(max-width: 768px) 64px, 80px"
+        class="neo-nav__brand-image"
+        alt="Prime Housing logo"
+      />
+    </a>
+
+    <div class="neo-nav__links neo-nav__links--secondary">
+      <a routerLink="primeConsultant" class="neo-nav__link">Prime Consultant</a>
+      <a routerLink="gallery" class="neo-nav__link">Gallery</a>
+      <a routerLink="contact" class="neo-nav__link">Contact</a>
+      <a routerLink="/contact" class="neo-nav__cta">Work With Us</a>
     </div>
 
     <button
       type="button"
-      class="luxe-nav__menu"
+      class="neo-nav__menu"
       (click)="sidePanel.toggle()"
       aria-label="Toggle navigation"
     >
-      <span></span>
-      <span></span>
-      <span></span>
+      <span class="neo-nav__menu-line"></span>
+      <span class="neo-nav__menu-line"></span>
+      <span class="neo-nav__menu-line"></span>
     </button>
   </div>
 </nav>

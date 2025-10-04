@@ -2,7 +2,7 @@
   display: block;
 }
 
-.luxe-atmosphere {
+.app-atmosphere {
   position: fixed;
   inset: 0;
   pointer-events: none;
@@ -10,63 +10,68 @@
   z-index: 0;
 }
 
-.luxe-atmosphere__gradient {
+.app-atmosphere__glow {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(140px);
+  width: clamp(320px, 45vw, 640px);
+  height: clamp(320px, 45vw, 640px);
+  filter: blur(120px);
   opacity: 0.55;
+  mix-blend-mode: screen;
   transform: translate3d(0, 0, 0);
-  animation: drift 24s ease-in-out infinite;
+  animation: drift 22s ease-in-out infinite;
 }
 
-.luxe-atmosphere__gradient--one {
-  top: -20%;
-  left: -15%;
-  width: clamp(360px, 48vw, 620px);
-  height: clamp(360px, 48vw, 620px);
-  background: radial-gradient(circle, rgba(32, 71, 38, 0.75), transparent 70%);
+.app-atmosphere__glow--one {
+  top: -15%;
+  left: -10%;
+  background: radial-gradient(circle, rgba(94, 107, 255, 0.65), transparent 60%);
+  animation-delay: -6s;
 }
 
-.luxe-atmosphere__gradient--two {
+.app-atmosphere__glow--two {
   top: 35%;
-  right: -10%;
-  width: clamp(280px, 38vw, 520px);
-  height: clamp(280px, 38vw, 520px);
-  background: radial-gradient(circle, rgba(255, 119, 27, 0.4), transparent 70%);
+  right: -12%;
+  background: radial-gradient(circle, rgba(130, 246, 216, 0.55), transparent 65%);
   animation-duration: 28s;
 }
 
-.luxe-atmosphere__gradient--three {
-  bottom: -25%;
-  left: 15%;
-  width: clamp(320px, 42vw, 560px);
-  height: clamp(320px, 42vw, 560px);
-  background: radial-gradient(circle, rgba(241, 251, 236, 0.45), transparent 70%);
-  animation-delay: -8s;
+.app-atmosphere__glow--three {
+  bottom: -18%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(66, 211, 255, 0.45), transparent 65%);
+  animation-duration: 24s;
+  animation-delay: -12s;
 }
 
-.luxe-atmosphere__frame {
+.app-atmosphere__grid {
   position: absolute;
-  inset: 12% 8%;
-  border-radius: 3rem;
-  border: 1px solid rgba(241, 251, 236, 0.12);
-  opacity: 0.35;
-  transform: perspective(1200px) rotateX(65deg);
-  filter: blur(2px);
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(148, 163, 255, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(148, 163, 255, 0.06) 1px,
+      transparent 1px
+    );
+  background-size: 120px 120px;
+  opacity: 0.55;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.8), transparent);
 }
 
-.luxe-page {
+.app-shell {
   position: relative;
-  z-index: 1;
   min-height: 100vh;
+  z-index: 1;
+  padding-top: clamp(5rem, 12vw, 7.5rem);
+  padding-bottom: clamp(4rem, 10vw, 7rem);
   display: flex;
   flex-direction: column;
   gap: clamp(3rem, 7vw, 4.5rem);
-  padding-top: clamp(5rem, 10vw, 7rem);
-  padding-bottom: clamp(4rem, 8vw, 6rem);
 }
 
-.luxe-main {
+.app-main {
   flex: 1;
   display: block;
 }
@@ -74,16 +79,9 @@
 @keyframes drift {
   0%,
   100% {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translate3d(0, -8%, 0) scale(1.08);
-  }
-}
-
-@media (max-width: 768px) {
-  .luxe-atmosphere__frame {
-    inset: 18% 12%;
-    border-radius: 2rem;
+    transform: translate3d(0, -6%, 0) scale(1.05);
   }
 }

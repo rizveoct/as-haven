@@ -1,19 +1,21 @@
-<div class="luxe-atmosphere" aria-hidden="true">
-  <div class="luxe-atmosphere__gradient luxe-atmosphere__gradient--one"></div>
-  <div class="luxe-atmosphere__gradient luxe-atmosphere__gradient--two"></div>
-  <div class="luxe-atmosphere__gradient luxe-atmosphere__gradient--three"></div>
-  <div class="luxe-atmosphere__frame"></div>
+<div class="app-atmosphere" aria-hidden="true">
+  <div class="app-atmosphere__glow app-atmosphere__glow--one"></div>
+  <div class="app-atmosphere__glow app-atmosphere__glow--two"></div>
+  <div class="app-atmosphere__glow app-atmosphere__glow--three"></div>
+  <div class="app-atmosphere__grid"></div>
 </div>
 
-<div class="luxe-page">
+<div class="app-shell">
   <app-loading *ngIf="!hideLayout()"></app-loading>
+
   <app-navbar *ngIf="!hideLayout()"></app-navbar>
   <app-floating-social *ngIf="!hideLayout()"></app-floating-social>
 
-  <main class="luxe-main">
+  <main class="app-main">
     <router-outlet></router-outlet>
   </main>
 
   <app-scroll-to-top></app-scroll-to-top>
+
   <app-footer *ngIf="!hideLayout()"></app-footer>
 </div>

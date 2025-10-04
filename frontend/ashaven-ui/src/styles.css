@@ -1,7 +1,4 @@
-
-
-/* src/styles.css */
-
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap';
 @import '@splidejs/splide/dist/css/splide.min.css';
 
 @tailwind base;

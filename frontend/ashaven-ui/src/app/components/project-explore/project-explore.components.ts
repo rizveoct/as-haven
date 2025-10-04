@@ -20,25 +20,25 @@ export class ProjectExploreComponent {
   projects: ExploreItem[] = [
     {
       id: 1,
-      title: 'Ongoing Projects',
+      title: 'Ongoing Residences',
       route: '/projects',
       image: 'images/icons/hook.png',
     },
     {
       id: 2,
-      title: 'Upcoming Projects',
+      title: 'Upcoming Landmark',
       route: '/projects',
       image: 'images/icons/coming-soon.png',
     },
     {
       id: 3,
-      title: 'Completed Projects',
+      title: 'Completed Masterpieces',
       route: '/projects',
       image: 'images/icons/architect.png',
     },
     {
       id: 4,
-      title: 'All Projects',
+      title: 'Entire Portfolio',
       route: '/projects',
       image: 'images/icons/architect.png',
     },
@@ -58,8 +58,8 @@ export class ProjectExploreComponent {
     const y = event.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * 12; // max 12deg tilt
-    const rotateY = ((x - centerX) / centerX) * -12;
+    const rotateX = ((y - centerY) / centerY) * 10;
+    const rotateY = ((x - centerX) / centerX) * -10;
 
     card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
   }

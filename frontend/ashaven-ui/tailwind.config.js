@@ -4,11 +4,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        light: "#ffffff", // White for clean backgrounds
-        accent: "#e63946", // Vibrant red for primary accents
-        accentLight: "#bcc6da", // Soft red for secondary accents
-        dark: "#1f2428", // Dark gray for headers/backgrounds
-        lightDark: "#6b7280", // Medium gray for subtle elements
+        brand: "#204726", // Deep forest green
+        mist: "#f1fbec", // Soft mint accent background
+        accent: "#ff771b", // Vibrant orange for calls to action
+        ink: "#000000", // Rich black for text and contrast
+        pure: "#ffffff", // Clean white surfaces
+      },
+      boxShadow: {
+        "luxe-glow": "0 30px 80px rgba(32, 71, 38, 0.3)",
       },
     },
   },

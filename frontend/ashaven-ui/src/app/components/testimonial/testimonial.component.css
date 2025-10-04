@@ -14,14 +14,15 @@
   position: relative;
   padding: clamp(2rem, 5vw, 3.5rem);
   border-radius: calc(var(--neo-radius-lg) * 0.85);
-  border: 1px solid rgba(148, 163, 255, 0.2);
-  background: linear-gradient(160deg, rgba(10, 14, 32, 0.88), rgba(7, 10, 24, 0.82));
-  box-shadow: 0 35px 90px rgba(5, 8, 20, 0.55);
+  border: 1px solid rgba(32, 71, 38, 0.12);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(241, 251, 236, 0.92));
+  box-shadow: 0 35px 90px rgba(19, 53, 31, 0.22);
   display: grid;
   gap: clamp(1.2rem, 3vw, 1.8rem);
   text-align: center;
   max-width: min(720px, 90vw);
   margin: 0 auto;
+  color: var(--luxe-forest-900);
 }
 
 .neo-testimonial__profile {
@@ -37,8 +38,8 @@
   height: clamp(4.5rem, 12vw, 6.5rem);
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid rgba(130, 246, 216, 0.6);
-  box-shadow: 0 20px 45px rgba(3, 6, 23, 0.55);
+  border: 3px solid rgba(255, 119, 27, 0.45);
+  box-shadow: 0 20px 45px rgba(19, 53, 31, 0.25);
 }
 
 .neo-testimonial__avatar img {
@@ -52,15 +53,15 @@
   bottom: -10px;
   right: 30%;
   font-size: clamp(3rem, 8vw, 4.5rem);
-  color: rgba(130, 246, 216, 0.35);
-  font-family: 'Georgia', serif;
+  color: rgba(255, 119, 27, 0.25);
+  font-family: 'Playfair Display', serif;
   transform: rotate(5deg);
 }
 
 .neo-testimonial__text {
   font-size: clamp(1.05rem, 2vw, 1.2rem);
   line-height: 1.8;
-  color: var(--neo-text-soft);
+  color: rgba(32, 71, 38, 0.72);
   max-width: 48ch;
   margin: 0 auto;
 }
@@ -76,7 +77,7 @@
 }
 
 .neo-testimonial__meta p {
-  color: rgba(226, 232, 255, 0.6);
+  color: rgba(32, 71, 38, 0.6);
   font-size: 0.9rem;
 }
 
@@ -84,9 +85,9 @@
   width: 46px;
   height: 46px;
   border-radius: 16px;
-  border: 1px solid rgba(148, 163, 255, 0.25);
-  background: rgba(9, 12, 28, 0.75);
-  color: var(--neo-text);
+  border: 1px solid rgba(32, 71, 38, 0.2);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--luxe-forest-900);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -98,13 +99,13 @@
 .neo-testimonial__control:hover,
 .neo-testimonial__control:focus-visible {
   transform: translateY(-3px);
-  border-color: rgba(130, 246, 216, 0.55);
-  background: rgba(130, 246, 216, 0.2);
+  border-color: rgba(32, 71, 38, 0.45);
+  background: rgba(255, 255, 255, 0.95);
 }
 
 .neo-testimonial__pagination {
   text-align: center;
-  color: rgba(226, 232, 255, 0.6);
+  color: rgba(32, 71, 38, 0.6);
   font-size: 0.9rem;
   letter-spacing: 0.3em;
 }

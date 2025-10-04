@@ -6,7 +6,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding: clamp(1rem, 2.4vw, 1.75rem) 0;
+  padding: clamp(0.5rem, 1.8vw, 1.1rem) 0;
   transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1),
     opacity 0.6s ease, filter 0.6s ease;
 }
@@ -44,9 +44,9 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: clamp(1rem, 3vw, 2.5rem);
-  padding: clamp(0.75rem, 1.6vw, 1.15rem)
-    clamp(1rem, 3vw, 2.25rem);
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: clamp(0.5rem, 1.2vw, 0.85rem)
+    clamp(0.85rem, 3vw, 2rem);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(32, 71, 38, 0.1);
@@ -70,19 +70,12 @@
 
 .neo-nav__links--primary {
   justify-self: flex-start;
+  grid-column: 1;
 }
 
 .neo-nav__links--secondary {
   justify-self: flex-end;
-}
-
-@media (min-width: 768px) {
-  .neo-nav__links {
-    display: flex;
-  }
-
-.neo-nav__links--secondary {
-  justify-self: flex-end;
+  grid-column: 3;
 }
 
 .neo-nav__link {
@@ -126,19 +119,26 @@
   padding: 0.35rem 0.65rem;
   border-radius: 1.5rem;
   transition: transform 0.35s ease;
+  grid-column: 1;
+  justify-self: flex-start;
 }
 
 .neo-nav__brand:hover {
   transform: translateY(-4px) scale(1.01);
 }
 
-
 .neo-nav__brand-copy {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   background: linear-gradient(135deg, rgba(32, 71, 38, 0.9), rgba(18, 45, 27, 0.95));
   border-radius: 1.2rem;
-  padding: 0px 10px 0px 10px;
+  padding: 0 10px;
+}
+
+.neo-nav__brand-copy img {
+  height: 38px;
+  width: auto;
 }
 
 .neo-nav__brand-copy span {
@@ -186,6 +186,8 @@
   box-shadow: 0 12px 28px rgba(19, 53, 31, 0.18);
   transition: transform 0.35s ease, border-color 0.35s ease;
   z-index: 2;
+  grid-column: 3;
+  justify-self: flex-end;
 }
 
 .neo-nav__menu-line {
@@ -212,11 +214,39 @@
   display: inline-flex;
 }
 
-/* Hide menu button on desktop */
-@media (min-width: 768px) {
+@media (max-width: 767px) {
+  .neo-nav__inner {
+    gap: clamp(0.5rem, 3vw, 1rem);
+    padding: clamp(0.45rem, 3.5vw, 0.75rem) clamp(0.75rem, 5vw, 1.25rem);
+  }
+
+  .neo-nav__brand {
+    grid-column: 1;
+    justify-self: flex-start;
+  }
+
   .neo-nav__menu {
-    display: none;
+    grid-column: 3;
+    justify-self: flex-end;
   }
 }
 
+/* Desktop layout */
+@media (min-width: 768px) {
+  .neo-nav__inner {
+    gap: clamp(1rem, 2.5vw, 2rem);
+  }
+
+  .neo-nav__links {
+    display: flex;
+  }
+
+  .neo-nav__brand {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .neo-nav__menu {
+    display: none;
+  }
 }

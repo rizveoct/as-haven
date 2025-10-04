@@ -54,9 +54,13 @@ export class LenisService {
       return;
     }
 
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const prefersTouchInput = window.matchMedia('(pointer: coarse)').matches;
 
     this.stopLenis();
+
+    if (prefersTouchInput) {
+      return;
+    }
 
     this.lenis = new Lenis({
       duration: 1.05,

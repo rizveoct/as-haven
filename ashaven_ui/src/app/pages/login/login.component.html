@@ -1,0 +1,109 @@
+<section class="relative flex min-h-screen items-center justify-center bg-gradient-to-br from-light to-accentLight px-6 py-8">
+  <!-- Glassmorphism container -->
+  <div
+    class="relative w-full max-w-md rounded-3xl bg-white/80 backdrop-blur-xl p-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-accentLight"
+  >
+    <!-- Title -->
+    <h2
+      class="text-4xl font-poppins font-bold text-center text-dark mb-8 tracking-tight"
+    >
+      Welcome Back 👋
+    </h2>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="errorMessage"
+      class="bg-accent text-white p-4 rounded-2xl mb-6 flex justify-between items-center shadow-lg animate-fadeIn"
+    >
+      {{ errorMessage }}
+      <button
+        class="text-white font-bold hover:text-lightDark transition"
+        (click)="errorMessage = ''"
+        aria-label="Close error message"
+      >
+        ×
+      </button>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div
+      *ngIf="isLoading"
+      class="absolute inset-0 flex items-center justify-center bg-dark/40 rounded-3xl z-10"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <div
+        class="animate-spin rounded-full h-14 w-14 border-4 border-accent border-t-transparent"
+      ></div>
+    </div>
+
+    <!-- Form -->
+    <form
+      (ngSubmit)="onSubmit()"
+      class="space-y-6 relative z-0"
+      autocomplete="off"
+      novalidate
+    >
+      <!-- Email -->
+      <div>
+        <label
+          for="email"
+          class="block text-sm font-medium text-dark mb-2"
+          >Email</label
+        >
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="loginModel.email"
+          required
+          autocomplete="email"
+          class="w-full px-4 py-3 rounded-xl bg-light border border-lightDark/30 focus:border-accent focus:ring-2 focus:ring-accent/30 text-dark transition-all duration-300"
+          placeholder="name@company.com"
+          aria-describedby="emailHelp"
+        />
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label
+          for="password"
+          class="block text-sm font-medium text-dark mb-2"
+          >Password</label
+        >
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="loginModel.password"
+          required
+          autocomplete="current-password"
+          class="w-full px-4 py-3 rounded-xl bg-light border border-lightDark/30 focus:border-accent focus:ring-2 focus:ring-accent/30 text-dark transition-all duration-300"
+          placeholder="••••••••"
+          aria-describedby="passwordHelp"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        [disabled]="isLoading"
+        class="w-full bg-gradient-to-r from-accent to-emerald-500 hover:from-emerald-500 hover:to-accent focus:ring-4 focus:outline-none focus:ring-accent/50 font-poppins font-semibold py-3 rounded-xl text-white text-lg shadow-lg transition-all duration-300 disabled:opacity-50"
+      >
+        Sign In
+      </button>
+    </form>
+
+    <!-- Extra Links -->
+    <div class="mt-6 text-center text-sm text-lightDark">
+      <p>
+        Don’t have an account?
+        <a
+          routerLink="/register"
+          class="text-accent font-medium hover:underline transition"
+          >Sign Up</a
+        >
+      </p>
+    </div>
+  </div>
+</section>

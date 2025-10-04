@@ -1,0 +1,44 @@
+<section class="services-section py-16 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <!-- Header -->
+    <div class="text-center mb-12 fade-up">
+      <h4 class="section-tag text-accent uppercase tracking-widest font-semibold mb-2">
+        Our Expertise
+      </h4>
+      <h2 class="section-heading text-4xl md:text-5xl font-extrabold text-gray-900">
+        Our Services
+      </h2>
+      <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
+        The decision to go for a joint venture on your land should be guided
+        by several criteria to ensure maximum returns on your investment.
+      </p>
+    </div>
+
+    <!-- Services grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <!-- Services list -->
+      <div class="flex flex-col justify-start gap-4 max-h-[650px] overflow-hidden">
+        <div
+          *ngFor="let service of services; let i = index"
+          class="service-card p-6 rounded-xl shadow-lg flex items-center gap-3 bg-white"
+          data-aos="fade-left"
+          [attr.data-aos-delay]="i * 150"
+        >
+          <div class="icon-wrapper w-12 h-12 flex items-center justify-center bg-accent text-white rounded-full shadow-md text-lg font-bold">
+            {{ service.icon }}
+          </div>
+          <p class="text-lg font-medium text-gray-800">{{ service.name }}</p>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="flex justify-center items-start">
+        <img
+          src="images/service.jpg"
+          alt="Service Illustration"
+          class="rounded-3xl shadow-2xl w-full h-[650px] object-cover"
+        />
+      </div>
+    </div>
+  </div>
+</section>

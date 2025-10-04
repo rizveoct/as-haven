@@ -1,0 +1,185 @@
+<div
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 transition-opacity duration-300 fade-up animate"
+  role="dialog"
+  aria-modal="true"
+>
+  <div
+    class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-lg font-bold text-dark">
+        {{ mode === "create" ? "Add Testimonial" : "Edit Testimonial" }}
+      </h3>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-lightDark hover:text-dark hover:bg-light rounded-full p-2 transition-colors duration-200"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form
+      (ngSubmit)="saveTestimonial()"
+      enctype="multipart/form-data"
+      class="space-y-5"
+    >
+      <div class="grid gap-4 sm:grid-cols-2">
+        <!-- Name -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-user mr-1.5"></i> Name
+          </label>
+          <input
+            [(ngModel)]="_testimonial.name"
+            name="name"
+            type="text"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            placeholder="Enter name"
+            required
+          />
+          <input
+            *ngIf="mode === 'edit'"
+            [(ngModel)]="_testimonial.id"
+            name="id"
+            type="hidden"
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-align-left mr-1.5"></i> Description
+          </label>
+          <textarea
+            [(ngModel)]="_testimonial.description"
+            name="description"
+            rows="3"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            placeholder="Write testimonial description"
+          ></textarea>
+        </div>
+
+        <!-- Image -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-image mr-1.5"></i> Image
+          </label>
+          <input
+            type="file"
+            name="image"
+            (change)="onImageChange($event)"
+            class="w-full p-2.5 bg-light border border-lightDark rounded-lg text-dark text-sm file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200"
+          />
+        </div>
+
+        <!-- Customer Type -->
+        <!-- <div class="sm:col-span-2">
+  <label class="block mb-1.5 text-sm font-medium text-dark">
+    <i class="fas fa-user-tag mr-1.5"></i> Customer Type
+  </label>
+  <select
+    [(ngModel)]="_testimonial.customerType"
+    name="customerType"
+    class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+    required
+  >
+    <option value="">Select type</option>
+    <option value="Customer">Customer</option>
+    <option value="Land Owner">Land Owner</option>
+  </select>
+</div> -->
+
+        <!-- Content Type -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-list mr-1.5"></i> Content Type
+          </label>
+          <select
+            [(ngModel)]="_testimonial.contentType"
+            name="contentType"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+          >
+            <option value="">Select content type</option>
+            <option value="Image">Image</option>
+            <option value="Video">Video</option>
+          </select>
+        </div>
+
+        <!-- Content -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            {{
+              _testimonial.contentType === "Video"
+                ? "Upload file (Video max 15MB)"
+                : "Upload file"
+            }}
+          </label>
+          <input
+            type="file"
+            name="content"
+            (change)="onContentChange($event)"
+            class="w-full p-2.5 bg-light border border-lightDark rounded-lg text-dark text-sm file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200"
+          />
+        </div>
+
+        <!-- Order -->
+        <div class="sm:col-span-2">
+          <label class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-sort-numeric-up mr-1.5"></i> Order
+          </label>
+          <input
+            [(ngModel)]="_testimonial.order"
+            name="order"
+            type="number"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
+        >
+          <span class="relative z-10 flex items-center">
+            <svg
+              class="mr-2 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            {{ mode === "create" ? "Save Testimonial" : "Update Testimonial" }}
+          </span>
+          <span
+            class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
+          ></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

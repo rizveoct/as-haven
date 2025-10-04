@@ -1,0 +1,47 @@
+<div class="related_projects py-14 bg-light" id="relatedProjects">
+  <div class="w-[85%] mx-auto px-4">
+    <h1 class="text-3xl md:text-4xl font-poppins font-bold text-dark mb-8 text-center">Related Projects</h1>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+      <div *ngFor="let card of cards" class="project_card group relative flex flex-col max-w-[400px] w-full">
+        <a (click)="onProjectSelect(card.id)" class="block flex flex-col flex-grow">
+          <div class="relative overflow-hidden">
+            <img
+              class="w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
+              [src]="card.image"
+              [alt]="card.name || 'Project image'"
+              loading="lazy"
+              (error)="onImageError($event)"
+            />
+            <button
+              class="absolute inset-x-0 bottom-4 mx-auto px-6 py-3 text-sm font-bold bg-accent text-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              [attr.aria-label]="'Visit project ' + card.name"
+            >
+              Visit
+            </button>
+          </div>
+          <div class="p-6 text-center flex flex-col">
+            <h2 class="text-xl font-bold font-poppins mb-2 group-hover:text-accent transition-colors duration-200">
+              {{ card.name }}
+            </h2>
+            <div class="text-sm text-dark flex justify-center items-center gap-3 mb-4">
+              <span>{{ card.location }}</span>
+              <span class="w-2 h-2 bg-accent"></span>
+              <span>{{ card.type }}</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- <div class="adds flex items-center justify-between w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-1/4 mx-auto mt-8 p-4 bg-accent rounded-full shadow-lg">
+      <div class="flex items-center gap-3">
+        <i class="ri-bookmark-3-fill text-xl md:text-2xl text-white"></i>
+      </div>
+      <div>
+        <a routerLink="/contact" class="btn-primary px-4 py-2 text-sm font-semibold bg-white text-accent rounded-full hover:bg-accent-light">Booking Now</a>
+      </div>
+      <div class="flex items-center gap-3">
+        <i class="ri-bookmark-3-fill text-xl md:text-2xl text-white"></i>
+      </div>
+    </div> -->
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="project_location py-12  sm:py-16  lg:py-20 " id="locationMap">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-center text-2xl sm:text-3xl lg:text-4xl font-semibold mb-8 sm:mb-12">
+      Location
+    </h1>
+
+    <!-- Full width & height map -->
+    <div class="map-wrapper w-full h-64 sm:h-96 lg:h-[500px] mb-8  overflow-hidden shadow-lg">
+      <div class="w-full h-full">
+        <div [innerHTML]="safeMapIframe" class="w-full h-full"></div>
+      </div>
+    </div>
+
+    <!-- Optional section below map -->
+    <!-- <div class="flex justify-center items-center mt-14">
+    <button
+    (click)="onRegisterNowClick()"
+      class="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-1 space-x-2 relative overflow-hidden download-button"
+    >
+      <span class="relative z-10">Booking Now</span>
+    </button>
+  </div> -->
+
+  </div>
+</div>

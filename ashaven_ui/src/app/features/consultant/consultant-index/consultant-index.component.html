@@ -1,0 +1,94 @@
+<div class="container mx-auto p-6">
+  <div class="flex items-center mb-6 fade-up animate">
+    <h6 class="text-lg font-bold text-dark grow">List of Consultants & Interior</h6>
+    <button
+      type="button"
+      (click)="openCreateModal()"
+      class="px-5 py-2 text-white bg-accent border border-accent/80 hover:bg-accent/80 focus:ring-2 focus:ring-accent/50 rounded-lg transition duration-300"
+    >
+      <span class="align-middle">Add Consultant | Interior</span>
+    </button>
+  </div>
+
+  <!-- Consultant Form Modal -->
+  <app-consultant-form
+    *ngIf="showFormModal"
+    [consultant]="selectedConsultant!"
+    [mode]="formMode"
+    (close)="closeFormModal()"
+    (saved)="onConsultantSaved()"
+  ></app-consultant-form>
+
+  <!-- Consultants Table -->
+  <div
+    class="relative overflow-x-auto bg-white rounded-lg shadow-md fade-up animate"
+  >
+    <table class="min-w-full divide-y ">
+      <thead class="bg-accentLight">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Name
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Location
+          </th>
+           <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Interior
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Image
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-lightDark">
+        <tr
+          *ngFor="let item of consultants"
+          class="hover:bg-light transition duration-200 fade-up animate"
+        >
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-dark whitespace-nowrap"
+          >
+            {{ item.name }}
+          </th>
+          <td class="px-6 py-4 text-sm text-dark">{{ item.location }}</td>
+          <td class="px-6 py-4 text-sm text-dark">{{ (item.isInterior != 1 ) ? 'Consultant':'Interior'}}</td>
+          <td class="px-6 py-4">
+            <img
+              [src]="apiBaseUrl + '/api/attachment/get/' + item.image"
+              alt="Consultant Image"
+              class="w-10 h-10 object-cover rounded"
+            />
+          </td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button
+              (click)="openEditModal(item)"
+              class="text-accent hover:text-accent/80 font-medium text-sm px-3 py-1"
+            >
+              Edit
+            </button>
+            <button
+              (click)="deleteConsultant(item.id)"
+              class="text-red-500 hover:text-red-600 font-medium text-sm px-3 py-1"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

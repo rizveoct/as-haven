@@ -1,0 +1,63 @@
+<div>
+  <div class="flex items-center mb-2">
+    <h6 class="text-base font-bold flex-grow">List of Offers</h6>
+    <div class="flex-shrink-0">
+      <button *ngIf="!offers || offers.length === 0" (click)="openCreateModal()" class="px-5 py-1 text-white bg-cyan-600 border border-cyan-500 hover:text-white hover:bg-cyan-600 hover:border-cyan-600 focus:text-white focus:bg-cyan-600 focus:border-cyan-600 focus:ring focus:ring-cyan-100 active:text-white active:bg-cyan-600 active:border-cyan-600 active:ring active:ring-cyan-100 dark:ring-cyan-400/20">
+        <span class="align-middle">Create Offer</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 overflow-y-auto">
+    <app-offer-form [offer]="null" mode="create" (close)="closeModal()" (saved)="onOfferSaved()"></app-offer-form>
+  </div>
+
+  <!-- Edit Modal -->
+  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50 overflow-y-auto">
+    <app-offer-form [offer]="selectedOffer" mode="edit" (close)="closeModal()" (saved)="onOfferSaved()"></app-offer-form>
+  </div>
+
+  <div class="relative overflow-x-auto shadow-md">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">Title</th>
+          <th scope="col" class="px-6 py-3 hidden">Description</th>
+          <th scope="col" class="px-6 py-3">Image</th>
+          <th scope="col" class="px-6 py-3">Status</th>
+          <th scope="col" class="px-6 py-3">Start Date</th>
+          <th scope="col" class="px-6 py-3">End Date</th>
+          <th scope="col" class="px-6 py-3">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of offers" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            {{ item.title }}
+          </th>
+          <td class="px-6 py-4 hidden">{{ item.description }}</td>
+          <td class="px-6 py-4">
+            <img class="w-16 h-10" [src]="apiBaseUrl + '/api/attachment/get/' + item.picture" alt="" />
+          </td>
+          <td class="px-6 py-4">
+            <span *ngIf="item.isActive" class="px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 inline-flex items-center">
+              <i class="fas fa-check-circle text-green-500 mr-1.5"></i> Active
+            </span>
+            <span *ngIf="!item.isActive" class="px-2.5 py-0.5 inline-flex items-center text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20">
+              <i class="fas fa-times-circle text-red-400 mr-1.5"></i> Inactive
+            </span>
+          </td>
+          <td class="px-6 py-4">{{ item.startDate }}</td>
+          <td class="px-6 py-4">{{ item.endDate }}</td>
+          <td class="px-6 py-4 text-right">
+            <button (click)="openEditModal(item)" class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Edit</button>
+            <button *ngIf="item.isActive" (click)="toggleActiveStatus(item.id, false)" class="ml-2 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Deactivate</button>
+            <button *ngIf="!item.isActive" (click)="toggleActiveStatus(item.id, true)" class="ml-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Activate</button>
+            <button (click)="deleteOffer(item.id)" class="ml-2 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

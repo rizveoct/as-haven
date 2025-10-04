@@ -1,0 +1,104 @@
+<app-gallery-hero />
+
+<section
+  class="project-gallery py-12 sm:py-16 lg:py-20 bg-light"
+  id="projectGallery"
+>
+  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2
+      class="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold text-dark mb-6 sm:mb-8 text-center fade-up"
+    >
+      Project Gallery
+    </h2>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 fade-up"
+    >
+      <div
+        *ngFor="let item of galleryItems; let i = index"
+        class="relative overflow-hidden bg-white shadow-lg hover:shadow-xl transition cursor-pointer rounded-lg"
+        (click)="openLightbox(i)"
+      >
+        <img
+          *ngIf="item.contentType === 'Image'"
+          [src]="baseUrl + '/api/attachment/get/' + item.contentName"
+          [alt]="item.title"
+          class="w-full h-48 sm:h-56 md:h-60 lg:h-64 object-cover rounded-lg"
+          (error)="onImageError($event)"
+        />
+        <video
+          *ngIf="item.contentType === 'Video'"
+          [src]="baseUrl + '/api/attachment/get/' + item.contentName"
+          controls
+          class="w-full h-48 sm:h-56 md:h-60 lg:h-64 object-cover rounded-lg"
+          (error)="onImageError($event)"
+        >
+        </video>
+      </div>
+
+      <!-- Empty state -->
+      <div
+        *ngIf="!galleryItems.length"
+        class="col-span-full text-center py-8 text-dark font-poppins bg-accent-light/20 rounded-2xl"
+      >
+        No gallery items available. Please check back later.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div
+  *ngIf="lightboxOpen && currentItem"
+  class="fixed inset-0 md:mt-16 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-6"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <div class="relative w-full max-w-3xl sm:max-w-5xl">
+    <!-- Close button -->
+    <button
+      class="absolute top-2 right-2 sm:top-4 sm:right-4 text-white text-2xl sm:text-3xl z-50 bg-black/50 hover:bg-black/70 rounded-full p-1"
+      (click)="closeLightbox()"
+      aria-label="Close lightbox"
+    >
+      ✖
+    </button>
+
+    <!-- Image / Video -->
+    <ng-container *ngIf="currentItem">
+      <img
+        *ngIf="currentItem.contentType === 'Image'"
+        [src]="baseUrl + '/api/attachment/get/' + currentItem.contentName"
+        [alt]="currentItem.title"
+        class="w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg"
+        (error)="onImageError($event)"
+      />
+
+      <video
+        *ngIf="currentItem.contentType === 'Video'"
+        [src]="baseUrl + '/api/attachment/get/' + currentItem.contentName"
+        controls
+        autoplay
+        class="w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg"
+        (error)="onImageError($event)"
+      ></video>
+    </ng-container>
+
+    <!-- Prev / Next buttons -->
+    <button
+      class="absolute top-1/2 left-1 sm:left-2 text-white text-3xl sm:text-4xl transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1 sm:p-2 z-50"
+      (click)="prevItem($event)"
+      aria-label="Previous item"
+    >
+      ❮
+    </button>
+
+    <button
+      class="absolute top-1/2 right-1 sm:right-2 text-white text-3xl sm:text-4xl transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1 sm:p-2 z-50"
+      (click)="nextItem($event)"
+      aria-label="Next item"
+    >
+      ❯
+    </button>
+  </div>
+</div>

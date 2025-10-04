@@ -1,0 +1,32 @@
+.download-button {
+  position: relative;  
+}
+
+.download-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #1f2937; /* Tailwind's bg-gray-800 (bg-dark) */
+  transition: width 0.3s ease-in-out;
+  z-index: 0;
+}
+
+.download-button:hover::before {
+  width: 100%;
+}
+
+.download-button:hover {
+  background-color: transparent; /* Prevent original bg-accent from showing */
+}
+
+.download-button:disabled {
+  pointer-events: none; /* Disable hover interactions */
+}
+
+.download-button:disabled::before {
+  width: 0; /* No animation when disabled */
+}
+

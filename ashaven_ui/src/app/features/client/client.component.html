@@ -1,0 +1,57 @@
+<div class="p-6 bg-light text-dark">
+  <h2 class="text-2xl font-semibold mb-4">Contact Submissions</h2>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-dark text-white">
+          <th class="p-3 text-left">Name</th>
+          <th class="p-3 text-left">Email</th>
+          <th class="p-3 text-left">Phone</th>
+          <th class="p-3 text-left">Subject</th>
+          <th class="p-3 text-left">Message</th>
+          <th class="p-3 text-left">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts" class="border-b border-lightDark/30 hover:bg-accentLight hover:text-dark transition-colors duration-200">
+          <td class="p-3">{{ contact.name }}</td>
+          <td class="p-3">{{ contact.email }}</td>
+          <td class="p-3">{{ contact.phone || 'N/A' }}</td>
+          <td class="p-3">{{ contact.subject }}</td>
+          <td class="p-3">{{ contact.message }}</td>
+          <td class="p-3">{{ contact.date | date:'yyyy-MM-dd'}}</td>
+        </tr>
+        <tr *ngIf="contacts.length === 0 && !errorMessage" class="text-center">
+          <td colspan="7" class="p-3">No submissions found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="mt-4 flex justify-between items-center">
+    <button
+      (click)="changePage(-1)"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-accent text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+      Previous
+    </button>
+    <span>Page {{ currentPage }}</span>
+    <button
+      (click)="changePage(1)"
+      [disabled]="contacts.length < pageSize"
+      class="px-4 py-2 bg-accent text-white rounded-lg disabled:bg-gray-300 disabled:cursor-not-allowed"
+    >
+      Next
+    </button>
+  </div>
+</div>
+

@@ -1,0 +1,28 @@
+/* Base button */
+.tab-button {
+  background: rgba(255, 255, 255, 0.6);
+  color: #333;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover effect */
+.tab-button:hover {
+  transform: translateX(-4px) scale(1.02);
+}
+
+/* Active tab with gradient + glowing border */
+.active-tab {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent));
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(255, 118, 136, 0.4);
+  border: none;
+}
+
+/* Subtle slide animation */
+.transition-transform {
+  transition-property: transform, opacity;
+  transition-duration: 500ms;
+  transition-timing-function: ease-in-out;
+}

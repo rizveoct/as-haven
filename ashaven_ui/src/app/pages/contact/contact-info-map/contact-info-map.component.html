@@ -1,0 +1,176 @@
+<div class="min-h-screen bg-color-1 py-8 flex items-center justify-center font-[Inter]">
+  <div class="container mx-auto px-4 w-[85%]">
+    <div class="flex flex-col lg:flex-row gap-8 w-full mx-auto p-12">
+      <div class="flex-1 pt-20 fade-up">
+        <p class="text-green-500 font-semibold uppercase tracking-wider text-sm mb-2">
+          CONTACT
+        </p>
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8">
+          Contact Us
+        </h1>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Name Input -->
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                placeholder="Full Name"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
+              />
+              <label
+                for="name"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Full Name
+              </label>
+              <p *ngIf="isFieldInvalid('name')" class="text-red-500 text-sm mt-1">
+                Name is required and must be at least 2 characters.
+              </p>
+            </div>
+
+            <!-- Phone Input -->
+            <div class="relative">
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                placeholder="Phone Number"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
+              />
+              <label
+                for="phone"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Phone Number
+              </label>
+            </div>
+
+            <!-- Email Input -->
+            <div class="relative">
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="Email"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
+              />
+              <label
+                for="email"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Email
+              </label>
+              <p *ngIf="isFieldInvalid('email')" class="text-red-500 text-sm mt-1">
+                Valid email is required.
+              </p>
+            </div>
+
+            <!-- Subject Input -->
+            <div class="relative">
+              <input
+                type="text"
+                id="subject"
+                formControlName="subject"
+                placeholder="Subject"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
+              />
+              <label
+                for="subject"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Subject
+              </label>
+              <p *ngIf="isFieldInvalid('subject')" class="text-red-500 text-sm mt-1">
+                Subject is required and must be at least 3 characters.
+              </p>
+            </div>
+          </div>
+
+          <!-- Message Input -->
+          <div class="mt-4 relative">
+            <textarea
+              id="message"
+              formControlName="message"
+              placeholder="Message"
+              class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent resize-none focus:border-green-500 focus:outline-none"
+            ></textarea>
+            <label
+              for="message"
+              class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+            >
+              Message
+            </label>
+            <p *ngIf="isFieldInvalid('message')" class="text-red-500 text-sm mt-1">
+              Message is required and must be at least 10 characters.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-6">
+            <button
+              type="submit"
+              [disabled]="isSubmitting"
+              class="w-full md:w-auto px-9 py-5 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-600 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            </button>
+          </div>
+
+          <!-- Submission Feedback -->
+          <div *ngIf="submitMessage" class="mt-4 text-sm" [ngClass]="{'text-green-500': !submitMessage.includes('Error'), 'text-red-500': submitMessage.includes('Error')}">
+            {{ submitMessage }}
+          </div>
+        </form>
+      </div>
+
+      <!-- Map -->
+      <div class="flex-1 flex justify-center items-center fade-up">
+        <div class="bg-white p-2 rounded-xl">
+          <div class="rounded-xl overflow-hidden shadow-lg relative w-[550px] h-[550px] animate-entrance">
+            <div class="absolute inset-0 bg-gray-200 animate-pulse" [class.hidden]="isMapLoaded"></div>
+            <iframe
+              title="Office location on map"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.4565222014585!2d88.63948298340911!3d24.365417322189778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbf0303e5de2a9%3A0xa52f9edf660f1286!2sProshanti%2C%20Shaheed%20Jahan%20Ali%20Biswas%20Rd%2C%20Rajshahi!5e0!3m2!1sen!2sbd!4v1757905362847!5m2!1sen!2sbd"
+              class="absolute inset-0 w-full h-full border-0"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              (load)="onMapLoad()"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Success Popup -->
+<div
+  *ngIf="showPopup"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+>
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-[90%] text-center relative">
+    <!-- Close Button -->
+    <button
+      class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-xl"
+      (click)="closePopup()"
+    >
+      ✖
+    </button>
+
+    <h3 class="text-2xl font-bold text-green-600 mb-4">🎉 Form Submitted!</h3>
+    <p class="text-gray-700">Thank you! We’ll reach out to you soon.</p>
+
+    <button
+      (click)="closePopup()"
+      class="mt-6 px-6 py-3 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
+    >
+      Close
+    </button>
+  </div>
+</div>

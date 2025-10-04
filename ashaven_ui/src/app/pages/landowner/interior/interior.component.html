@@ -1,0 +1,109 @@
+<div class="py-12 px-4 md:px-8 rounded-2xl" id="relatedProjects">
+  <div class="mx-auto w-[85%]">
+    <!-- Header with title and nav buttons -->
+    <div class="flex justify-between items-center mb-10">
+      <h1 class="text-6xl text-dark font-semibold font-poppins">
+        Our Interior Project
+      </h1>
+      <div class="nav flex items-end gap-4">
+        <button
+          (click)="prevSlide()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
+        <button
+          (click)="nextSlide()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+          aria-label="Next slide"
+        >
+          →
+        </button>
+      </div>
+    </div>
+    <!-- Slider -->
+    <div class="slider-wrapper">
+      <div
+        class="slides"
+        [style.transform]="'translateX(' + currentTranslate + 'px)'"
+        (mousedown)="onMouseDown($event)"
+        (touchstart)="onMouseDown($event)"
+        (mouseenter)="onMouseEnter()"
+        (mouseleave)="onMouseLeave()"
+      >
+        <div *ngFor="let slide of slides" class="slide group relative flex flex-col max-w-[400px] w-full">
+          <a
+  (click)="openModal(slide, $event)"
+  (touchend)="openModal(slide, $event)"
+  class="block flex flex-col flex-grow"
+>
+
+            <div class="relative overflow-hidden">
+              <img
+                class="w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
+                [src]="slide.image"
+                [alt]="slide.name || 'Project image'"
+                loading="lazy"
+                (error)="onImageError($event)"
+              />
+              
+            </div>
+            <div class="p-6 text-center flex flex-col">
+              <h2 class="text-xl font-bold font-poppins mb-2 group-hover:text-accent transition-colors duration-200">
+                {{ slide.name }}
+              </h2>
+              <div class="text-sm text-dark flex justify-center items-center gap-3 mb-4">
+                <span>{{ slide.location }}</span>
+                <span class="w-2 h-2 bg-accent"></span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  *ngIf="isModalOpen && selectedSlide"
+  class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 pt-24"
+>
+  <div
+    class="bg-white rounded-2xl shadow-xl w-[90%] max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-4xl p-6 relative animate-fadeIn"
+  >
+    <!-- Close button -->
+    <button
+      (click)="closeModal()"
+      class="absolute top-3 right-3 text-gray-500 hover:text-dark text-2xl"
+    >
+      ✕
+    </button>
+
+    <!-- Modal Content -->
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+      <!-- Image -->
+      <div class="w-72 md:w-96 lg:w-[32rem] aspect-[4/5] overflow-hidden rounded-xl shadow-lg">
+  <img
+    [src]="selectedSlide.image"
+    alt="{{ selectedSlide.name }}"
+    class="w-full h-full object-cover"
+    (error)="onImageError($event)"
+  />
+</div>
+
+
+      <!-- Text Content -->
+      <div class="flex-1 text-center md:text-left">
+        <h2 class="text-3xl font-bold text-dark mb-2">
+          {{ selectedSlide.name }}
+        </h2>
+        <p class="text-accent font-medium mb-4 text-lg">
+          {{ selectedSlide.location }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+

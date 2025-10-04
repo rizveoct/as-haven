@@ -1,0 +1,34 @@
+<div class="py-12 px-4 md:px-8 rounded-2xl">
+  <div class="mx-auto w-[85%]">
+    <p class="text-accent text-2xl lg:text-2xl text-center md:text-left">
+      News & Article
+    </p>
+    <div class="flex flex-col items-center md:flex-row md:justify-between">
+      <h1
+        class="text-2xl lg:text-6xl text-dark font-semibold fade-up mb-2 text-center md:text-left"
+      >
+        <span class="mb-5">Stay Updated</span><br /><span class="md:ms-16"
+          >With Prime Housing</span
+        >
+      </h1>
+
+      <div class="nav flex items-center gap-4 fade-up md:mr-10 md:pr-10">
+        <button
+          (click)="prev()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+        >
+          ←
+        </button>
+        <button
+          (click)="next()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+        >
+          →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-blog-slide (scrollContainer)="scrollContainer = $event" />
+
+</div>

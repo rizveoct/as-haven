@@ -1,0 +1,71 @@
+<div class="py-12 px-4 md:px-8 rounded-2xl" id="relatedProjects">
+  <div class="mx-auto w-[85%]">
+    <!-- Header with title and nav buttons -->
+    <div class="flex justify-between items-center mb-10">
+      <h1 class="text-6xl text-dark font-semibold font-poppins">
+        Our Feature Project
+      </h1>
+      <div class="nav flex items-end gap-4">
+        <button
+          (click)="prevSlide()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
+        <button
+          (click)="nextSlide()"
+          class="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center bg-accent text-light rounded-full ring-offset-2 ring ring-accent hover:bg-accent-light transition duration-500 ease-in-out text-lg font-semibold"
+          aria-label="Next slide"
+        >
+          →
+        </button>
+      </div>
+    </div>
+    <!-- Slider -->
+    <div class="slider-wrapper">
+      <div
+        class="slides"
+        [style.transform]="'translateX(' + currentTranslate + 'px)'"
+        (mousedown)="onMouseDown($event)"
+        (touchstart)="onMouseDown($event)"
+        (mouseenter)="onMouseEnter()"
+        (mouseleave)="onMouseLeave()"
+      >
+        <div *ngFor="let slide of slides" class="slide group relative flex flex-col max-w-[400px] w-full">
+          <a
+            (click)="onProjectSelect(slide.id, $event)"
+            (touchend)="onProjectSelect(slide.id, $event)"
+            class="block flex flex-col flex-grow"
+          >
+            <div class="relative overflow-hidden">
+              <img
+                class="w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
+                [src]="slide.image"
+                [alt]="slide.name || 'Project image'"
+                loading="lazy"
+                (error)="onImageError($event)"
+              />
+              <button
+                class="absolute inset-x-0 bottom-4 mx-auto px-6 py-3 text-sm font-bold bg-accent text-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                [attr.aria-label]="'Visit project ' + slide.name"
+              >
+                Visit
+              </button>
+            </div>
+            <div class="p-6 text-center flex flex-col">
+              <h2 class="text-xl font-bold font-poppins mb-2 group-hover:text-accent transition-colors duration-200">
+                {{ slide.name }}
+              </h2>
+              <div class="text-sm text-dark flex justify-center items-center gap-3 mb-4">
+                <span>{{ slide.address }}</span>
+                <span class="w-2 h-2 bg-accent"></span>
+                <span>{{ slide.type }}</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

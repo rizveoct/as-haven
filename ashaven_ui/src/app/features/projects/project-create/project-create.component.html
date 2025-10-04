@@ -1,0 +1,26 @@
+<div class="container mx-auto p-6">
+  <!-- Header -->
+  <div class="flex items-center mb-6 fade-up animate">
+    <h6 class="text-lg font-bold text-dark flex-grow">Create Project</h6>
+    <a
+  [routerLink]="['/dashboard/projects']"
+  class="relative overflow-hidden px-6 py-2 text-white bg-accent rounded-lg text-sm font-medium transition-all duration-300 group"
+>
+  <span class="relative z-10">Back</span>
+  <!-- Hover fill effect -->
+  <span
+    class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
+  ></span>
+</a>
+
+  </div>
+
+  <!-- Form Wrapper -->
+  <div class="relative bg-white rounded-lg shadow-md border border-accentLight fade-up animate">
+    <app-project-form
+      [project]="null"
+      mode="create"
+      (saved)="onProjectSaved()"
+    ></app-project-form>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+/* Section wrapper */
+.testimonial-section {
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  /* background-color: #f9fafb; Light gray */
+}
+
+/* Header */
+.section-tag {
+  color: var(--accent, #dd1e26);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.section-heading {
+  color: #1f2937; /* dark gray */
+  /* font-size: 36px; */
+  /* font-weight: 800; */
+  /* margin: 10px 0 0; */
+}
+
+/* Slider container */
+.testimonial-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Navigation arrows */
+.nav-arrow {
+  background: var(--accent, #dd1e26);
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.nav-arrow:hover {
+  background-color: #b7171e;
+}
+
+/* Testimonial card */
+.testimonial-card-container {
+  /* background-color: #fff; */
+  padding: 60px 40px 40px;
+  border-radius: 16px;
+  max-width: 700px;
+  margin: 0 40px;
+  /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card-container:hover {
+  transform: translateY(-5px);
+  /* box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); */
+}
+
+/* Profile image */
+.profile-image {
+  position: relative;
+  width: 150px; /* same as w-28 */
+  height: 150px;
+  border: 4px solid var(--accent, #dd1e26);
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Quote icon */
+.quote-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent, #dd1e26);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Testimonial text */
+.testimonial-text {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #374151; /* neutral gray */
+  margin-bottom: 25px;
+}
+
+/* Author */
+.author-info {
+  margin-top: 20px;
+}
+
+.author-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+.author-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 5px;
+}

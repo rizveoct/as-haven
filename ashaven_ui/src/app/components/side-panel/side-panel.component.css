@@ -1,0 +1,30 @@
+.side-panel.open {
+  right: 0;
+  background-color: var(--accentLight);
+  box-shadow: rgba(0, 0, 0, 0.6) 0px -7px 27px 3px;
+}
+
+.side-panel-links a {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px; /* space for underline */
+  text-decoration: none;
+}
+
+/* Glowing underline effect */
+.side-panel-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent); /* use your accent color */
+  box-shadow: 0 0 8px var(--accent), 0 0 12px var(--accent);
+  transition: width 0.3s ease-in-out;
+}
+
+/* Expand underline on hover */
+.side-panel-links a:hover::after {
+  width: 100%;
+}

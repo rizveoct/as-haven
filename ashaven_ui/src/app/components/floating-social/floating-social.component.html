@@ -1,0 +1,54 @@
+<div class="fixed bottom-5 left-5 z-50 flex-col-reverse items-center hidden md:flex">
+  <!-- Main Toggle Button -->
+  <button
+    (click)="toggleSocialIcons()"
+    aria-label="Toggle social media icons"
+    class="w-12 h-12 rounded-full bg-accent flex items-center justify-center shadow-lg transition-transform duration-500"
+    [class.spin]="isSpinning"
+  >
+    <i
+      [ngClass]="isOpen ? 'ri-close-line' : 'ri-chat-1-line'"
+      class="text-2xl text-white"
+    ></i>
+  </button>
+
+  <!-- Social Icons -->
+  <div *ngIf="isOpen" class="flex flex-col-reverse gap-2 mt-2">
+    <a
+      href="https://linkedin.com"
+      target="_blank"
+      aria-label="LinkedIn"
+      class="social-btn bg-[#0077B5]"
+      [ngStyle]="{ 'animation-delay': '0.4s' }"
+    >
+      <i class="ri-linkedin-fill text-xl"></i>
+    </a>
+    <a
+      href="https://instagram.com"
+      target="_blank"
+      aria-label="Instagram"
+      class="social-btn bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600"
+      [ngStyle]="{ 'animation-delay': '0.3s' }"
+    >
+      <i class="ri-instagram-line text-xl"></i>
+    </a>
+    <a
+      href="https://twitter.com"
+      target="_blank"
+      aria-label="Twitter"
+      class="social-btn bg-[#1DA1F2]"
+      [ngStyle]="{ 'animation-delay': '0.2s' }"
+    >
+      <i class="ri-twitter-fill text-xl"></i>
+    </a>
+    <a
+      href="https://facebook.com"
+      target="_blank"
+      aria-label="Facebook"
+      class="social-btn bg-[#1877F2]"
+      [ngStyle]="{ 'animation-delay': '0.1s' }"
+    >
+      <i class="ri-facebook-fill text-xl"></i>
+    </a>
+  </div>
+</div>

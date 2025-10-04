@@ -1,0 +1,124 @@
+<div class="p-6 bg-light min-h-screen">
+  <!-- Header -->
+  <div class="flex items-center mb-6">
+    <h6 class="text-2xl font-bold text-accent flex-grow">Project Features</h6>
+    <div class="flex-shrink-0 space-x-2">
+      <!-- Add Feature -->
+      <button (click)="openCreateModal()"
+              class="px-6 py-2 text-white bg-accent focus:ring-4 focus:ring-accentLight rounded-lg text-sm font-medium transition-all duration-200 relative overflow-hidden group">
+        <span class="relative z-10">Add Feature</span>
+        <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+      </button>
+      <!-- Back -->
+      <button [routerLink]="['/dashboard/projects']"
+              class="px-6 py-2 text-white bg-accent focus:ring-4 focus:ring-accentLight rounded-lg text-sm font-medium transition-all duration-200 relative overflow-hidden group">
+        <span class="relative z-10">Back</span>
+        <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-dark/70 transition-opacity duration-300">
+    <div class="relative p-6 w-full max-w-3xl mx-auto">
+      <div class="relative p-6 bg-white dark:bg-dark rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center pb-4 mb-6 border-b border-lightDark">
+          <h3 class="text-2xl font-bold text-accent">Add Feature</h3>
+          <button type="button" (click)="closeModal()"
+                  class="text-lightDark hover:text-dark rounded-lg p-2 hover:bg-light transition-colors duration-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Form -->
+        <form (ngSubmit)="saveFeature()" enctype="multipart/form-data">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <!-- Title -->
+            <div class="sm:col-span-2">
+              <label for="title" class="block mb-2 text-sm font-semibold text-dark">Title</label>
+              <input id="title" [(ngModel)]="newFeature.title" name="title" type="text"
+                     class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     placeholder="Enter Title" required />
+            </div>
+
+            <!-- Description -->
+            <div class="sm:col-span-2">
+              <label for="description" class="block mb-2 text-sm font-semibold text-dark">Description</label>
+              <textarea id="description" [(ngModel)]="newFeature.description" name="description" rows="3"
+                        class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                        placeholder="Write description here"></textarea>
+            </div>
+
+            <!-- Icon -->
+            <div class="sm:col-span-2">
+              <label for="icon" class="block mb-2 text-sm font-semibold text-dark">Icon</label>
+              <input id="icon" name="icon" type="file" (change)="onIconChange($event)"
+                     class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-white focus:outline-none transition-all duration-200" />
+            </div>
+
+            <!-- Order -->
+            <div class="sm:col-span-2">
+              <label for="order" class="block mb-2 text-sm font-semibold text-dark">Order</label>
+              <input id="order" [(ngModel)]="newFeature.order" name="order" type="number"
+                     class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     placeholder="Enter order" />
+            </div>
+          </div>
+
+          <!-- Save button -->
+          <div class="mt-6">
+            <button type="submit"
+                    class="inline-flex items-center px-6 py-3 text-white bg-accent border border-accent focus:ring-2 focus:ring-accentLight font-medium rounded-lg text-sm transition-all duration-300 relative overflow-hidden group">
+              <svg class="mr-2 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"></path>
+              </svg>
+              <span class="relative z-10">Save</span>
+              <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-white mt-6">
+    <table class="w-full text-sm text-left text-dark">
+      <thead class="text-xs text-dark uppercase bg-light">
+        <tr>
+          <th class="px-6 py-4">Title</th>
+          <th class="px-6 py-4">Description</th>
+          <th class="px-6 py-4">Icon</th>
+          <th class="px-6 py-4">Order</th>
+          <th class="px-6 py-4">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of features; let i = index"
+            class="border-b border-lightDark hover:bg-accentLight transition-colors duration-200"
+            [ngClass]="{'bg-light': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+          <td class="px-6 py-4 max-w-xs truncate">{{ item.title }}</td>
+          <td class="px-6 py-4 max-w-xs truncate">{{ item.description }}</td>
+          <td class="px-6 py-4">
+            <img class="w-12 h-12 object-cover rounded-full shadow-sm"
+                 [src]="apiBaseUrl + '/api/attachment/get/' + item.icon" alt="Icon" />
+          </td>
+          <td class="px-6 py-4">{{ item.order }}</td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button *ngIf="item.isActive" (click)="toggleFeatureActive(item.id, false)"
+                    class="px-4 py-1 text-red-600 hover:text-white border border-red-600 hover:bg-red-600 rounded-lg text-sm font-medium transition-all duration-200">Deactivate</button>
+            <button *ngIf="!item.isActive" (click)="toggleFeatureActive(item.id, true)"
+                    class="px-4 py-1 text-accent hover:text-white border border-accent hover:bg-accent rounded-lg text-sm font-medium transition-all duration-200">Activate</button>
+            <button (click)="deleteFeature(item.id)"
+                    class="px-4 py-1 text-red-600 hover:text-white border border-red-600 hover:bg-red-600 rounded-lg text-sm font-medium transition-all duration-200">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

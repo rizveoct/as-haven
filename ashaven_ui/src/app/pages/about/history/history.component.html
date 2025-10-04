@@ -1,0 +1,23 @@
+<div
+  class="relative mb-5 py-10  px-4 md:px-2 "
+>
+  <div class="mx-auto relative w-[85%]" >
+    <h1
+      class="text-4xl fade-up lg:text-6xl  text-dark font-semibold mb-8 text-center md:text-left"
+    >
+      <span class="block mb-5">The History</span>
+      <span class="md:ml-16">Of Prime Housing</span>
+    </h1>
+    <p
+      class="text-lg fade-up text-dark text-center md:text-left lg:ml-40 font-[var(--body)]"
+      *ngIf="history; else noHistory"
+      [@textAnimation]
+    >
+      {{ history }}
+    </p>
+
+    <ng-template #noHistory>
+      <p class="text-lightDark" [@textAnimation]>No history available.</p>
+    </ng-template>
+  </div>
+</div>

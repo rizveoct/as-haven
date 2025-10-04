@@ -1,0 +1,108 @@
+<div class="p-5 space-y-5">
+  <!-- Header & Create Button -->
+  <div class="flex items-center mb-4">
+    <h6 class="text-lg font-bold flex-grow text-dark">List of Testimonials</h6>
+    <div class="flex-shrink-0">
+      <button
+        (click)="openCreateModal()"
+        class="px-5 py-2 text-white bg-accent border border-accent rounded-lg hover:bg-accentLight focus:ring focus:ring-accent/30 transition-all duration-200"
+      >
+        Create Testimonial
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+    <app-testimonial-form [testimonial]="null" mode="create" (close)="closeModal()" (saved)="onTestimonialSaved()"></app-testimonial-form>
+  </div>
+
+  <!-- Edit Modal -->
+  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+    <app-testimonial-form [testimonial]="selectedTestimonial" mode="edit" (close)="closeModal()" (saved)="onTestimonialSaved()"></app-testimonial-form>
+  </div>
+
+  <!-- Testimonials Table -->
+  <div class="relative overflow-x-auto shadow-lg rounded-lg">
+    <table class="w-full text-sm text-left text-lightDark">
+      <thead class="text-xs text-dark uppercase bg-accentLight border-b">
+        <tr>
+          <th class="px-6 py-3">Name</th>
+          <th class="px-6 py-3">Description</th>
+          <th class="px-6 py-3">Image</th>
+          <th class="px-6 py-3">Type</th>
+          <th class="px-6 py-3">Content</th>
+          <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3">Order</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let item of testimonials"
+          class="bg-white border-b hover:bg-accentLight transition-colors duration-150"
+        >
+          <td class="px-6 py-4 font-medium text-dark">{{ item.name }}</td>
+          <td class="px-6 py-4 truncate max-w-xs">{{ item.description }}</td>
+          <td class="px-6 py-4">
+            <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.image" alt="Image" />
+          </td>
+          <td class="px-6 py-4">{{ item.contentType }}</td>
+          <td class="px-6 py-4">
+            <ng-container *ngIf="item.contentType === 'Image'">
+              <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.content" alt="Content Image" />
+            </ng-container>
+            <ng-container *ngIf="item.contentType === 'Video'">
+              <video class="w-12 h-12 rounded" controls>
+                <source [src]="apiBaseUrl + '/api/attachment/get/' + item.content" type="video/mp4" />
+              </video>
+            </ng-container>
+          </td>
+          <td class="px-6 py-4">
+            <span
+              *ngIf="item.isActive"
+              class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-accentLight text-accent"
+            >
+              <i class="fas fa-check-circle mr-1"></i> Active
+            </span>
+            <span
+              *ngIf="!item.isActive"
+              class="inline-flex items-center px-2 py-1 text-xs font-medium rounded bg-red-100 text-red-600"
+            >
+              <i class="fas fa-times-circle mr-1"></i> Inactive
+            </span>
+          </td>
+          <td class="px-6 py-4">{{ item.order }}</td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button
+              (click)="openEditModal(item)"
+              class="text-accent border border-accent hover:bg-accent hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Edit
+            </button>
+            <button
+              *ngIf="item.isActive"
+              (click)="toggleActiveStatus(item.id, false)"
+              class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Deactivate
+            </button>
+            <button
+              *ngIf="!item.isActive"
+              (click)="toggleActiveStatus(item.id, true)"
+              class="text-accent border border-accent hover:bg-accent hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Activate
+            </button>
+            <button
+              (click)="deleteTestimonial(item.id)"
+              class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

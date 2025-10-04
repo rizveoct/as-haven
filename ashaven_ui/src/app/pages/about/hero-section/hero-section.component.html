@@ -1,0 +1,27 @@
+  <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
+    <!-- Background Image -->
+    <div
+      class="absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
+      style="background-image: url('/images/banner/banner-3.png')"
+      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+    ></div>
+
+    <!-- Optional overlay -->
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <!-- Centered content -->
+    <div
+      class="relative z-10 flex flex-col items-center justify-center h-full px-5 gap-2"
+    >
+      <div
+        class="inline-flex items-baseline gap-2 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg max-w-[85%]"
+      >
+        <h1
+          class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--light)]"
+        >
+          About Us
+        </h1>
+      </div>
+      <p class="text-lg sm:text-xl text-[var(--light)]">Home > About Us</p>
+    </div>
+  </div>

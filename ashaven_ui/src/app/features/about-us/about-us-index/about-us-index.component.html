@@ -1,0 +1,77 @@
+<div>
+  <!-- Header & Create Button -->
+  <div class="flex items-center mb-4">
+    <h6 class="text-lg font-bold flex-grow text-dark">About Us List</h6>
+    <div class="flex-shrink-0">
+      <button
+        (click)="openCreateModal()"
+        class="px-5 py-2 text-white bg-accent border border-accent rounded-lg hover:bg-accent-dark hover:border-accent-dark focus:ring focus:ring-accent/30 transition-all duration-200"
+      >
+        Create About Us
+      </button>
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+    <app-about-us-form [aboutUs]="null" mode="create" (close)="closeModal()" (saved)="onAboutUsSaved()"></app-about-us-form>
+  </div>
+
+  <!-- Edit Modal -->
+  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+    <app-about-us-form [aboutUs]="selectedAboutUs" mode="edit" (close)="closeModal()" (saved)="onAboutUsSaved()"></app-about-us-form>
+  </div>
+
+  <!-- About Us Table -->
+  <div class="relative overflow-x-auto shadow-lg rounded-lg">
+    <table class="w-full text-sm text-left text-dark">
+      <thead class="text-xs text-dark uppercase bg-accentLight border-b">
+        <tr>
+          <th class="px-6 py-3">History</th>
+          <th class="px-6 py-3">Vision</th>
+          <th class="px-6 py-3">Vision Image</th>
+          <th class="px-6 py-3">Mission</th>
+          <th class="px-6 py-3">Mission Image</th>
+          <th class="px-6 py-3">Owner</th>
+          <th class="px-6 py-3">Designation</th>
+          <th class="px-6 py-3">Speech</th>
+          <th class="px-6 py-3">Owner Image</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of aboutUsList" class="bg-white border-b hover:bg-gray-50 transition-colors duration-150">
+          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.history }}">{{ item.history }}</td>
+          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.vision }}">{{ item.vision }}</td>
+          <td class="px-6 py-4">
+            <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.visionImage" alt="Vision Image" />
+          </td>
+          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.mission }}">{{ item.mission }}</td>
+          <td class="px-6 py-4">
+            <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.missionImage" alt="Mission Image" />
+          </td>
+          <td class="px-6 py-4">{{ item.ownerName }}</td>
+          <td class="px-6 py-4">{{ item.ownerDesignation }}</td>
+          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.ownerSpeech }}">{{ item.ownerSpeech }}</td>
+          <td class="px-6 py-4">
+            <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.ownerImage" alt="Owner Image" />
+          </td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button
+              (click)="openEditModal(item)"
+              class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Edit
+            </button>
+            <button
+              (click)="deleteAboutUs(item.id)"
+              class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.slider-wrapper {
+  overflow: hidden;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.1s linear;
+  user-select: none; 
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.slide {
+  margin-right: 16px; 
+  overflow: hidden;
+  cursor: grab; 
+  flex-shrink: 0;
+  transition: transform 0.3s;
+}
+
+.slide:active {
+  cursor: grabbing; 
+}

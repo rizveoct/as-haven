@@ -1,0 +1,67 @@
+:host {
+  display: block;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Custom scrollbar for modal */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #0891b2 #e5e7eb;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #0891b2;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #0e7490;
+}
+
+@media (max-width: 640px) {
+  .max-w-2xl {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  textarea, input {
+    font-size: 0.875rem;
+  }
+
+  .sm\:grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .sm\:grid-cols-3 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sm\:col-span-3 {
+    grid-column: span 2 / span 2;
+  }
+}

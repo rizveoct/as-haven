@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Ensure modal content is scrollable */
+.max-h-\[90vh\] {
+  max-height: 90vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on touch devices */
+}
+
+/* Custom scrollbar for modal */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #4f46e5 #e5e7eb;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #4f46e5;
+  border-radius: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #4338ca;
+}
+
+/* Prevent parent container from blocking scroll */
+.fixed.inset-0 {
+  overflow: hidden; /* Prevent body scroll when modal is open */
+}
+
+body {
+  overflow: hidden; /* Ensure body doesn't scroll when modal is open */
+}

@@ -1,0 +1,151 @@
+<div class="connect_form py-14 px-4">
+  <div class="w-[85%] mx-auto max-w-2xl">
+    <h2 class="text-4xl font-bold text-slate-800 mb-4 fade-up">Want to Form a Great Partnership?</h2>
+    <p class="text-gray-600 mb-6 fade-up">Fill in your details and we'll reach out to you soon. No obligation.</p>
+
+    
+
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Name Input -->
+            <div class="relative">
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
+                placeholder="Full Name"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
+              />
+              <label
+                for="name"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Full Name
+              </label>
+              <p *ngIf="isFieldInvalid('name')" class="text-red-500 text-sm mt-1">
+                Name is required and must be at least 2 characters.
+              </p>
+            </div>
+
+            <!-- Phone Input -->
+            <div class="relative">
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                placeholder="Phone Number"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-accent focus:outline-none"
+              />
+              <label
+                for="phone"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Phone Number
+              </label>
+            </div>
+
+            <!-- Email Input -->
+            <div class="relative">
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="Email"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-accent focus:outline-none"
+              />
+              <label
+                for="email"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Email
+              </label>
+              <p *ngIf="isFieldInvalid('email')" class="text-red-500 text-sm mt-1">
+                Valid email is required.
+              </p>
+            </div>
+
+            <!-- Subject Input -->
+            <div class="relative">
+              <input
+                type="text"
+                id="subject"
+                formControlName="subject"
+                placeholder="Subject"
+                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-accent focus:outline-none"
+              />
+              <label
+                for="subject"
+                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+              >
+                Subject
+              </label>
+              <p *ngIf="isFieldInvalid('subject')" class="text-red-500 text-sm mt-1">
+                Subject is required and must be at least 3 characters.
+              </p>
+            </div>
+          </div>
+
+          <!-- Message Input -->
+          <div class="mt-4 relative">
+            <textarea
+              id="message"
+              formControlName="message"
+              placeholder="Message"
+              class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent resize-none focus:border-accent focus:outline-none"
+            ></textarea>
+            <label
+              for="message"
+              class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
+            >
+              Message
+            </label>
+            <p *ngIf="isFieldInvalid('message')" class="text-red-500 text-sm mt-1">
+              Message is required and must be at least 10 characters.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="mt-6">
+            <button
+              type="submit"
+              [disabled]="isSubmitting"
+              class="w-full md:w-auto px-9 py-5 bg-accent text-white font-bold rounded-lg shadow-md hover:bg-accent transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            </button>
+          </div>
+
+          <!-- Submission Feedback -->
+          <div *ngIf="submitMessage" class="mt-4 text-sm" [ngClass]="{'text-accent': !submitMessage.includes('Error'), 'text-red-500': submitMessage.includes('Error')}">
+            {{ submitMessage }}
+          </div>
+        </form>
+  </div>
+</div>
+
+
+<!-- Success Popup -->
+<div
+  *ngIf="showPopup"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+>
+  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-[90%] text-center relative">
+    <!-- Close Button -->
+    <button
+      class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-xl"
+      (click)="closePopup()"
+    >
+      ✖
+    </button>
+
+    <h3 class="text-2xl font-bold text-accent mb-4">🎉 Form Submitted!</h3>
+    <p class="text-gray-700">Thank you! We’ll reach out to you soon.</p>
+
+    <button
+      (click)="closePopup()"
+      class="mt-6 px-6 py-3 bg-accent text-white rounded-lg shadow hover:bg-green-600 transition"
+    >
+      Close
+    </button>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<nav
+  appNavbarScroll
+  class="flex justify-between items-center fixed top-0 w-full z-[1000] px-0"
+>
+  <div class="w-[85%] mx-auto flex justify-between items-center py-4">
+    <!-- LEFT LINKS -->
+    <div class="nav-left hidden md:flex items-center gap-8 text-light">
+      <a
+        routerLink="home"
+        class="font-semibold hover:text-accent-light transition-colors duration-300"
+        >Home</a
+      >
+      <a
+        routerLink="about"
+        class="font-semibold hover:text-accent-light transition-colors duration-300"
+        >About Us</a
+      >
+      <a
+        routerLink="projects"
+        class="font-semibold hover:text-accent-light transition-colors duration-300"
+        >Projects</a
+      >
+    </div>
+
+    <!-- LOGO (center on desktop, left on mobile) -->
+    <a
+      routerLink="home"
+      class="nav-center flex-1 flex justify-start md:justify-center"
+    >
+      <img
+        src="images/logo.jpg"
+        srcset="images/logo.jpg 80w, images/logo.jpg 160w"
+        sizes="(max-width: 768px) 64px, 80px"
+        class="max-h-16 md:max-h-20 object-contain"
+        alt="Logo"
+      />
+    </a>
+
+    <!-- RIGHT SIDE -->
+    <div class="nav-right flex items-center gap-6">
+      <a
+        routerLink="primeConsultant"
+        class="hidden md:block hide font-semibold text-light hover:text-accent transition-colors duration-300"
+      >
+        Prime Consultant
+      </a>
+      <a
+        routerLink="gallery"
+        class="hidden md:block hide font-semibold text-light hover:text-accent transition-colors duration-300"
+      >
+        Gallery
+      </a>
+      <a
+        routerLink="contact"
+        class="hidden md:block hide font-semibold text-light hover:text-accent transition-colors duration-300"
+      >
+        Contact
+      </a>
+
+      <!-- MENU BUTTON (mobile only) -->
+      <div
+        class="menu-btn-wrapper flex items-center gap-2 border-2 px-4 py-2 rounded-lg cursor-pointer transition-all duration-300 z-[1100] md:hidden"
+        (click)="sidePanel.toggle()"
+      >
+        <div class="menu-btn flex flex-col justify-between w-6 h-[18px]">
+          <span
+            class="block h-[3px] w-full rounded-sm transition-all duration-300"
+            [ngClass]="{ 'bg-light': isTop, 'bg-accent': !isTop }"
+          ></span>
+          <span
+            class="block h-[3px] w-full rounded-sm transition-all duration-300"
+            [ngClass]="{ 'bg-light': isTop, 'bg-accent': !isTop }"
+          ></span>
+          <span
+            class="block h-[3px] w-full rounded-sm transition-all duration-300"
+            [ngClass]="{ 'bg-light': isTop, 'bg-accent': !isTop }"
+          ></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<app-side-panel />

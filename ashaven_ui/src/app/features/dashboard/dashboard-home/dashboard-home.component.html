@@ -1,0 +1,52 @@
+<div class="container mx-auto p-6">
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 fade-up animate">
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <h3 class="text-lg font-semibold text-dark">Total Properties</h3>
+      <p class="text-3xl font-bold text-accent">{{ projects.length }}</p>
+      <p class="text-sm text-lightDark">Updated today</p>
+    </div>
+
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+      <h3 class="text-lg font-semibold text-dark">Client Inquiries</h3>
+      <p class="text-3xl font-bold text-accent">{{ totalInquiries }}</p>
+      <p class="text-sm text-lightDark">Updated today</p>
+      <div *ngIf="inquiriesError" class="mt-2 text-sm text-red-700">
+        {{ inquiriesError }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Listings Table -->
+  <div class="bg-white p-6 rounded-lg shadow-md fade-up animate">
+    <h3 class="text-lg font-semibold text-dark mb-4">Recent Listings</h3>
+    <div *ngIf="projectsError" class="mb-4 text-sm text-red-700">
+      {{ projectsError }}
+    </div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-lightDark">
+        <thead class="bg-accentLight">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider">Property</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider">Location</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider">Date Listed</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-lightDark">
+          <tr *ngFor="let project of projects" class="fade-up animate">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-dark">{{ project.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-dark">{{ project.address }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-dark">
+              {{ project.category }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-dark">{{ project.createDate | date:'yyyy-MM-dd' }}</td>
+          </tr>
+          <tr *ngIf="projects.length === 0 && !projectsError" class="text-center">
+            <td colspan="5" class="px-6 py-4 text-sm text-dark">No projects found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

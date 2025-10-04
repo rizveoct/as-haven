@@ -1,0 +1,72 @@
+<section class="project-gallery py-20 bg-light" id="projectGallery" >
+  <div class="w-[85%] mx-auto px-4">
+    <h2 class="text-3xl md:text-4xl font-poppins font-bold text-dark mb-8 text-center">
+      Project Gallery
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div 
+        *ngFor="let item of gallery; let i = index" 
+        class="relative overflow-hidden bg-white shadow-lg hover:shadow-xl transition "
+      >
+        <img
+          *ngIf="item.contentType === 'Image'"
+          [src]="baseUrl + '/api/attachment/get/' + item.content"
+          alt="Gallery Image"
+          class="w-full h-60 object-cover cursor-pointer"
+          (click)="openLightbox(i)"
+          (error)="onImageError($event)"
+        />
+
+        <video
+          *ngIf="item.contentType === 'Video'"
+          [src]="baseUrl + '/api/attachment/get/' + item.content"
+          controls
+          class="w-full h-60 object-cover cursor-pointer"
+          (click)="openLightbox(i)"
+          (error)="onImageError($event)"
+        ></video>
+      </div>
+
+      <!-- Empty state -->
+      <div *ngIf="!gallery.length" class="col-span-full text-center py-8 text-dark font-poppins bg-accent-light/20 rounded-2xl">
+        No gallery items available. Please check back later.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox Modal -->
+<div *ngIf="lightboxOpen" class="fixed pt-10 inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+  <!-- <button class="absolute top-4 right-6 text-white text-3xl" (click)="closeLightbox()">✖</button> -->
+
+  <!-- Prev button -->
+  <button class="absolute left-20 text-white text-4xl" (click)="prevItem()">❮</button>
+
+  <div class="relative w-[85%] max-w-6xl mt-8 flex items-center justify-center">
+    <!-- Display image or video -->
+    <ng-container *ngIf="currentItem">
+      <img *ngIf="currentItem.contentType === 'Image'" 
+           [src]="baseUrl + '/api/attachment/get/' + currentItem.content" 
+           class="max-h-[80vh] object-contain rounded-lg" />
+
+      <video *ngIf="currentItem.contentType === 'Video'" 
+             [src]="baseUrl + '/api/attachment/get/' + currentItem.content" 
+             controls 
+             autoplay
+             class="max-h-[80vh] object-contain rounded-lg"></video>
+    </ng-container>
+
+    <!-- Close button inside media -->
+    <button
+      class="absolute top-2 right-2 sm:top-3 sm:right-3 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 sm:p-3 transition"
+      (click)="closeLightbox()"
+      aria-label="Close lightbox"
+    >
+      ✖
+    </button>
+  </div>
+
+  <!-- Next button -->
+  <button class="absolute right-20 text-white text-4xl" (click)="nextItem()">❯</button>
+</div>

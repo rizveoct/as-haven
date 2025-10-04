@@ -1,0 +1,10 @@
+<app-loading *ngIf="!hideLayout()"></app-loading>
+
+<app-navbar *ngIf="!hideLayout()"></app-navbar>
+<app-floating-social *ngIf="!hideLayout()"></app-floating-social>
+
+<router-outlet></router-outlet>
+  <app-scroll-to-top></app-scroll-to-top>
+
+
+<app-footer *ngIf="!hideLayout()"></app-footer>

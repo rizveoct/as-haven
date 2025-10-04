@@ -1,0 +1,173 @@
+/* Base hero/header */
+.headering {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(135deg, rgba(29, 78, 216, 0.85), rgba(99, 102, 241, 0.85)),
+    url('/images/banner/banner-3.png') no-repeat center/cover;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
+  overflow: hidden;
+}
+
+/* Typography overrides (only where needed) */
+h1 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+p {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Title container */
+.page_title {
+  z-index: 10;
+}
+
+.page_title h1 {
+  color: #ffffff;
+}
+
+/* Blog card */
+.blog_card_box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem; /* rounded-3xl */
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  background: rgba(255, 255, 255, 0.10); /* fallback if no backdrop support */
+}
+
+/* Apply glassmorphism only if supported */
+@supports ((-webkit-backdrop-filter: blur(12px)) or (backdrop-filter: blur(12px))) {
+  .blog_card_box {
+    background: rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+}
+
+
+/* Accent stroke (if not inlined in HTML) */
+.blog_card_box .accent-stroke {
+  position: absolute;
+  left: -1px;
+  top: 1rem;
+  height: 4rem;
+  width: 6px;
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(180deg, #6366f1, #06b6d4);
+}
+
+/* Image hover zoom */
+.blog_image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transform-origin: center center;
+  transition: transform 0.7s ease;
+}
+
+.blog_card_box:hover .blog_image img {
+  transform: scale(1.05);
+}
+
+/* Card hover lift */
+.blog_card_box:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.35);
+}
+
+/* Title underline animation (if not using the pseudo span) */
+.blog_title h2 {
+  position: relative;
+  overflow: visible;
+}
+
+.blog_title h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #6366f1, #0ea5e9);
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.blog_card_box:hover .blog_title h2::after {
+  width: 3rem;
+}
+
+/* Countdown badge */
+.countdown_badge {
+  background-color: #fee2e2;
+  color: #b91c1c;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-family: monospace;
+  font-weight: 600;
+}
+
+/* Offer time overlay icon */
+.offer-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.35rem 0.75rem;
+  background: linear-gradient(90deg, #ec4899, #f59e0b);
+  color: #fff;
+  border-radius: 9999px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Read more area */
+.blog_title .read-more {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* Fallback author avatar */
+.fallback-avatar {
+  background-color: #c7d2fe;
+  color: #312e81;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Utility for pulse when offer is soon */
+.pulse-soon {
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive tweaks */
+@media (min-width: 1024px) {
+  .blog_title h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Accessibility focus */
+a:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}

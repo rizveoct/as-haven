@@ -1,0 +1,66 @@
+<!-- MOBILE VIEW: keep as-is -->
+<div class="relative h-[50vh] md:hidden">
+  <div
+    class="h-full w-full bg-img"
+    [style.backgroundImage]="
+      project?.content
+        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
+        : 'url(/images/fallback.png)'
+    "
+  >
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <div
+      class="relative z-10 h-full flex flex-col justify-center w-[85%] max-w-[85vw] pl-6"
+    >
+      <h1
+        class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-serif font-bold mb-2"
+      >
+        {{ project?.name || "Project Details" }}
+      </h1>
+      <p class="text-base md:text-lg lg:text-xl text-accentLight">
+        {{ project?.address || "No address available" }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- DESKTOP VIEW: full height, image shown twice horizontally (50% + 50%) -->
+<div class="hidden md:flex h-[100vh]">
+  <!-- Left half -->
+  <div
+    class="w-1/2 h-full bg-img relative"
+    [style.backgroundImage]="
+      project?.content
+        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
+        : 'url(/images/fallback.png)'
+    "
+  >
+    <div class="absolute inset-0 bg-black/40"></div>
+    <div
+      class="relative z-10 h-full flex flex-col justify-center w-[85%] max-w-[85%] pl-16 lg:pl-24"
+    >
+      <h1
+        class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-serif font-bold mb-2"
+      >
+        {{ project?.name || "Project Details" }}
+      </h1>
+      <p class="text-base md:text-lg lg:text-xl text-accentLight">
+        {{ project?.address || "No address available" }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Right half (duplicate image) -->
+  <div
+    class="w-1/2 h-full bg-img relative"
+    [style.backgroundImage]="
+      project?.content
+        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
+        : 'url(/images/fallback.png)'
+    "
+  >
+    <div class="absolute inset-0 bg-black/40"></div>
+  </div>
+</div>

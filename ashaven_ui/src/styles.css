@@ -1,0 +1,75 @@
+
+
+/* src/styles.css */
+
+@import '@splidejs/splide/dist/css/splide.min.css';
+/* @import "swiper/element/css";
+@import "swiper/element/css/navigation";
+@import "swiper/element/css/pagination";
+@import "swiper/element/css/autoplay"; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --light: #ffffff;
+    --dark: #1f2428;
+    --lightDark: #bcc6da;
+    --accent: #e63946;
+    --accentLight: #6b7280;
+    
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+}
+
+
+body {
+  background-color: var(--white) !important;
+  overflow-x: hidden;
+}
+.bg-color-1 {
+    background-color: #e5f8ed;
+}
+.bg-color-2{
+  background-color: #1b1d21;
+}
+
+.sec-pad {
+    padding: 20px 0px 5px 0px;
+}
+
+.sec-pad-2 {
+    padding: 100px 0px 5px 0px;
+}
+
+/* Fade Up */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: transform 1.5s ease-out;
+}
+.fade-up.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+.btn-primary {
+  background: var(--light);
+  color: #3b82f6;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: 10px solid var(--accent);
+  transition: all 0.3s ease;
+}
+
+

@@ -1,0 +1,9 @@
+<div class="offer_time_bar" *ngIf="offerActive">
+  <h2 class="text-center">Offer Time</h2>
+  <div class="timer" *ngIf="timer.days !== '00' || timer.hours !== '00' || timer.minutes !== '00' || timer.seconds !== '00'">
+    <span>{{ timer.days }}</span>
+    <span>{{ timer.hours }}</span>
+    <span>{{ timer.minutes }}</span>
+    <span>{{ timer.seconds }}</span>
+  </div>
+</div>

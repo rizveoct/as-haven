@@ -1,0 +1,38 @@
+<div class="relative overflow-hidden">
+  <app-hero-section />
+  <app-history [history]="state.about.history"></app-history>
+  <!-- <app-owner-speech
+    [ownerName]="state.about.ownerName"
+    [ownerDesignation]="state.about.ownerDesignation"
+    [ownerSpeech]="state.about.ownerSpeech"
+    [ownerImage]="state.about.ownerImage"
+    (imageError)="onImageError($event)"
+  ></app-owner-speech> -->
+  <app-mission-vision
+    [mission]="state.about.mission"
+    [missionImage]="state.about.missionImage"
+    [vision]="state.about.vision"
+    [visionImage]="state.about.visionImage"
+    (imageError)="onImageError($event)"
+  ></app-mission-vision>
+
+  <app-owner-speech
+  [title]="'Managing Director'"
+    [ownerName]="state.about.ownerName"
+    [ownerDesignation]="state.about.ownerDesignation"
+    [ownerSpeech]="state.about.ownerSpeech"
+    [ownerImage]="state.about.ownerImage"
+    [linkedIn]="state.about.linkedIn"
+    [twitter]="state.about.twitter"
+    [facebook]="state.about.facebook"
+    (imageError)="onImageError($event)"
+  />
+
+  <app-team [teams]="state.teams" (toggle)="onToggle($event)"></app-team>
+  <app-team-modal
+    *ngIf="isModalVisible"
+    [selectedTeamMember]="state.selectedTeamMember"
+    (toggle)="onToggle()"
+    (imageError)="onImageError($event)"
+  ></app-team-modal>
+</div>

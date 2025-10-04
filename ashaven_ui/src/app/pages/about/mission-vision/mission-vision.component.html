@@ -1,0 +1,84 @@
+<section class="our_vision_mission">
+  <div class="w-[85%] mx-auto mission_vision_container">
+    
+    <!-- Mission -->
+    <div class="mission py-10 flex flex-col lg:flex-row gap-10 items-center">
+      
+
+      <!-- Image -->
+      <div class="flex-shrink-0 w-full lg:w-1/3">
+        <div class="overflow-hidden rounded-xl shadow">
+          <img
+            *ngIf="missionImage; else missionPlaceholder"
+            [src]="missionImage"
+            alt="Mission image"
+            class="w-full object-cover aspect-[4/5]"
+            loading="lazy"
+            (error)="onImageError($event)"
+            [@imageAnimation]
+          />
+          <ng-template #missionPlaceholder>
+            <div
+              class="w-full aspect-[4/5] bg-accent-light/20 flex items-center justify-center text-dark"
+              [@imageAnimation]
+            >
+              No image
+            </div>
+          </ng-template>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="lg:w-1/2 fade-up">
+        <h2 class="text-3xl font-poppins font-bold text-dark mb-3" [@textAnimation]>Mission</h2>
+        <div class="text-dark">
+          <p *ngIf="mission; else noMission" [@textAnimation]>{{ mission }}</p>
+          <ng-template #noMission>
+            <p class="text-accent-light" [@textAnimation]>No mission available.</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vision -->
+    <div class="vision py-10 flex flex-col lg:flex-row gap-10 items-center">
+     
+
+      <!-- Text -->
+      <div class="lg:w-1/2 fade-up">
+        <h2 class="text-3xl font-poppins font-bold text-dark mb-3" [@visionTextAnimation]>Vision</h2>
+        <div class="text-dark">
+          <p *ngIf="vision; else noVision" [@visionTextAnimation]>{{ vision }}</p>
+          <ng-template #noVision>
+            <p class="text-accent-light" [@visionTextAnimation]>No vision available.</p>
+          </ng-template>
+        </div>
+      </div>
+
+
+       <!-- Image -->
+      <div class="flex-shrink-0 w-full lg:w-1/3">
+        <div class="overflow-hidden rounded-xl shadow-lg">
+          <img
+            *ngIf="visionImage; else visionPlaceholder"
+            [src]="visionImage"
+            alt="Vision image"
+            class="w-full object-cover aspect-[4/5]"
+            loading="lazy"
+            (error)="onImageError($event)"
+            [@visionImageAnimation]
+          />
+          <ng-template #visionPlaceholder>
+            <div
+              class="w-full aspect-[4/5] bg-accent-light/20 flex items-center justify-center text-dark"
+              [@visionImageAnimation]
+            >
+              No image
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

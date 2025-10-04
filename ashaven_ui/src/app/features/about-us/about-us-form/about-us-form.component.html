@@ -1,0 +1,225 @@
+<div
+  class="relative w-full max-w-md sm:max-w-2xl md:max-w-3xl bg-white rounded-xl shadow-2xl p-4 sm:p-5 md:p-6 transform transition-all duration-300 scale-100 max-h-[90vh] overflow-y-auto"
+>
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-4 sm:mb-5">
+    <h3 class="text-base sm:text-lg font-bold text-dark">
+      {{ mode === 'create' ? 'Add About Us' : 'Edit About Us' }}
+    </h3>
+    <button
+      type="button"
+      (click)="closeModal()"
+      class="text-lightDark hover:text-dark hover:bg-light rounded-full p-1.5 sm:p-2 transition-colors duration-200"
+    >
+      <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      <span class="sr-only">Close modal</span>
+    </button>
+  </div>
+
+  <!-- Form -->
+  <form (ngSubmit)="saveAboutUs()" enctype="multipart/form-data" class="space-y-4 sm:space-y-5">
+    <div class="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-3">
+
+      <!-- History -->
+      <div>
+        <label for="history" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-book mr-1 sm:mr-1.5"></i>History
+        </label>
+        <textarea
+          id="history"
+          [(ngModel)]="_aboutUs.history"
+          name="history"
+          rows="2"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Write company history here"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Vision -->
+      <div>
+        <label for="vision" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-eye mr-1 sm:mr-1.5"></i>Vision
+        </label>
+        <textarea
+          id="vision"
+          [(ngModel)]="_aboutUs.vision"
+          name="vision"
+          rows="2"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Write company vision here"
+          required
+        ></textarea>
+        <input *ngIf="mode === 'edit'" id="id" [(ngModel)]="_aboutUs.id" name="id" type="hidden" />
+      </div>
+
+      <!-- Mission -->
+      <div>
+        <label for="mission" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-bullseye mr-1 sm:mr-1.5"></i>Mission
+        </label>
+        <textarea
+          id="mission"
+          [(ngModel)]="_aboutUs.mission"
+          name="mission"
+          rows="2"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Write company mission here"
+          required
+        ></textarea>
+      </div>
+
+      <!-- Owner Name -->
+      <div class="sm:col-span-1">
+        <label for="ownerName" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-user mr-1 sm:mr-1.5"></i>Owner Name
+        </label>
+        <input
+          id="ownerName"
+          [(ngModel)]="_aboutUs.ownerName"
+          name="ownerName"
+          type="text"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Enter owner name"
+          required
+        />
+      </div>
+
+      <!-- Owner Designation -->
+      <div class="sm:col-span-1">
+        <label for="ownerDesignation" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-briefcase mr-1 sm:mr-1.5"></i>Owner Designation
+        </label>
+        <input
+          id="ownerDesignation"
+          [(ngModel)]="_aboutUs.ownerDesignation"
+          name="ownerDesignation"
+          type="text"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Enter owner designation"
+          required
+        />
+      </div>
+
+      <!-- Owner Speech -->
+      <div class="sm:col-span-2 md:col-span-3">
+        <label for="ownerSpeech" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-comment-alt mr-1 sm:mr-1.5"></i>Owner Speech
+        </label>
+        <textarea
+          id="ownerSpeech"
+          [(ngModel)]="_aboutUs.ownerSpeech"
+          name="ownerSpeech"
+          rows="3"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="Write owner speech here"
+          required
+        ></textarea>
+      </div>
+
+      <div>
+        <label for="facebook" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fab fa-facebook mr-1 sm:mr-1.5"></i>Facebook
+        </label>
+        <input
+          id="facebook"
+          name="facebook"
+          [(ngModel)]="_aboutUs.facebook"
+          type="text"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="https://facebook.com/username"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="twitter" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fab fa-twitter mr-1 sm:mr-1.5"></i>Twitter
+        </label>
+        <input
+          id="twitter"
+          name="twitter"
+          [(ngModel)]="_aboutUs.twitter"
+          type="text"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="https://twitter.com/username"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="linkedIn" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fab fa-linkedin mr-1 sm:mr-1.5"></i>LinkedIn
+        </label>
+        <input
+          id="linkedIn"
+          name="linkedIn"
+          [(ngModel)]="_aboutUs.linkedIn"
+          type="text"
+          class="w-full p-2 sm:p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          placeholder="https://linkedin.com/username"
+          required
+        />
+      </div>
+
+      <!-- Images -->
+      <div>
+        <label for="image" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-image mr-1 sm:mr-1.5"></i>Owner Image
+        </label>
+        <input
+          id="image"
+          name="image"
+          type="file"
+          (change)="onOwnerImageChange($event)"
+          class="w-full p-2 sm:p-2.5 bg-light border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <label for="visionImage" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-image mr-1 sm:mr-1.5"></i>Vision Image
+        </label>
+        <input
+          id="visionImage"
+          name="visionImage"
+          type="file"
+          (change)="onVisionImageChange($event)"
+          class="w-full p-2 sm:p-2.5 bg-light border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+        />
+      </div>
+
+      <div>
+        <label for="missionImage" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+          <i class="fas fa-image mr-1 sm:mr-1.5"></i>Mission Image
+        </label>
+        <input
+          id="missionImage"
+          name="missionImage"
+          type="file"
+          (change)="onMissionImageChange($event)"
+          class="w-full p-2 sm:p-2.5 bg-light border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+        />
+      </div>
+
+      <!-- Submit Button -->
+      <div class="mt-6 sm:mt-10 flex justify-center sm:col-span-3">
+        <button
+          type="submit"
+          class="relative inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300 w-full sm:w-auto"
+        >
+          <span class="relative z-10 flex items-center">
+            <svg class="mr-1 sm:mr-2 w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            {{ mode === 'create' ? 'Save' : 'Update' }}
+          </span>
+          <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

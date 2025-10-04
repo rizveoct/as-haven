@@ -1,0 +1,88 @@
+<div class="our_team py-20 px-6 fade-up">
+  <div class="max-w-7xl mx-auto">
+    <h2
+      class="text-4xl md:text-5xl font-bold text-[var(--dark)] mb-16 text-center"
+    >
+      Board of Directors
+    </h2>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div
+        *ngFor="let teamitem of teams"
+        (click)="onToggle(teamitem)"
+        class="team_card group relative p-8 rounded-2xl shadow-lg bg-white/70 backdrop-blur-md border border-[var(--accent-light)] cursor-pointer transition-transform duration-500 hover:-translate-y-3 hover:shadow-2xl"
+      >
+        <div class="flex flex-col items-center">
+          <!-- IMAGE -->
+          <div
+  class="team_image mb-6 overflow-hidden rounded-full w-44 h-44 ring-4 ring-[var(--accent-light)] group-hover:ring-[var(--accent)] transition-all duration-500"
+>
+  <img
+    [src]="teamitem.image"
+    alt="{{ teamitem.name }}"
+    class="w-full h-full object-cover scale-100 group-hover:scale-110 transition-transform duration-500"
+    loading="lazy"
+/>
+</div>
+
+
+          <!-- TEXT CONTENT -->
+          <div class="text-center">
+            <h3
+              class="team_name text-2xl font-semibold text-[var(--dark)] mb-2"
+            >
+              {{ teamitem.name }}
+            </h3>
+            <p
+              class="team_designation text-[var(--accent)] font-medium mb-4 uppercase tracking-wide"
+            >
+              {{ teamitem.designation }}
+            </p>
+            <p
+              class="team_description text-sm text-gray-700 leading-relaxed px-2"
+            >
+              {{ teamitem.description }}
+            </p>
+
+            <!-- SOCIAL LINKS -->
+            <!-- SOCIAL LINKS -->
+            <div class="flex justify-center gap-4 mt-4">
+              <!-- LinkedIn -->
+              <a
+                [href]="teamitem.linkthen"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'LinkedIn of ' + teamitem.name"
+                class="flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white text-xl hover:bg-dark"
+              >
+                <i class="ri-linkedin-fill"></i>
+              </a>
+
+              <!-- Facebook -->
+              <a
+                [href]="teamitem.facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'Facebook of ' + teamitem.name"
+                class="flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white text-xl hover:bg-dark"
+              >
+                <i class="ri-facebook-fill"></i>
+              </a>
+
+              <!-- Twitter -->
+              <a
+                [href]="teamitem.twiter"
+                target="_blank"
+                rel="noopener noreferrer"
+                [attr.aria-label]="'Twitter of ' + teamitem.name"
+                class="flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white text-xl hover:bg-dark"
+              >
+                <i class="ri-twitter-fill"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

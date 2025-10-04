@@ -1,0 +1,123 @@
+<div class="p-6 bg-light min-h-screen">
+  <!-- Header -->
+  <div class="flex items-center mb-6">
+    <h6 class="text-2xl font-bold text-dark flex-grow">Project Gallery</h6>
+    <div class="flex-shrink-0 space-x-2">
+      <button (click)="showCreateModal = true"
+              class="relative group px-6 py-2 text-white bg-accent rounded-lg text-sm font-medium overflow-hidden transition-all duration-200">
+        <span class="relative z-10">Add Gallery Item</span>
+        <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+      </button>
+      <button [routerLink]="['/dashboard/projects']"
+              class="relative group px-6 py-2 text-white bg-accent rounded-lg text-sm font-medium overflow-hidden transition-all duration-200">
+        <span class="relative z-10">Back</span>
+        <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+      </button>
+      
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black/30">
+    <div class="relative w-full max-w-3xl mx-auto">
+      <div class="relative p-6 bg-light rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
+        
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center pb-4 mb-6 border-b border-lightDark">
+          <h3 class="text-2xl font-bold text-dark">Add Gallery Item</h3>
+          <button type="button" (click)="showCreateModal = false"
+                  class="text-lightDark hover:text-dark rounded-lg p-2 hover:bg-accentLight transition-colors duration-200">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Form -->
+        <form (ngSubmit)="saveGalleryItem()" enctype="multipart/form-data">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <div class="sm:col-span-2">
+              <label for="contentType" class="block mb-2 text-sm font-semibold text-dark">Content Type</label>
+              <select id="contentType" [(ngModel)]="newGalleryItem.contentType" name="contentType"
+                      class="block w-full p-3 text-sm text-dark bg-light rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200">
+                <option value="">Select content type</option>
+                <option value="Image">Image</option>
+                <option value="Video">Video</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="content"
+                     class="block mb-2 text-sm font-semibold text-dark">{{ newGalleryItem.contentType === 'Video' ? 'Content (Video max 15MB)' : 'Content' }}</label>
+              <input class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-light focus:outline-none transition-all duration-200"
+                     id="content" name="content" type="file" (change)="onContentChange($event)" />
+            </div>
+
+            <div class="sm:col-span-2">
+              <label for="order" class="block mb-2 text-sm font-semibold text-dark">Order</label>
+              <input id="order" [(ngModel)]="newGalleryItem.order" name="order" type="number"
+                     class="block w-full p-3 text-sm text-dark bg-light rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     placeholder="Enter order" />
+            </div>
+          </div>
+
+          <div class="mt-6 flex justify-end">
+            <button type="submit"
+                    class="relative group inline-flex items-center px-6 py-3 text-white bg-accent border border-accent font-medium rounded-lg text-sm overflow-hidden transition-all duration-300">
+              <span class="relative z-10">Save</span>
+              <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Table -->
+  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-light mt-6">
+    <table class="w-full text-sm text-left text-dark">
+      <thead class="text-xs text-dark uppercase bg-accentLight">
+        <tr>
+          <th class="px-6 py-4">Content Type</th>
+          <th class="px-6 py-4">Content</th>
+          <th class="px-6 py-4">Order</th>
+          <th class="px-6 py-4">Status</th>
+          <th class="px-6 py-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of galleryItems; let i = index"
+            class="border-b border-lightDark hover:bg-accentLight transition-colors duration-200"
+            [ngClass]="{'bg-light': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+          <td class="px-6 py-4">{{ item.contentType }}</td>
+          <td class="px-6 py-4">
+            <ng-container *ngIf="item.contentType === 'Image'">
+              <img class="w-24 h-16 object-cover rounded-md shadow-sm"
+                   [src]="apiBaseUrl + '/api/attachment/get/' + item.content" alt="Content" />
+            </ng-container>
+            <ng-container *ngIf="item.contentType === 'Video'">
+              <video class="w-24 h-16 rounded-md shadow-sm" controls>
+                <source [src]="apiBaseUrl + '/api/attachment/get/' + item.content" type="video/mp4" />
+              </video>
+            </ng-container>
+          </td>
+          <td class="px-6 py-4">{{ item.order }}</td>
+          <td class="px-6 py-4">
+            <span *ngIf="item.isActive" class="px-2.5 py-0.5 text-xs font-medium rounded border bg-accentLight text-accent inline-flex items-center">Active</span>
+            <span *ngIf="!item.isActive" class="px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 text-red-500 inline-flex items-center">Inactive</span>
+          </td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button *ngIf="item.isActive" (click)="toggleGalleryActive(item.id, false)"
+                    class="px-4 py-1 text-red-600 hover:text-white border border-red-600 hover:bg-red-700 rounded-lg text-sm font-medium transition-all duration-200">Deactivate</button>
+            <button *ngIf="!item.isActive" (click)="toggleGalleryActive(item.id, true)"
+                    class="px-4 py-1 text-accent hover:text-white border border-accent hover:bg-accent rounded-lg text-sm font-medium transition-all duration-200">Activate</button>
+            <button (click)="deleteGalleryItem(item.id)"
+                    class="px-4 py-1 text-red-600 hover:text-white border border-red-600 hover:bg-red-700 rounded-lg text-sm font-medium transition-all duration-200">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

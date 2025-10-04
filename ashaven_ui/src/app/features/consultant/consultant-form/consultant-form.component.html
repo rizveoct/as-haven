@@ -1,0 +1,161 @@
+<div
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 transition-opacity duration-300 fade-up animate"
+  role="dialog"
+  aria-modal="true"
+>
+  <div
+    class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-lg font-bold text-dark">
+        {{ mode === 'create' ? 'Add New Consultant' : 'Edit Consultant' }}
+      </h3>
+      <button
+        type="button"
+        (click)="close.emit()"
+        class="text-lightDark hover:text-dark hover:bg-light rounded-full p-2 transition-colors duration-200"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form
+      (ngSubmit)="saveConsultant()"
+      enctype="multipart/form-data"
+      class="space-y-5"
+    >
+      <div class="grid gap-4 sm:grid-cols-2">
+        <!-- Name -->
+        <div class="sm:col-span-2">
+          <label
+            for="name"
+            class="block mb-1.5 text-sm font-medium text-dark"
+          >
+            <i class="fas fa-user mr-1.5"></i>Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            [(ngModel)]="_consultant.name"
+            type="text"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            placeholder="Enter consultant name"
+            required
+          />
+          <input
+            *ngIf="mode === 'edit'"
+            id="editid"
+            name="editid"
+            [(ngModel)]="_consultant.id"
+            type="text"
+            class="hidden"
+          />
+        </div>
+
+        <!-- Location -->
+        <div class="sm:col-span-2">
+          <label
+            for="location"
+            class="block mb-1.5 text-sm font-medium text-dark"
+          >
+            <i class="fas fa-map-marker-alt mr-1.5"></i>Location
+          </label>
+          <input
+            id="location"
+            name="location"
+            [(ngModel)]="_consultant.location"
+            type="text"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            placeholder="Enter consultant location"
+            required
+          />
+        </div>
+
+        <!-- IsInterior -->
+<div class="sm:col-span-2">
+  <label for="isInterior" class="block mb-1.5 text-sm font-medium text-dark">
+    <i class="fas fa-briefcase mr-1.5"></i> Type
+  </label>
+
+  <select
+    id="isInterior"
+    name="isInterior"
+    class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+    [ngModel]="_consultant.isInterior"
+    (ngModelChange)="setInterior($event)"
+    required
+  >
+    <option [value]="0">Consultant</option>
+    <option [value]="1">Interior</option>
+  </select>
+
+  <p class="mt-1 text-xs text-gray-500">
+    Selecting <strong>Consultant</strong> saves <code>0</code>; selecting
+    <strong>Interior</strong> saves <code>1</code>.
+  </p>
+</div>
+
+
+        <!-- Image -->
+        <div class="sm:col-span-2">
+          <label
+            for="image"
+            class="block mb-1.5 text-sm font-medium text-dark"
+          >
+            <i class="fas fa-image mr-1.5"></i>Profile Image
+          </label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            (change)="onFileChange($event)"
+            class="w-full p-2.5 bg-light border border-lightDark rounded-lg text-dark file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-sm"
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
+        >
+          <span class="relative z-10 flex items-center">
+            <svg
+              class="mr-2 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+              ></path>
+            </svg>
+            {{ mode === 'create' ? 'Create' : 'Update' }}
+          </span>
+          <span
+            class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
+          ></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

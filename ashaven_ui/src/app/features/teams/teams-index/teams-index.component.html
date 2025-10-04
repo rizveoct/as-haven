@@ -1,0 +1,180 @@
+<div class="container mx-auto p-6">
+  <div class="flex items-center mb-6 fade-up animate">
+    <h6 class="text-lg font-bold text-dark grow">List of Teams</h6>
+    <button
+      type="button"
+      (click)="openCreateModal()"
+      class="px-5 py-2 text-white bg-accent border border-accent/80 hover:bg-accent/80 focus:ring-2 focus:ring-accent/50 rounded-lg transition duration-300"
+    >
+      <span class="align-middle">Create Team</span>
+    </button>
+  </div>
+
+  <!-- Team Form Modal -->
+  <app-team-form
+    *ngIf="showFormModal"
+    [team]="selectedTeam!"
+    [mode]="formMode"
+    (close)="closeFormModal()"
+    (saved)="onTeamSaved()"
+  ></app-team-form>
+
+  <!-- Teams Table -->
+  <div
+    class="relative overflow-x-auto bg-white rounded-lg shadow-md fade-up animate"
+  >
+    <table class="min-w-full divide-y divide-lightDark">
+      <thead class="bg-accentLight">
+        <tr>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Name
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Designation
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Description
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Facebook
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Twitter
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            LinkedIn
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Image
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Status
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Order
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
+          >
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-lightDark">
+        <tr
+          *ngFor="let item of teams"
+          class="hover:bg-light transition duration-200 fade-up animate"
+        >
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-dark whitespace-nowrap"
+          >
+            {{ item.name }}
+          </th>
+          <td class="px-6 py-4 text-sm text-dark">{{ item.designation }}</td>
+          <td class="px-6 py-4 text-sm text-dark">
+            {{
+              item.description
+                ? (item.description | slice : 0 : 100) +
+                  (item.description.length > 100 ? "..." : "")
+                : "No description"
+            }}
+          </td>
+
+          <td class="px-6 py-4">
+            <a
+              [href]="item.facebook"
+              target="_blank"
+              class="text-accent hover:underline"
+              >Link</a
+            >
+          </td>
+          <td class="px-6 py-4">
+            <a
+              [href]="item.twiter"
+              target="_blank"
+              class="text-accent hover:underline"
+              >Link</a
+            >
+          </td>
+          <td class="px-6 py-4">
+            <a
+              [href]="item.linkthen"
+              target="_blank"
+              class="text-accent hover:underline"
+              >Link</a
+            >
+          </td>
+          <td class="px-6 py-4">
+            <img
+              [src]="apiBaseUrl + '/api/attachment/get/' + item.image"
+              alt="Team Image"
+              class="w-10 h-10 object-cover rounded"
+            />
+          </td>
+          <td class="px-6 py-4">
+            <span
+              *ngIf="item.isActive"
+              class="px-2.5 py-0.5 text-xs font-medium rounded bg-accent/20 text-accent inline-flex items-center"
+            >
+              <i class="fas fa-check-circle mr-1.5"></i> Active
+            </span>
+            <span
+              *ngIf="!item.isActive"
+              class="px-2.5 py-0.5 text-xs font-medium rounded bg-red-500/20 text-red-500 inline-flex items-center"
+            >
+              <i class="fas fa-times-circle mr-1.5"></i> Inactive
+            </span>
+          </td>
+          <td class="px-6 py-4 text-sm text-dark">{{ item.order }}</td>
+          <td class="px-6 py-4 text-right space-x-2">
+            <button
+              (click)="openEditModal(item)"
+              class="text-accent hover:text-accent/80 font-medium text-sm px-3 py-1"
+            >
+              Edit
+            </button>
+            <button
+              *ngIf="item.isActive"
+              (click)="toggleActiveStatus(item.id, false)"
+              class="text-red-500 hover:text-red-600 font-medium text-sm px-3 py-1"
+            >
+              Deactivate
+            </button>
+            <button
+              *ngIf="!item.isActive"
+              (click)="toggleActiveStatus(item.id, true)"
+              class="text-accent hover:text-accent/80 font-medium text-sm px-3 py-1"
+            >
+              Activate
+            </button>
+            <button
+              (click)="deleteTeam(item.id)"
+              class="text-red-500 hover:text-red-600 font-medium text-sm px-3 py-1"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

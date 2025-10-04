@@ -1,0 +1,86 @@
+<div class="testimonial-section py-16">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <h4 class="section-tag text-accent uppercase tracking-widest font-semibold">
+      TESTIMONIALS
+    </h4>
+    <h2
+      class="section-heading text-4xl md:text-5xl font-extrabold text-dark mt-2"
+    >
+      What They Say About Us
+    </h2>
+  </div>
+
+  <!-- Slider -->
+  <div
+    class="testimonial-slider flex items-center justify-center gap-6 relative"
+  >
+    <!-- Prev button -->
+    <button
+      class="nav-arrow left-arrow absolute left-0 top-1/2 -translate-y-1/2 bg-accent text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-accent/80 transition"
+      (click)="prev()"
+    >
+      &lt;
+    </button>
+
+    <!-- Testimonial card -->
+    <div
+  *ngIf="currentTestimonial"
+  class="testimonial-card-container p-10 max-w-3xl mx-auto text-center relative"
+  [@slideAnimation]="currentIndex"
+>
+  <!-- Profile image with quote -->
+  <div class="flex justify-center relative mb-6">
+    <div class="relative">
+      <div class="profile-image w-28 h-28 rounded-full overflow-hidden border-4 border-accent shadow-lg">
+        <img
+          *ngIf="currentTestimonial?.image; else placeholderImage"
+          [src]="baseURL + '/api/attachment/get/' + currentTestimonial.image"
+          [alt]="currentTestimonial.name"
+          class="w-full h-full object-cover"
+          (error)="onImageError($event)"
+        />
+        <ng-template #placeholderImage>
+          <img
+            src="https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg"
+            alt="Placeholder image"
+            class="w-full h-full object-cover"
+          />
+        </ng-template>
+      </div>
+
+      <!-- Quote icon -->
+      <div class="quote-icon-wrapper absolute -bottom-2 -right-2 bg-accent text-white w-50 h-50 flex items-center justify-center rounded-full shadow-md">
+        <span class="text-6xl mt-7 font-bold">”</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Testimonial text -->
+  <p class="testimonial-text text-lg md:text-xl text-gray-700 leading-relaxed mb-6 italic">
+    {{ currentTestimonial.description }}
+  </p>
+
+  <!-- Author info -->
+  <div class="author-info">
+    <p class="author-name font-semibold text-xl text-dark">
+      {{ currentTestimonial.name }}
+    </p>
+  </div>
+</div>
+
+
+    <!-- Next button -->
+    <button
+      class="nav-arrow right-arrow absolute right-0 top-1/2 -translate-y-1/2 bg-accent text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg hover:bg-accent/80 transition"
+      (click)="next()"
+    >
+      &gt;
+    </button>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-8 text-center text-gray-500">
+    {{ currentIndex + 1 }} / {{ testimonials.length }}
+  </div>
+</div>

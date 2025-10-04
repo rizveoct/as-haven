@@ -1,0 +1,101 @@
+nav {
+  transition: all 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Transparent at top */
+nav.transparent {
+  background: transparent;
+  box-shadow: none;
+}
+
+nav.transparent .nav-left a,
+nav.transparent .nav-right a,
+nav.transparent .menu-btn-wrapper,
+nav.transparent .menu-btn span {
+  color: var(--light);
+  border-color: var(--light);
+}
+
+/* Navbar visible with white background */
+nav.scrolled {
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Links & menu when navbar is white */
+nav.scrolled .nav-left a,
+nav.scrolled .nav-right a,
+nav.scrolled .menu-btn-wrapper,
+nav.scrolled .menu-btn span {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Hidden when scrolling down */
+nav.hide-navbar {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+
+
+nav .nav-left a,
+nav .nav-right a {
+  position: relative;
+  color: var(--light);
+  transition: color 0.3s ease-in-out;
+}
+
+
+nav .nav-left a::after,
+nav .nav-right a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent), 0 0 12px var(--accent);
+  transition: width 0.3s ease-in-out;
+}
+
+nav .nav-left a:hover::after,
+nav .nav-right a:hover::after {
+  width: 100%;
+}
+
+.menu-btn-wrapper {
+  border: 2px solid var(--light);
+  transition: all 0.3s ease-in-out;
+}
+
+
+.menu-btn-wrapper:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+
+nav.hide-navbar .nav-left,
+nav.hide-navbar .nav-center,
+nav.hide-navbar .nav-right .hide
+ {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: all 0.5s ease;
+}
+
+
+nav.hide-navbar .nav-right .show-always {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  color: var(--accent);
+  justify-content: flex-end;
+}
+
+nav.hide-navbar {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

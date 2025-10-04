@@ -108,8 +108,8 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // navigation - selectors must exist in DOM at initialize time
       navigation: {
-        nextEl: '.swiper-next',
-        prevEl: '.swiper-prev',
+        nextEl: '.luxe-slider__control--next',
+        prevEl: '.luxe-slider__control--prev',
       },
 
       // pagination - we will place an element with class .swiper-pagination in template

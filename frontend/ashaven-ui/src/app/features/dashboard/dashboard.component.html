@@ -1,255 +1,154 @@
-<div class="flex h-screen bg-light text-dark" (click)="closeSidebar($event)">
-  <!-- Sidebar (Desktop) -->
-  <aside class="hidden md:flex md:flex-col md:w-64 bg-dark text-white shadow-lg">
-    <div class="flex items-center justify-center h-16 bg-accent shadow-md">
-      <h1 class="text-2xl font-bold tracking-wide">Prime Housing</h1>
+<div class="luxe-dashboard" (click)="closeSidebar($event)">
+  <aside class="luxe-dashboard__sidebar">
+    <div class="luxe-dashboard__logo">
+      <span class="luxe-dashboard__mark">AE</span>
+      <div>
+        <strong>Ashaven Estates</strong>
+        <span>Control Centre</span>
+      </div>
     </div>
 
-    <nav class="flex-1 p-4">
-      <ul class="space-y-2">
-        <li>
-          <a routerLink="/dashboard" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-home mr-3 w-5 text-accent"></i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/projects" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-building mr-3 w-5 text-accent"></i>
-            <span>Projects</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/clients" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-users mr-3 w-5 text-accent"></i>
-            <span>Clients</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/teams" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-user-friends mr-3 w-5 text-accent"></i>
-            <span>Teams</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/consultant" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-user-friends mr-3 w-5 text-accent"></i>
-            <span>Consultant</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a routerLink="/dashboard/blogs" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-blog mr-3 w-5 text-accent"></i>
-            <span>Blogs</span>
-          </a>
-        </li> -->
-        <li>
-          <a routerLink="/dashboard/testimonials" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-quote-left mr-3 w-5 text-accent"></i>
-            <span>Testimonials</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a routerLink="/dashboard/offers" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-tag mr-3 w-5 text-accent"></i>
-            <span>Offers</span>
-          </a>
-        </li> -->
-        <li>
-          <a routerLink="/dashboard/about-us" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-info-circle mr-3 w-5 text-accent"></i>
-            <span>About Us</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/gallery" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-cog mr-3 w-5 text-accent"></i>
-            <span>Gallery</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/faq" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-cog mr-3 w-5 text-accent"></i>
-            <span>FAQ</span>
-          </a>
-        </li>
-      </ul>
+    <nav class="luxe-dashboard__nav" aria-label="Dashboard navigation">
+      <a routerLink="/dashboard" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Overview</span>
+      </a>
+      <a routerLink="/dashboard/projects" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-city"></i>
+        <span>Property listings</span>
+      </a>
+      <a routerLink="/dashboard/clients" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-user-tie"></i>
+        <span>Client registry</span>
+      </a>
+      <a routerLink="/dashboard/teams" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-users"></i>
+        <span>Advisory team</span>
+      </a>
+      <a routerLink="/dashboard/consultant" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-handshake"></i>
+        <span>Consultants</span>
+      </a>
+      <a routerLink="/dashboard/testimonials" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-comment-dots"></i>
+        <span>Testimonials</span>
+      </a>
+      <a routerLink="/dashboard/gallery" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-images"></i>
+        <span>Gallery</span>
+      </a>
+      <a routerLink="/dashboard/faq" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+        <i class="fas fa-question-circle"></i>
+        <span>FAQ</span>
+      </a>
+      <button type="button" class="luxe-dashboard__nav-item luxe-dashboard__nav-item--logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sign out</span>
+      </button>
     </nav>
   </aside>
 
-  <!-- Mobile Sidebar (Overlay) -->
   <aside
-    class="fixed inset-0 z-50 bg-black/50 md:hidden transition-opacity duration-300"
+    class="luxe-dashboard__sidebar luxe-dashboard__sidebar--mobile"
     *ngIf="showSidebar"
   >
-    <div
-      class="absolute top-0 left-0 w-64 h-full bg-dark text-white shadow-lg transform transition-transform duration-300"
-      [ngClass]="{ 'translate-x-0': showSidebar, '-translate-x-full': !showSidebar }"
-    >
-      <!-- Logo/Header -->
-      <div class="flex items-center justify-center h-16 bg-accent shadow-md">
-        <h1 class="text-2xl font-bold tracking-wide">Real Estate</h1>
-      </div>
-
-      <!-- Navigation -->
-      <nav class="flex-1 p-4">
-        <ul class="space-y-2">
-          <li>
-            <a routerLink="/dashboard" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-              <i class="fas fa-home mr-3 w-5 text-accent"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li>
-          <a routerLink="/dashboard/projects" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-building mr-3 w-5 text-accent"></i>
-            <span>Projects</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/clients" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-users mr-3 w-5 text-accent"></i>
-            <span>Clients</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/teams" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-user-friends mr-3 w-5 text-accent"></i>
-            <span>Teams</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/consultant" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-user-friends mr-3 w-5 text-accent"></i>
-            <span>Consultant</span>
-          </a>
-        </li>
-        <!-- <li>
-          <a routerLink="/dashboard/blogs" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-blog mr-3 w-5 text-accent"></i>
-            <span>Blogs</span>
-          </a>
-        </li> -->
-        <li>
-          <a routerLink="/dashboard/testimonials" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-quote-left mr-3 w-5 text-accent"></i>
-            <span>Testimonials</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/offers" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-tag mr-3 w-5 text-accent"></i>
-            <span>Offers</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/about-us" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-info-circle mr-3 w-5 text-accent"></i>
-            <span>About Us</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/gallery" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-cog mr-3 w-5 text-accent"></i>
-            <span>Gallery</span>
-          </a>
-        </li>
-        <li>
-          <a routerLink="/dashboard/faq" (click)="closeSidebar()" class="flex items-center p-3 rounded-lg transition-all duration-300 hover:bg-accentLight hover:text-dark">
-            <i class="fas fa-cog mr-3 w-5 text-accent"></i>
-            <span>FAQ</span>
-          </a>
-        </li>
-        </ul>
-      </nav>
+    <div class="luxe-dashboard__mobile-header">
+      <span>Navigate</span>
+      <button type="button" (click)="toggleSidebar()" aria-label="Close navigation">&times;</button>
     </div>
+    <nav class="luxe-dashboard__nav" aria-label="Mobile dashboard navigation">
+      <a routerLink="/dashboard" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-chart-line"></i>
+        <span>Overview</span>
+      </a>
+      <a routerLink="/dashboard/projects" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-city"></i>
+        <span>Property listings</span>
+      </a>
+      <a routerLink="/dashboard/clients" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-user-tie"></i>
+        <span>Client registry</span>
+      </a>
+      <a routerLink="/dashboard/teams" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-users"></i>
+        <span>Advisory team</span>
+      </a>
+      <a routerLink="/dashboard/consultant" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-handshake"></i>
+        <span>Consultants</span>
+      </a>
+      <a routerLink="/dashboard/testimonials" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-comment-dots"></i>
+        <span>Testimonials</span>
+      </a>
+      <a routerLink="/dashboard/gallery" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-images"></i>
+        <span>Gallery</span>
+      </a>
+      <a routerLink="/dashboard/faq" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+        <i class="fas fa-question-circle"></i>
+        <span>FAQ</span>
+      </a>
+      <button type="button" class="luxe-dashboard__nav-item luxe-dashboard__nav-item--logout" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Sign out</span>
+      </button>
+    </nav>
   </aside>
 
-  <!-- Main Content -->
-  <div class="flex-1 flex flex-col">
-    <!-- Header -->
-    <header class="bg-white shadow-sm p-4 flex justify-between items-center h-16 border-b border-lightDark/30">
-      <!-- Mobile Menu Button -->
-      <button class="md:hidden text-dark text-2xl" (click)="toggleSidebar()">
+  <div class="luxe-dashboard__main">
+    <header class="luxe-dashboard__header">
+      <button type="button" class="luxe-dashboard__menu" (click)="toggleSidebar()" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
 
-      <h2 class="text-xl font-semibold">Welcome, Agent!</h2>
-
-      <div class="flex items-center space-x-4">
-        <!-- Search -->
-        <div class="relative hidden sm:block">
-          <input
-            type="text"
-            placeholder="Search properties..."
-            class="p-2 pl-10 w-64 border rounded-lg border-lightDark bg-light focus:outline-none focus:ring-2 focus:ring-accent transition duration-200"
-          />
-          <i class="fas fa-search absolute top-3 left-3 text-lightDark"></i>
-        </div>
-
-        <!-- Notifications -->
-        <div class="relative cursor-pointer">
-          <i class="fas fa-bell text-lightDark text-lg"></i>
-          <span class="absolute -top-1 -right-1 h-2.5 w-2.5 bg-red-500 rounded-full"></span>
-        </div>
-
-        <!-- Profile -->
-<div class="relative" (clickOutside)="closeProfileModal()">
-  <div
-    class="h-9 w-9 rounded-full bg-accent flex items-center justify-center text-white font-bold cursor-pointer select-none"
-    (click)="toggleProfileDropdown()"
-  >
-    A
-  </div>
-
-  <!-- Dropdown -->
-  <div
-    *ngIf="showProfileDropdown"
-    class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50"
-  >
-    <button
-      (click)="openProfileModal()"
-      class="w-full text-left px-4 py-2 text-sm text-dark hover:bg-gray-100 rounded-lg transition-colors duration-200"
-    >
-      Profile
-    </button>
-    <button
-      (click)="logout()"
-      class="w-full text-left px-4 py-2 text-sm text-dark hover:bg-gray-100 rounded-lg transition-colors duration-200"
-    >
-      Logout
-    </button>
-  </div>
-</div>
-
-<!-- Profile Modal -->
-<div *ngIf="showProfileModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-  <div class="bg-white rounded-xl w-96 p-6 relative">
-    <h2 class="text-xl font-semibold mb-4">My Profile</h2>
-    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
-      <label class="block mb-2 text-sm font-medium">Username</label>
-      <input formControlName="username" class="w-full p-2 border rounded mb-3" />
-
-      <label class="block mb-2 text-sm font-medium">New Password</label>
-      <input type="password" formControlName="password" class="w-full p-2 border rounded mb-3" />
-
-      <label class="block mb-2 text-sm font-medium">Confirm Password</label>
-      <input type="password" formControlName="confirmPassword" class="w-full p-2 border rounded mb-4" />
-
-      <div class="flex justify-end space-x-2">
-        <button type="button" (click)="closeProfileModal()" class="px-4 py-2 bg-gray-300 rounded">Cancel</button>
-        <button type="submit" class="px-4 py-2 bg-accent text-white rounded">Save</button>
+      <div class="luxe-dashboard__breadcrumbs">
+        <span>Welcome back, Agent</span>
+        <strong>Performance dashboard</strong>
       </div>
-    </form>
-  </div>
-</div>
 
+      <div class="luxe-dashboard__actions">
+        <div class="luxe-dashboard__search">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search the portfolio" />
+        </div>
+        <button class="luxe-dashboard__icon" type="button" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span></span>
+        </button>
+        <div class="luxe-dashboard__profile" (clickOutside)="closeProfileModal()">
+          <div class="luxe-dashboard__avatar" (click)="toggleProfileDropdown()">AE</div>
+          <div *ngIf="showProfileDropdown" class="luxe-dashboard__profile-menu">
+            <button type="button" (click)="openProfileModal()">Profile</button>
+            <button type="button" (click)="logout()">Logout</button>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Dashboard Content -->
-    <main class="main-content flex-1 overflow-y-auto p-6" #mainContent (wheel)="onWheel($event)">
+    <main class="luxe-dashboard__content" #mainContent (wheel)="onWheel($event)">
       <router-outlet></router-outlet>
     </main>
+  </div>
+</div>
+
+<div *ngIf="showProfileModal" class="luxe-dashboard__modal">
+  <div class="luxe-dashboard__modal-card">
+    <h2>Profile</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()" class="luxe-dashboard__form">
+      <label>Username</label>
+      <input formControlName="username" />
+
+      <label>New Password</label>
+      <input type="password" formControlName="password" />
+
+      <label>Confirm Password</label>
+      <input type="password" formControlName="confirmPassword" />
+
+      <div class="luxe-dashboard__form-actions">
+        <button type="button" class="luxe-button luxe-button--ghost" (click)="closeProfileModal()">Cancel</button>
+        <button type="submit" class="luxe-button">Save changes</button>
+      </div>
+    </form>
   </div>
 </div>

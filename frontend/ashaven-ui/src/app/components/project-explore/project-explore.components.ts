@@ -20,50 +20,59 @@ export class ProjectExploreComponent {
   projects: ExploreItem[] = [
     {
       id: 1,
-      title: 'Ongoing Projects',
+      title: 'Ongoing Residences',
       route: '/projects',
       image: 'images/icons/hook.png',
     },
     {
       id: 2,
-      title: 'Upcoming Projects',
+      title: 'Upcoming Landmark',
       route: '/projects',
       image: 'images/icons/coming-soon.png',
     },
     {
       id: 3,
-      title: 'Completed Projects',
+      title: 'Completed Masterpieces',
       route: '/projects',
       image: 'images/icons/architect.png',
     },
     {
       id: 4,
-      title: 'All Projects',
+      title: 'Entire Portfolio',
       route: '/projects',
       image: 'images/icons/architect.png',
     },
   ];
 
   onMouseMove(event: MouseEvent) {
-    const card = event.currentTarget as HTMLElement | null;
-    if (!card) return;
+    const wrapper = event.currentTarget as HTMLElement | null;
+    const card = wrapper?.querySelector(
+      '.luxe-explore__inner'
+    ) as HTMLElement | null;
+    if (!wrapper || !card) {
+      return;
+    }
 
     const rect = card.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * 12; // max 12deg tilt
-    const rotateY = ((x - centerX) / centerX) * -12;
+    const rotateX = ((y - centerY) / centerY) * 10;
+    const rotateY = ((x - centerX) / centerX) * -10;
 
-    card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
   }
 
   onMouseLeave(event: MouseEvent) {
-    const card = event.currentTarget as HTMLElement | null;
-    if (!card) return;
+    const wrapper = event.currentTarget as HTMLElement | null;
+    const card = wrapper?.querySelector(
+      '.luxe-explore__inner'
+    ) as HTMLElement | null;
+    if (!card) {
+      return;
+    }
 
-    card.style.transform =
-      'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)';
+    card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
   }
 }

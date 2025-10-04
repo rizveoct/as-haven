@@ -17,6 +17,7 @@ export class DashboardHomeComponent implements OnInit {
   projects: Project[] = [];
   inquiriesError: string | null = null;
   projectsError: string | null = null;
+  Math = Math;
 
   constructor(
     private contactusService: ContactusService,

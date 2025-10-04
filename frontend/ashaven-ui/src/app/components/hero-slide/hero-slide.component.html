@@ -1,68 +1,117 @@
-<!-- Mobile View (kept as original with minor additions like des) -->
-<div class="carousel w-full h-[60vh] md:hidden relative overflow-hidden">
-  <div class="list">
-    <div class="item" *ngFor="let slide of slides; let i = index">
-      <div class="relative w-full h-full bg-img" [ngStyle]="{'background-image': 'url(' + slide.image + ')'}"></div>
-      <div class="absolute inset-0 bg-black/40"></div>
-      <div class="content">
-        <div class="author text-accent">{{ slide.author }}</div>
-        <div class="title text-light">{{ slide.title }}</div>
-        <div class="topic text-lightDark">{{ slide.topic }}</div>
-        <div class="des text-light">{{ slide.des }}</div>
-        <div class="buttons">
-          <button class="bg-accent text-white font-bold rounded-lg" [routerLink]="['/projectdetails', slide.id]">DETAILS</button>
+<section *ngIf="slides.length; else heroSkeleton" class="luxe-hero" aria-live="polite">
+  <div class="luxe-hero__backdrop" aria-hidden="true">
+    <div class="luxe-hero__gradient luxe-hero__gradient--left"></div>
+    <div class="luxe-hero__gradient luxe-hero__gradient--right"></div>
+    <div
+      class="luxe-hero__image"
+      *ngFor="let slide of slides; let i = index; trackBy: trackBySlide"
+      [style.backgroundImage]="'url(' + slide.image + ')'"
+      [class.is-active]="i === currentIndex"
+    ></div>
+    <div class="luxe-hero__veil"></div>
+  </div>
+
+  <div *ngIf="activeSlide as active" class="luxe-hero__inner">
+    <div class="luxe-hero__content">
+      <span class="luxe-eyebrow luxe-reveal">Signature Residences</span>
+      <h1 class="luxe-hero__title luxe-reveal" data-delay="1">
+        {{ active.title }}
+      </h1>
+      <p class="luxe-hero__subtitle luxe-reveal" data-delay="2">
+        {{ active.des }}
+      </p>
+
+      <div class="luxe-hero__meta luxe-reveal" data-delay="3">
+        <div>
+          <span class="luxe-hero__meta-label">Location</span>
+          <span class="luxe-hero__meta-value">{{ active.topic }}</span>
+        </div>
+        <div>
+          <span class="luxe-hero__meta-label">Collection</span>
+          <span class="luxe-hero__meta-value">{{ active.author }}</span>
+        </div>
+        <div>
+          <span class="luxe-hero__meta-label">Signature Feature</span>
+          <span class="luxe-hero__meta-value">{{ active.thumbnailDescription }}</span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="thumbnail">
-    <div class="item" *ngFor="let slide of slides; let i = index" (click)="goToSlide(i)">
-      <img [src]="slide.image" [alt]="slide.alt + ' thumbnail'" loading="lazy">
-      <div class="content">
-        <div class="title">{{ slide.thumbnailTitle }}</div>
-        <div class="description">{{ slide.thumbnailDescription }}</div>
+
+      <div class="luxe-hero__cta">
+        <a
+          class="luxe-button"
+          [routerLink]="['/projectdetails', active.id]"
+          [attr.aria-label]="'Explore ' + active.title"
+        >
+          Explore residence
+        </a>
+        <a
+          class="luxe-button luxe-button--ghost"
+          routerLink="/projects"
+          aria-label="View all properties"
+        >
+          View the collection
+        </a>
       </div>
-    </div>
-  </div>
-  <div style="display: none;" class="arrows">
-    <button id="prev-mobile" aria-label="Previous slide">&lt;</button>
-    <button id="next-mobile" aria-label="Next slide">&gt;</button>
-  </div>
-  <div class="time"></div>
-</div>
-<!-- Desktop View (70/30 split, images fill height and width, animated content) -->
-<div class="hidden md:flex w-full h-[100vh] overflow-hidden">
-  <div class="image-section relative flex-[6] bg-dark">
-    <div *ngFor="let slide of slides; let i = index"
-         class="absolute inset-0 transition-all duration-1000 ease-in-out pointer-events-none"
-         [ngClass]="{'opacity-100 scale-100': currentIndex === i, 'opacity-0 scale-110': currentIndex !== i}">
-      <img [src]="slide.image" [alt]="slide.alt" class="w-full h-full object-fill">
-    </div>
-  </div>
-  <div class="content-section flex-[4] flex flex-col bg-gradient-to-b from-gray-900 to-dark text-white p-10 md:p-16">
-    <div class="content relative flex-1 z-10">
-      <div *ngFor="let slide of slides; let i = index"
-           class="absolute inset-0 flex flex-col justify-center transition-opacity duration-700 ease-in-out"
-           [ngClass]="{'opacity-100': currentIndex === i, 'opacity-0': currentIndex !== i}">
-        <div class="author text-accent uppercase tracking-[0.2em] text-lg mb-4 animate-content" style="animation-delay: 0.2s">{{ slide.author }}</div>
-        <div class="title text-5xl lg:text-7xl font-extrabold leading-tight mb-6 animate-content" style="animation-delay: 0.4s">{{ slide.title }}</div>
-        <div class="topic text-2xl font-semibold mb-6 animate-content" style="animation-delay: 0.6s">{{ slide.topic }}</div>
-        <div class="des text-lg leading-relaxed mb-8 max-w-prose animate-content" style="animation-delay: 0.8s">{{ slide.des }}</div>
-        <div class="buttons relative z-15">
-          <button class="bg-accent text-white font-bold text-lg rounded-lg px-8 py-4 hover:bg-opacity-90 hover:shadow-lg transition-all duration-300 pointer-events-auto" [routerLink]="['/projectdetails', slide.id]" aria-label="View project details" (click)="debugClick($event)">DETAILS</button>
+
+      <div class="luxe-hero__progress" aria-label="Slide progress">
+        <div class="luxe-hero__progress-track">
+          <div class="luxe-hero__progress-bar" [style.width.%]="progress"></div>
         </div>
+        <span class="luxe-hero__progress-index">
+          {{ currentIndex + 1 | number: '2.0' }} / {{ slides.length | number: '2.0' }}
+        </span>
       </div>
     </div>
-    <div class="thumbnails flex flex-col gap-4 overflow-y-auto pr-4 h-[30vh] scrollbar-thin scrollbar-thumb-accent scrollbar-track-gray-800">
-      <div *ngFor="let slide of slides; let i = index" (click)="setCurrentIndex(i)"
-           class="thumbnail-item cursor-pointer flex gap-4 items-center p-4 hover:bg-gray-800/50 rounded-lg transition-all duration-300"
-           [ngClass]="{'bg-gray-800/70': currentIndex === i}">
-        <img [src]="slide.image" [alt]="slide.alt + ' thumbnail'" class="w-20 h-28 object-cover rounded-md shadow-md">
-        <div class="text flex-1">
-          <div class="title font-semibold text-lg">{{ slide.thumbnailTitle }}</div>
-          <div class="description text-sm text-gray-300">{{ slide.thumbnailDescription }}</div>
-        </div>
+
+    <div class="luxe-hero__stage" role="group" aria-label="Featured property visuals">
+      <div class="luxe-hero__stage-frame">
+        <img [src]="active.image" [alt]="active.alt || 'Featured property'" loading="lazy" />
+        <div class="luxe-hero__stage-shine"></div>
+      </div>
+
+      <div class="luxe-hero__floating-card luxe-hero__floating-card--primary">
+        <span class="luxe-hero__floating-label">Starting from</span>
+        <strong>{{ active.thumbnailTitle }}</strong>
+        <span>{{ active.topic }}</span>
+      </div>
+
+      <div class="luxe-hero__floating-card luxe-hero__floating-card--secondary">
+        <span class="luxe-hero__floating-label">Private viewings</span>
+        <strong>By appointment</strong>
+        <span>Concierge on request</span>
+      </div>
+
+      <div class="luxe-hero__controls" role="group" aria-label="Hero slider controls">
+        <button type="button" (click)="prev()" aria-label="Previous highlight">
+          <span aria-hidden="true">&#8592;</span>
+        </button>
+        <button type="button" (click)="next()" aria-label="Next highlight">
+          <span aria-hidden="true">&#8594;</span>
+        </button>
       </div>
     </div>
   </div>
-</div>
+
+  <nav class="luxe-hero__thumbnails" aria-label="Jump to property">
+    <button
+      type="button"
+      *ngFor="let project of slides; let i = index; trackBy: trackBySlide"
+      class="luxe-hero__thumbnail"
+      [class.is-active]="i === currentIndex"
+      (click)="goToSlide(i)"
+      [attr.aria-label]="'Go to ' + project.thumbnailTitle"
+    >
+      <span class="luxe-hero__thumbnail-index">{{ (i + 1) | number: '2.0' }}</span>
+      <span class="luxe-hero__thumbnail-text">
+        <strong>{{ project.thumbnailTitle }}</strong>
+        <small>{{ project.thumbnailDescription }}</small>
+      </span>
+    </button>
+  </nav>
+</section>
+
+<ng-template #heroSkeleton>
+  <section class="luxe-hero luxe-hero--loading" aria-busy="true">
+    <div class="luxe-hero__skeleton"></div>
+  </section>
+</ng-template>

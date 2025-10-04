@@ -1,20 +1,20 @@
-<div class="relative bg-[url('/images/banner/banner-3.png')] bg-no-repeat bg-center bg-cover bg-fixed py-20 md:py-28 lg:py-36 xl:py-[270px] px-4 md:px-2 lg:px-5 before:content-[''] before:absolute before:inset-0 before:bg-black/40 before:z-[-1] z-1">
-  <div class="mx-auto relative w-[85%]" >
-<p class="text-accent text-2xl lg:text-2xl text-center md:text-left">
-  VISION
-</p>
-<h1 class="fade-up text-2xl lg:text-6xl text-white font-semibold mb-8 text-center md:text-left">
-  <span class="block mb-5">Elevating</span>
-<span class="md:ml-16">The Way We Live</span>
-
-</h1>
-
-
-
-
-    <p class="text-lg fade-up text-accentLight text-center md:text-left lg:ml-40 font-[var(--body)]">
-      {{vision}}
-    </p>
-    <a routerLink="/about" class="absolute mt-8 w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-40 xl:h-40 flex items-center justify-center font-semibold bg-accent text-white text-sm lg:text-base xl:text-lg rounded-full ring-2 ring-accent ring-offset-2 hover:bg-accent-light transition duration-500 ease-in-out md:-bottom-40 lg:-bottom-48 xl:-bottom-[340px] lg:left-0">Read More</a>
+<section class="luxe-vision">
+  <div class="luxe-vision__media" aria-hidden="true">
+    <img src="/images/banner/banner-3.png" alt="Architectural skyline" />
+    <div class="luxe-vision__veil"></div>
+    <div class="luxe-vision__glow luxe-vision__glow--one"></div>
+    <div class="luxe-vision__glow luxe-vision__glow--two"></div>
   </div>
-</div>
+
+  <div class="luxe-vision__content">
+    <span class="luxe-eyebrow luxe-eyebrow--light">Our philosophy</span>
+    <h2 class="luxe-vision__title">
+      <span>Elevating</span>
+      <span>the art of living</span>
+    </h2>
+    <p>{{ vision }}</p>
+    <a routerLink="/about" class="luxe-button">
+      Read our story
+    </a>
+  </div>
+</section>

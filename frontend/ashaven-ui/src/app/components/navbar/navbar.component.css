@@ -76,6 +76,15 @@
   justify-self: flex-end;
 }
 
+@media (min-width: 768px) {
+  .neo-nav__links {
+    display: flex;
+  }
+
+.neo-nav__links--secondary {
+  justify-self: flex-end;
+}
+
 .neo-nav__link {
   position: relative;
   color: rgba(32, 71, 38, 0.68);
@@ -123,15 +132,17 @@
   transform: translateY(-4px) scale(1.01);
 }
 
-.neo-nav__logo {
+.neo-nav__crest {
   display: inline-flex;
-  width: clamp(3rem, 5.6vw, 3.4rem);
-  height: clamp(3rem, 5.6vw, 3.4rem);
+  align-items: center;
+  justify-content: center;
+  width: clamp(3rem, 6vw, 3.6rem);
+  height: clamp(3rem, 6vw, 3.6rem);
   border-radius: 1.2rem;
-  box-shadow: 0 18px 40px rgba(19, 53, 31, 0.16);
-  background: linear-gradient(135deg, rgba(32, 71, 38, 0.12), rgba(255, 255, 255, 0.05));
-  padding: clamp(0.35rem, 1vw, 0.55rem);
-  object-fit: contain;
+  background: linear-gradient(135deg, rgba(32, 71, 38, 0.9), rgba(18, 45, 27, 0.95));
+  color: var(--luxe-cream);
+  font-weight: 600;
+  letter-spacing: 0.22em;
 }
 
 .neo-nav__brand-copy {
@@ -185,18 +196,6 @@
   box-shadow: 0 12px 28px rgba(19, 53, 31, 0.18);
   transition: transform 0.35s ease, border-color 0.35s ease;
   z-index: 2;
-}
-
-@media (min-width: 768px) {
-  .neo-nav__links {
-    display: flex;
-  }
-}
-
-@media (min-width: 1024px) {
-  .neo-nav__menu {
-    display: none;
-  }
 }
 
 .neo-nav__menu-line {

@@ -59,14 +59,11 @@ export class LenisService {
     this.stopLenis();
 
     this.lenis = new Lenis({
-      duration: isFinePointer ? 0.92 : 1.05,
-      easing: (t: number) => 1 - Math.pow(1 - t, 2.2),
+      duration: 1.05,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      wheelMultiplier: isFinePointer ? 1 : 0.85,
-      touchMultiplier: isFinePointer ? 1 : 1.05,
-      gestureOrientation: 'vertical',
-      autoResize: true,
-      lerp: isFinePointer ? 0.16 : 0.12,
+      touchMultiplier: 1.1,
+      lerp: 0.075,
     });
 
     root.classList.add('has-lenis');

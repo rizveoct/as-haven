@@ -1,42 +1,33 @@
 <app-gallery-hero />
 
-<section class="gallery-section" id="projectGallery">
-  <div class="gallery-section__aurora"></div>
-  <div class="gallery-section__aurora gallery-section__aurora--right"></div>
-
-  <div class="gallery-section__container">
-    <div class="gallery-section__intro fade-up">
-      <span class="gallery-section__eyebrow">Immersive Moments</span>
-      <div class="gallery-section__heading">
-        <h2 class="gallery-section__title">Project Gallery</h2>
-        <p class="gallery-section__description">
-          From visionary renderings to lived-in scenes, explore the crafted
-          stories that define AS Haven. Each capture celebrates the light,
-          textures, and perspectives that make our residences feel like art.
+<section class="gallery-app" id="projectGallery">
+  <div class="gallery-app__container">
+    <header class="gallery-app__header fade-up">
+      <div class="gallery-app__header-text">
+        <span class="gallery-app__eyebrow">Captured moments</span>
+        <h2 class="gallery-app__title">Project Gallery</h2>
+        <p class="gallery-app__subtitle">
+          Swipe through the latest stills and reels from AS Haven. Built like a mobile gallery, tap any tile to view it full screen.
         </p>
       </div>
 
-      <div class="gallery-section__meta">
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalItems }}</span>
-          <span class="gallery-stat__label">Showcased stories</span>
+      <div class="gallery-app__counts" aria-label="Gallery totals">
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalItems }}</span>
+          <span class="gallery-app__count-label">Total</span>
         </div>
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalImages }}</span>
-          <span class="gallery-stat__label">Signature stills</span>
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalImages }}</span>
+          <span class="gallery-app__count-label">Images</span>
         </div>
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalVideos }}</span>
-          <span class="gallery-stat__label">Immersive reels</span>
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalVideos }}</span>
+          <span class="gallery-app__count-label">Videos</span>
         </div>
       </div>
-    </div>
+    </header>
 
-    <div
-      class="gallery-section__filters fade-up"
-      role="tablist"
-      aria-label="Gallery filters"
-    >
+    <div class="gallery-app__filters fade-up" role="tablist" aria-label="Gallery filters">
       <button
         type="button"
         class="gallery-filter"
@@ -75,68 +66,43 @@
       </button>
     </div>
 
-    <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">
-      <div class="gallery-section__grid fade-up">
-        <ng-container *ngIf="featuredItem as hero">
+    <div *ngIf="loadError" class="gallery-error fade-up" role="alert">
+      <div class="gallery-error__card">
+        <h3 class="gallery-error__title">We couldn't load the gallery.</h3>
+        <p class="gallery-error__copy">
+          Please check your connection and try again. Your favourites will be right back.
+        </p>
+        <button class="gallery-error__retry" type="button" (click)="loadGalleryItems()">
+          Try again
+        </button>
+      </div>
+    </div>
+
+    <ng-container *ngIf="isLoading; else galleryContent">
+      <div class="gallery-skeleton fade-up" aria-hidden="true">
+        <div class="gallery-skeleton__grid">
+          <div class="gallery-skeleton__tile" *ngFor="let placeholder of skeletonPlaceholders"></div>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #galleryContent>
+      <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">
+        <div class="gallery-app__grid fade-up">
           <button
             type="button"
-            class="gallery-card gallery-card--featured"
-            (click)="openItem(hero)"
-            [attr.aria-label]="getAriaLabel(hero)"
-          >
-            <span class="gallery-card__media">
-              <img
-                *ngIf="isImage(hero)"
-                [src]="mediaUrl(hero)"
-                [alt]="hero.title"
-                loading="lazy"
-                class="gallery-card__media-el"
-                (error)="onImageError($event)"
-              />
-              <video
-                *ngIf="isVideo(hero)"
-                [src]="mediaUrl(hero)"
-                muted
-                loop
-                playsinline
-                preload="metadata"
-                class="gallery-card__media-el"
-                (error)="onImageError($event)"
-              ></video>
-            </span>
-
-            <span class="gallery-card__overlay">
-              <span class="gallery-card__chip" [class.is-video]="isVideo(hero)">
-                {{ isVideo(hero) ? 'Video' : 'Image' }}
-              </span>
-              <span class="gallery-card__title">
-                {{ hero.title || 'Untitled showcase' }}
-              </span>
-              <span
-                *ngIf="hero.description"
-                class="gallery-card__description"
-                >{{ hero.description }}</span
-              >
-              <span class="gallery-card__cta">View showcase</span>
-            </span>
-          </button>
-        </ng-container>
-
-        <div class="gallery-section__grid-inner">
-          <button
-            type="button"
-            class="gallery-card"
-            *ngFor="let item of supportingItems; trackBy: trackById"
+            class="gallery-tile"
+            *ngFor="let item of filteredGalleryItems; trackBy: trackById"
             (click)="openItem(item)"
             [attr.aria-label]="getAriaLabel(item)"
           >
-            <span class="gallery-card__media">
+            <span class="gallery-tile__thumb">
               <img
                 *ngIf="isImage(item)"
                 [src]="mediaUrl(item)"
                 [alt]="item.title"
                 loading="lazy"
-                class="gallery-card__media-el"
+                class="gallery-tile__media"
                 (error)="onImageError($event)"
               />
               <video
@@ -146,28 +112,22 @@
                 loop
                 playsinline
                 preload="metadata"
-                class="gallery-card__media-el"
+                class="gallery-tile__media"
                 (error)="onImageError($event)"
               ></video>
+              <span *ngIf="isVideo(item)" class="gallery-tile__icon" aria-hidden="true">▶</span>
             </span>
 
-            <span class="gallery-card__overlay">
-              <span class="gallery-card__chip" [class.is-video]="isVideo(item)">
-                {{ isVideo(item) ? 'Video' : 'Image' }}
+            <span class="gallery-tile__caption">
+              <span class="gallery-tile__title">{{ item.title || 'Untitled' }}</span>
+              <span *ngIf="item.description" class="gallery-tile__description">
+                {{ item.description }}
               </span>
-              <span class="gallery-card__title">
-                {{ item.title || 'Untitled showcase' }}
-              </span>
-              <span
-                *ngIf="item.description"
-                class="gallery-card__description"
-                >{{ item.description }}</span
-              >
             </span>
           </button>
         </div>
-      </div>
-    </ng-container>
+      </ng-container>
+    </ng-template>
   </div>
 </section>
 
@@ -177,8 +137,7 @@
       <span class="gallery-empty__eyebrow">Gallery coming soon</span>
       <p class="gallery-empty__title">We are curating something special.</p>
       <p class="gallery-empty__copy">
-        Our creative team is capturing new moments from the latest residences.
-        Check back shortly to experience the next chapter of AS Haven.
+        Our creative team is capturing new moments from the latest residences. Check back shortly to experience the next chapter of AS Haven.
       </p>
     </div>
   </div>
@@ -192,11 +151,7 @@
   (touchend)="onTouchEnd($event)"
 >
   <div class="gallery-lightbox__content">
-    <button
-      class="gallery-lightbox__close"
-      (click)="closeLightbox()"
-      aria-label="Close lightbox"
-    >
+    <button class="gallery-lightbox__close" (click)="closeLightbox()" aria-label="Close lightbox">
       <span aria-hidden="true">×</span>
     </button>
 
@@ -220,19 +175,11 @@
       ></video>
     </ng-container>
 
-    <button
-      class="gallery-lightbox__nav gallery-lightbox__nav--prev"
-      (click)="prevItem($event)"
-      aria-label="Previous item"
-    >
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="prevItem($event)" aria-label="Previous item">
       ❮
     </button>
 
-    <button
-      class="gallery-lightbox__nav gallery-lightbox__nav--next"
-      (click)="nextItem($event)"
-      aria-label="Next item"
-    >
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="nextItem($event)" aria-label="Next item">
       ❯
     </button>
   </div>

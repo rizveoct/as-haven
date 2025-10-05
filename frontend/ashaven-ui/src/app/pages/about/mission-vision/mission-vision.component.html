@@ -1,25 +1,62 @@
-<section class="our_vision_mission">
-  <div class="w-[85%] mx-auto mission_vision_container">
-    
-    <!-- Mission -->
-    <div class="mission py-10 flex flex-col lg:flex-row gap-10 items-center">
-      
+<section class="mission-vision relative py-20">
+  <div class="mission-vision__glow mission-vision__glow--one"></div>
+  <div class="mission-vision__glow mission-vision__glow--two"></div>
 
-      <!-- Image -->
-      <div class="flex-shrink-0 w-full lg:w-1/3">
-        <div class="overflow-hidden rounded-xl shadow">
+  <div class="w-[90%] max-w-6xl mx-auto space-y-16">
+    <div class="flex flex-col items-center gap-10 lg:flex-row">
+      <div class="order-2 w-full space-y-6 rounded-[2.5rem] bg-white/90 p-10 shadow-2xl backdrop-blur md:order-1 md:w-1/2">
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.6em] text-accent">
+          <span class="h-2 w-2 rounded-full bg-accent"></span>
+          Mission
+        </span>
+        <h3 class="text-3xl font-semibold text-dark" [@textAnimation]>Driven by people and purpose</h3>
+        <div class="space-y-4 text-dark/80">
+          <p *ngIf="mission; else noMission" [@textAnimation]>{{ mission }}</p>
+          <ng-template #noMission>
+            <p class="text-accent-light" [@textAnimation]>No mission available.</p>
+          </ng-template>
+          <ul class="grid gap-3 text-sm text-dark/70 sm:grid-cols-2">
+            <li class="flex items-center gap-2">
+              <span class="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <i class="ri-leaf-line text-base"></i>
+              </span>
+              Sustainable structures
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <i class="ri-community-line text-base"></i>
+              </span>
+              Community-first layouts
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <i class="ri-shield-check-line text-base"></i>
+              </span>
+              Elevated security
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                <i class="ri-sun-line text-base"></i>
+              </span>
+              Light-filled interiors
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="order-1 flex w-full flex-shrink-0 justify-center md:order-2 md:w-1/2">
+        <div class="mission-vision__image-wrapper">
           <img
             *ngIf="missionImage; else missionPlaceholder"
             [src]="missionImage"
             alt="Mission image"
-            class="w-full object-cover aspect-[4/5]"
+            class="h-full w-full object-cover"
             loading="lazy"
             (error)="onImageError($event)"
             [@imageAnimation]
           />
           <ng-template #missionPlaceholder>
             <div
-              class="w-full aspect-[4/5] bg-accent-light/20 flex items-center justify-center text-dark"
+              class="flex h-full w-full items-center justify-center text-dark/60"
               [@imageAnimation]
             >
               No image
@@ -27,58 +64,50 @@
           </ng-template>
         </div>
       </div>
-
-      <!-- Text -->
-      <div class="lg:w-1/2 fade-up">
-        <h2 class="text-3xl font-poppins font-bold text-dark mb-3" [@textAnimation]>Mission</h2>
-        <div class="text-dark">
-          <p *ngIf="mission; else noMission" [@textAnimation]>{{ mission }}</p>
-          <ng-template #noMission>
-            <p class="text-accent-light" [@textAnimation]>No mission available.</p>
-          </ng-template>
-        </div>
-      </div>
     </div>
 
-    <!-- Vision -->
-    <div class="vision py-10 flex flex-col lg:flex-row gap-10 items-center">
-     
-
-      <!-- Text -->
-      <div class="lg:w-1/2 fade-up">
-        <h2 class="text-3xl font-poppins font-bold text-dark mb-3" [@visionTextAnimation]>Vision</h2>
-        <div class="text-dark">
-          <p *ngIf="vision; else noVision" [@visionTextAnimation]>{{ vision }}</p>
-          <ng-template #noVision>
-            <p class="text-accent-light" [@visionTextAnimation]>No vision available.</p>
-          </ng-template>
-        </div>
-      </div>
-
-
-       <!-- Image -->
-      <div class="flex-shrink-0 w-full lg:w-1/3">
-        <div class="overflow-hidden rounded-xl shadow-lg">
+    <div class="flex flex-col items-center gap-10 lg:flex-row">
+      <div class="flex w-full flex-shrink-0 justify-center md:w-1/2">
+        <div class="mission-vision__image-wrapper">
           <img
             *ngIf="visionImage; else visionPlaceholder"
             [src]="visionImage"
             alt="Vision image"
-            class="w-full object-cover aspect-[4/5]"
+            class="h-full w-full object-cover"
             loading="lazy"
             (error)="onImageError($event)"
             [@visionImageAnimation]
           />
           <ng-template #visionPlaceholder>
-            <div
-              class="w-full aspect-[4/5] bg-accent-light/20 flex items-center justify-center text-dark"
-              [@visionImageAnimation]
-            >
+            <div class="flex h-full w-full items-center justify-center text-dark/60" [@visionImageAnimation]>
               No image
             </div>
           </ng-template>
         </div>
       </div>
+      <div class="w-full space-y-6 rounded-[2.5rem] bg-white/90 p-10 shadow-2xl backdrop-blur md:w-1/2">
+        <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.6em] text-accent">
+          <span class="h-2 w-2 rounded-full bg-accent"></span>
+          Vision
+        </span>
+        <h3 class="text-3xl font-semibold text-dark" [@visionTextAnimation]>Designing tomorrow’s skyline</h3>
+        <div class="space-y-4 text-dark/80">
+          <p *ngIf="vision; else noVision" [@visionTextAnimation]>{{ vision }}</p>
+          <ng-template #noVision>
+            <p class="text-accent-light" [@visionTextAnimation]>No vision available.</p>
+          </ng-template>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-2xl border border-accent/20 bg-accent/10 px-5 py-6 text-dark">
+              <h4 class="text-2xl font-semibold text-accent">02</h4>
+              <p class="text-sm text-dark/70">Cities poised for our next generation of lifestyle projects.</p>
+            </div>
+            <div class="rounded-2xl border border-dark/10 bg-dark px-5 py-6 text-white">
+              <h4 class="text-2xl font-semibold">2028</h4>
+              <p class="text-sm text-white/70">Delivering carbon-conscious communities with smart mobility.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 </section>

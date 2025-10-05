@@ -1,29 +1,38 @@
-<div class="faq_section py-16 fade-up">
-  <div class="max-w-4xl mx-auto px-4">
-    <h2 class="section-title text-2xl md:text-3xl font-bold text-center text-primary mb-4">
-      Frequently Asked Questions
-    </h2>
-    <p class="text-center text-gray-600 mb-10">
-      Find answers to common questions about our properties and services.
-    </p>
+<section class="faq-section relative overflow-hidden">
+  <div class="faq-gradient"></div>
+  <div class="faq-aurora faq-aurora--emerald"></div>
+  <div class="faq-aurora faq-aurora--violet"></div>
+  <div class="faq-grid"></div>
 
-    <div class="space-y-4">
-      <div *ngFor="let faq of faqs; let i = index" class="faq-item bg-white rounded-xl shadow-lg overflow-hidden animate-entrance">
-        <button
-          class="w-full flex justify-between items-center p-5 text-left"
-          (click)="toggleFaq(faq)"
-        >
-          <span class="font-semibold text-primary text-lg">{{ faq.question }}</span>
-          <i class="ri-arrow-down-s-line text-2xl text-primary transition-transform"
-             [ngClass]="{'rotate-180': faq.isOpen}"></i>
+  <div class="relative max-w-5xl mx-auto px-6 py-20 md:py-24">
+    <div class="text-center fade-up space-y-4">
+      <span class="faq-pill">Frequently asked</span>
+      <h2 class="text-3xl md:text-4xl font-semibold text-slate-900">
+        Answers to the questions our residents ask the most.
+      </h2>
+      <p class="text-slate-600 max-w-3xl mx-auto">
+        We have compiled the insights that help you move forward faster. If you cannot find what you need, our concierge team is just a message away.
+      </p>
+    </div>
+
+    <div class="mt-12 space-y-4 fade-up">
+      <div *ngFor="let faq of faqs; let i = index" class="faq-card" [class.is-open]="faq.isOpen">
+        <button class="faq-toggle" (click)="toggleFaq(faq)">
+          <div class="toggle-copy">
+            <span class="toggle-index">0{{ i + 1 }}</span>
+            <span class="toggle-question">{{ faq.question }}</span>
+          </div>
+          <span class="toggle-icon" [ngClass]="{'is-open': faq.isOpen}">
+            <i class="ri-add-line"></i>
+          </span>
         </button>
         <div
           [@slideInOut]="faq.isOpen ? 'open' : 'closed'"
-          class="px-5 pb-5 text-gray-600"
+          class="faq-answer"
         >
           <p>{{ faq.answer }}</p>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>

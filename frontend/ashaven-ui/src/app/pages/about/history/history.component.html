@@ -1,23 +1,58 @@
-<div
-  class="relative mb-5 py-10  px-4 md:px-2 "
->
-  <div class="mx-auto relative w-[85%]" >
-    <h1
-      class="text-4xl fade-up lg:text-6xl  text-dark font-semibold mb-8 text-center md:text-left"
-    >
-      <span class="block mb-5">The History</span>
-      <span class="md:ml-16">Of Prime Housing</span>
-    </h1>
-    <p
-      class="text-lg fade-up text-dark text-center md:text-left lg:ml-40 font-[var(--body)]"
-      *ngIf="history; else noHistory"
-      [@textAnimation]
-    >
-      {{ history }}
-    </p>
+<section class="history-section relative py-20">
+  <div class="history-section__glow history-section__glow--one"></div>
+  <div class="history-section__glow history-section__glow--two"></div>
 
-    <ng-template #noHistory>
-      <p class="text-lightDark" [@textAnimation]>No history available.</p>
-    </ng-template>
+  <div class="mx-auto flex w-[90%] max-w-6xl flex-col gap-12 lg:flex-row lg:items-start">
+    <div class="space-y-6 lg:w-7/12">
+      <span class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.6em] text-accent">
+        <span class="h-2 w-2 rounded-full bg-accent"></span>
+        Our legacy
+      </span>
+      <h2 class="text-4xl font-semibold leading-tight text-dark md:text-5xl">
+        The History
+        <span class="block text-accent">Of Prime Housing</span>
+      </h2>
+      <div class="relative overflow-hidden rounded-3xl bg-white/90 p-8 shadow-xl backdrop-blur-md">
+        <div class="history-section__halo"></div>
+        <p
+          class="text-lg leading-relaxed text-dark/80"
+          *ngIf="history; else noHistory"
+          [@textAnimation]
+        >
+          {{ history }}
+        </p>
+        <ng-template #noHistory>
+          <p class="text-lightDark" [@textAnimation]>No history available.</p>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="space-y-6 lg:w-5/12">
+      <div class="rounded-3xl border border-dark/10 bg-gradient-to-br from-white via-white/90 to-accent/10 p-8 shadow-xl">
+        <h3 class="mb-6 text-2xl font-semibold text-dark">Defining moments</h3>
+        <ul class="space-y-5 text-dark/80">
+          <li class="flex gap-4">
+            <span class="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-accent"></span>
+            <p>Delivered landmark residences in Dhaka’s most sought-after neighbourhoods.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-accent"></span>
+            <p>Introduced boutique amenities inspired by global hospitality brands.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="mt-2 h-2.5 w-2.5 flex-shrink-0 rounded-full bg-accent"></span>
+            <p>Elevated sustainable design with smart energy solutions and biophilic spaces.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="flex items-center gap-5 rounded-3xl bg-dark px-6 py-7 text-white shadow-xl">
+        <div class="text-5xl font-semibold leading-none">100%</div>
+        <div class="space-y-1">
+          <p class="text-sm uppercase tracking-[0.4em] text-white/70">Client trust</p>
+          <p class="text-base text-white/80">Consistent satisfaction ratings from residents and partners.</p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>

@@ -1,3 +1,47 @@
 :host {
   display: block;
 }
+
+.history-section {
+  position: relative;
+  background: radial-gradient(circle at top left, rgba(249, 115, 22, 0.05), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(37, 99, 235, 0.07), transparent 60%),
+    linear-gradient(180deg, rgba(241, 245, 249, 0.8), rgba(255, 255, 255, 0.95));
+}
+
+.history-section__glow {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(60px);
+  opacity: 0.45;
+}
+
+.history-section__glow--one {
+  top: -6rem;
+  left: -4rem;
+  width: clamp(18rem, 30vw, 26rem);
+  height: clamp(18rem, 30vw, 26rem);
+  background: rgba(249, 115, 22, 0.4);
+}
+
+.history-section__glow--two {
+  bottom: -4rem;
+  right: -3rem;
+  width: clamp(16rem, 28vw, 24rem);
+  height: clamp(16rem, 28vw, 24rem);
+  background: rgba(56, 189, 248, 0.35);
+}
+
+.history-section__halo {
+  position: absolute;
+  inset: -30%;
+  background: radial-gradient(circle at 30% 30%, rgba(249, 115, 22, 0.12), transparent 70%);
+  filter: blur(45px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.history-section .shadow-xl {
+  box-shadow: 0 40px 80px -40px rgba(15, 23, 42, 0.25);
+}

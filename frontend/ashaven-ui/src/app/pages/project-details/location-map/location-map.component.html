@@ -1,25 +1,51 @@
-<div class="project_location py-12  sm:py-16  lg:py-20 " id="locationMap">
-  <div class="max-w-7xl mx-auto">
-    <h1 class="text-center text-2xl sm:text-3xl lg:text-4xl font-semibold mb-8 sm:mb-12">
-      Location
-    </h1>
-
-    <!-- Full width & height map -->
-    <div class="map-wrapper w-full h-64 sm:h-96 lg:h-[500px] mb-8  overflow-hidden shadow-lg">
-      <div class="w-full h-full">
-        <div [innerHTML]="safeMapIframe" class="w-full h-full"></div>
-      </div>
+<section class="project-location" id="locationMap">
+  <div class="project-location__container">
+    <div class="project-location__heading">
+      <span class="project-location__eyebrow">Connected Living</span>
+      <h2 class="project-location__title">Where the City Meets Sanctuary</h2>
+      <p class="project-location__intro">
+        Perfectly situated to balance tranquility with urban energy, the address keeps you minutes from gourmet dining,
+        boutique retail, and major transit links.
+      </p>
     </div>
 
-    <!-- Optional section below map -->
-    <!-- <div class="flex justify-center items-center mt-14">
-    <button
-    (click)="onRegisterNowClick()"
-      class="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-1 space-x-2 relative overflow-hidden download-button"
-    >
-      <span class="relative z-10">Booking Now</span>
-    </button>
-  </div> -->
+    <div class="project-location__grid">
+      <div class="project-location__map">
+        <div class="project-location__map-frame">
+          <div [innerHTML]="safeMapIframe" class="project-location__map-embed"></div>
+        </div>
+      </div>
 
+      <aside class="project-location__info">
+        <h3>Neighborhood Highlights</h3>
+        <ul>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2C8.13401 2 5 5.07443 5 8.97272C5 13.8323 11.0743 20.2749 11.3386 20.5485C11.7158 20.9389 12.2842 20.9388 12.6614 20.5485C12.9257 20.2749 19 13.8323 19 8.97272C19 5.07443 15.866 2 12 2Z"
+              />
+              <path d="M12 11.4782C10.316 11.4782 8.94882 10.089 8.94882 8.37876C8.94882 6.66852 10.316 5.2793 12 5.2793C13.684 5.2793 15.0512 6.66852 15.0512 8.37876C15.0512 10.089 13.684 11.4782 12 11.4782Z" />
+            </svg>
+            Reside within a walkable enclave surrounded by lush parks and cultural experiences.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 7.5L12 3L21 7.5L12 12L3 7.5Z" />
+              <path d="M3 12.5L12 17L21 12.5" />
+              <path d="M3 16.5L12 21L21 16.5" />
+            </svg>
+            Effortless access to business districts, education hubs, and weekend getaways via major roads.
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 10.5L12 6L19 10.5V18.5C19 19.3284 18.3284 20 17.5 20H6.5C5.67157 20 5 19.3284 5 18.5V10.5Z" />
+              <path d="M9 20V12H15V20" />
+            </svg>
+            A serene retreat after a vibrant day—crafted for those who appreciate balance and design.
+          </li>
+        </ul>
+        <a class="project-location__cta" href="#contacting">Plan Your Visit</a>
+      </aside>
+    </div>
   </div>
-</div>
+</section>

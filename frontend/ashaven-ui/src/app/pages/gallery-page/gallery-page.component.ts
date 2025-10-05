@@ -24,6 +24,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   lightboxOpen = false;
   currentIndex = 0;
   baseUrl = environment.baseUrl;
+  activeFilter: 'all' | 'image' | 'video' = 'all';
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -57,12 +58,99 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  get filteredGalleryItems(): GalleryItem[] {
+    if (this.activeFilter === 'image') {
+      return this.galleryItems.filter((item) => this.isImage(item));
+    }
+    if (this.activeFilter === 'video') {
+      return this.galleryItems.filter((item) => this.isVideo(item));
+    }
+    return this.galleryItems;
+  }
+
+  get featuredItem(): GalleryItem | null {
+    return this.filteredGalleryItems[0] || null;
+  }
+
+  get supportingItems(): GalleryItem[] {
+    return this.filteredGalleryItems.slice(1);
+  }
+
+  get totalItems(): number {
+    return this.galleryItems.length;
+  }
+
+  get totalImages(): number {
+    return this.galleryItems.filter((item) => this.isImage(item)).length;
+  }
+
+  get totalVideos(): number {
+    return this.galleryItems.filter((item) => this.isVideo(item)).length;
+  }
+
   get currentItem(): GalleryItem | null {
     return this.galleryItems[this.currentIndex] || null;
   }
 
   onImageError(event: Event): void {
     this.imageError.emit(event);
+  }
+
+  setFilter(filter: 'all' | 'image' | 'video'): void {
+    this.activeFilter = filter;
+    const nextItem = this.filteredGalleryItems[0];
+
+    if (nextItem) {
+      const nextIndex = this.galleryItems.findIndex(
+        (item) => item.id === nextItem.id
+      );
+      this.currentIndex = nextIndex !== -1 ? nextIndex : 0;
+    } else {
+      this.currentIndex = 0;
+    }
+
+    if (
+      this.lightboxOpen &&
+      (!this.currentItem ||
+        !this.filteredGalleryItems.some(
+          (item) => item.id === this.currentItem?.id
+        ))
+    ) {
+      this.closeLightbox();
+    } else {
+      this.cdr.detectChanges();
+    }
+  }
+
+  openItem(item: GalleryItem): void {
+    const actualIndex = this.galleryItems.findIndex(
+      (galleryItem) => galleryItem.id === item.id
+    );
+    if (actualIndex !== -1) {
+      this.openLightbox(actualIndex);
+    }
+  }
+
+  mediaUrl(item: GalleryItem): string {
+    return `${this.baseUrl}/api/attachment/get/${item.contentName}`;
+  }
+
+  isVideo(item: GalleryItem): boolean {
+    return item.contentType?.toLowerCase() === 'video';
+  }
+
+  isImage(item: GalleryItem): boolean {
+    return item.contentType?.toLowerCase() === 'image';
+  }
+
+  getAriaLabel(item: GalleryItem): string {
+    const typeLabel = this.isVideo(item) ? 'Video' : 'Image';
+    const title = item.title?.trim().length ? item.title : 'Gallery item';
+    return `${typeLabel}: ${title}`;
+  }
+
+  trackById(_: number, item: GalleryItem): string {
+    return item.id;
   }
 
   openLightbox(index: number): void {

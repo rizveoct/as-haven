@@ -1,23 +1,40 @@
-<div class="relative">
-
-  <!-- Hero Banner with fixed parallax -->
-  <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-    <!-- Background Image -->
-    <div 
-      class="absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
-      style="background-image: url('/images/banner/banner-3.png');"
-      [ngStyle]="{'transform': 'translateY(' + (scrollY * 0.3 - 60) + 'px)'}">
+<section class="gallery-hero" aria-labelledby="galleryHeroTitle">
+  <div class="gallery-hero__background">
+    <div
+      class="gallery-hero__media"
+      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.2) + 'px)' }"
+    >
+      <img
+        src="/images/banner/banner-3.png"
+        alt="Gallery showcase"
+        loading="lazy"
+      />
     </div>
+    <div class="gallery-hero__gradient"></div>
+    <div class="gallery-hero__glow gallery-hero__glow--left"></div>
+    <div class="gallery-hero__glow gallery-hero__glow--right"></div>
+  </div>
 
-    <!-- Optional overlay -->
-    <div class="absolute inset-0 bg-black/40"></div>
-
-    <!-- Centered content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full px-5 gap-2">
-      <div class="inline-flex items-baseline gap-2 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg max-w-[85%]">
-        <h1 class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--light)]">Gallery</h1>
+  <div class="gallery-hero__content">
+    <div class="gallery-hero__badge">Immersive showcase</div>
+    <h1 class="gallery-hero__title" id="galleryHeroTitle">Gallery</h1>
+    <p class="gallery-hero__subtitle">
+      Discover the crafted stories, moods, and spaces that define AS Haven.
+    </p>
+    <nav class="gallery-hero__breadcrumb" aria-label="Breadcrumb">
+      <a routerLink="/" class="gallery-hero__breadcrumb-link">Home</a>
+      <span aria-hidden="true" class="gallery-hero__breadcrumb-separator">/</span>
+      <span class="gallery-hero__breadcrumb-current">Gallery</span>
+    </nav>
+    <div class="gallery-hero__meta">
+      <div class="gallery-hero__meta-card">
+        <span class="gallery-hero__meta-eyebrow">Curated visions</span>
+        <span class="gallery-hero__meta-value">Architectural artistry</span>
       </div>
-      <p class="text-lg sm:text-xl text-[var(--light)]">Home > Gallery</p>
+      <div class="gallery-hero__meta-card">
+        <span class="gallery-hero__meta-eyebrow">Experience</span>
+        <span class="gallery-hero__meta-value">Still &amp; motion stories</span>
+      </div>
     </div>
   </div>
-</div>
+</section>

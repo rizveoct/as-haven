@@ -1,6 +1,12 @@
+.side-panel {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.96), rgba(241, 251, 236, 0.92));
+  backdrop-filter: blur(16px);
+  border-left: 1px solid rgba(32, 71, 38, 0.08);
+}
+
 .side-panel.open {
   right: 0;
-  background-color: var(--accentLight);
+  background-color: rgba(241, 251, 236, 0.98);
   box-shadow: rgba(0, 0, 0, 0.6) 0px -7px 27px 3px;
 }
 

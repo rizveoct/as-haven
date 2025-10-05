@@ -6,9 +6,9 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding: clamp(0.35rem, 1.4vw, 0.85rem) 0;
-  transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1),
-    opacity 0.6s ease, filter 0.6s ease;
+  padding: clamp(0.5rem, 1.8vw, 1.1rem) 0;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 1s ease, filter 1s ease;
 }
 
 .neo-nav.hide-navbar {
@@ -137,7 +137,7 @@
 }
 
 .neo-nav__brand-copy img {
-  height: clamp(42px, 5vw, 48px);
+  height: 38px;
   width: auto;
 }
 
@@ -217,7 +217,7 @@
 @media (max-width: 767px) {
   .neo-nav__inner {
     gap: clamp(0.5rem, 3vw, 1rem);
-    padding: clamp(0.35rem, 3vw, 0.6rem) clamp(0.75rem, 5vw, 1.25rem);
+    padding: clamp(0.45rem, 3.5vw, 0.75rem) clamp(0.75rem, 5vw, 1.25rem);
   }
 
   .neo-nav__brand {

@@ -1,119 +1,75 @@
-<div class="py-16" id="atGlance">
-  <div class="w-[85%] mx-auto">
-    <div class="md:flex md:flex-row mb-16 gap-8">
-      <!-- Right: Details -->
-      <div class="w-full md:w-1/2">
-        <h1
-          class="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#1f2d46] mb-12"
-        >
-          At a Glance
-        </h1>
+<section class="glance" id="atGlance">
+  <div class="glance__backdrop"></div>
+  <div class="glance__container">
+    <div class="glance__heading">
+      <span class="glance__eyebrow">Project Summary</span>
+      <h2 class="glance__title">At a Glance</h2>
+      <p class="glance__intro">
+        A curated overview of the residence, from generous floor plans to thoughtful services that elevate daily living.
+        Explore key information, specifications, and inspiration in one beautifully organized space.
+      </p>
+    </div>
 
-        <table class="w-full text-[#1f2d46] font-sans">
-          <tbody class="divide-y divide-gray-200">
-            <tr>
-              <td class="py-4 px-2 font-semibold w-36">Address:</td>
-              <td class="py-4 px-2">{{ project?.address || "None" }}</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Land Area:</td>
-              <td class="py-4 px-2">{{ project?.landArea || "None" }}</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Height:</td>
-              <td class="py-4 px-2">{{ project?.height || "None" }}</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Building Type:</td>
-              <td class="py-4 px-2">{{ project?.type || "None" }}</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Number Of Apartments:</td>
-              <td class="py-4 px-2">
-                {{ project?.numberOfApartments || "None" }}
-              </td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Number Of Car Parking:</td>
-              <td class="py-4 px-2">
-                {{ project?.numberOfParking || "None" }}
-              </td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Number Of Motor Bike Parking:</td>
-              <td class="py-4 px-2">
-                {{ project?.noOfMotorParking || "None" }}
-              </td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Units Per Floor:</td>
-              <td class="py-4 px-2">{{ project?.unitPerFloors || "None" }}</td>
-            </tr>
-            <tr>
-              <td class="py-4 px-2 font-semibold">Size Of Each Apartment:</td>
-              <td class="py-4 px-2">
-                {{ project?.sizeOfEachApartment || "None" }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <button
-          (click)="downloadPdf(project?.pdfFile)"
-          [disabled]="!project?.pdfFile"
-          class="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-1 space-x-2 relative overflow-hidden download-button"
-        >
-          <svg
-            *ngIf="project?.pdfFile"
-            class="w-5 h-5 relative z-10"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            ></path>
-          </svg>
-          <span class="relative z-10">Project Brochure</span>
-        </button>
+    <div class="glance__highlights" *ngIf="quickFacts.length">
+      <div class="glance__highlight" *ngFor="let fact of quickFacts">
+        <span class="glance__highlight-label">{{ fact.label }}</span>
+        <span class="glance__highlight-value">{{ fact.value }}</span>
       </div>
-      <!-- Left: Image/Video -->
-      <div class="w-full md:w-1/2">
-        <div *ngIf="project?.contentType === 'Image'" class="mt-5">
+    </div>
+
+    <div class="glance__grid">
+      <div class="glance__media">
+        <ng-container [ngSwitch]="project?.contentType">
           <img
-            class="w-full h-80 sm:h-96 md:h-[600px] lg:h-[700px] xl:h-[800px] object-cover rounded-lg"
+            *ngSwitchCase="'Image'"
+            class="glance__media-img"
             [src]="baseUrl + '/api/attachment/get/' + project?.content"
             alt="Project image"
             (error)="onImageError($event)"
           />
-        </div>
 
-        <div *ngIf="project?.contentType === 'Video'" class="mt-5">
-          <video
-            class="w-full h-80 sm:h-96 md:h-[600px] lg:h-[700px] xl:h-[800px] rounded-lg"
-            controls
-          >
+          <video *ngSwitchCase="'Video'" class="glance__media-video" controls>
             <source
               [src]="baseUrl + '/api/attachment/get/' + project?.content"
               type="video/mp4"
             />
             Your browser does not support the video tag.
           </video>
+
+          <div *ngSwitchDefault class="glance__media-placeholder">
+            <span>No gallery available</span>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="glance__details">
+        <h3 class="glance__details-title">Key Details</h3>
+        <table class="glance__table">
+          <tbody>
+            <tr *ngFor="let row of detailRows">
+              <td class="glance__table-label">{{ row.label }}</td>
+              <td class="glance__table-value">{{ row.value }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="glance__actions">
+          <button
+            (click)="downloadPdf(project?.pdfFile)"
+            [disabled]="!project?.pdfFile"
+            class="glance__button glance__button--primary"
+          >
+            Project Brochure
+          </button>
+          <button
+            type="button"
+            class="glance__button glance__button--ghost"
+            (click)="onRegisterNowClick()"
+          >
+            Register Interest
+          </button>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- <div class="flex justify-center items-center mt-14">
-    <button
-    (click)="onRegisterNowClick()"
-      class="inline-flex items-center justify-center px-6 py-3 bg-accent text-white font-semibold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:-translate-y-1 space-x-2 relative overflow-hidden download-button"
-    >
-      <span class="relative z-10">Booking Now</span>
-    </button>
-  </div> -->
-</div>
+</section>

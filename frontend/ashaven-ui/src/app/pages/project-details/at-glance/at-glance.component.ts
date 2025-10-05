@@ -48,4 +48,43 @@ export class AtGlanceComponent {
       },
     });
   }
+
+  get quickFacts(): { label: string; value: string }[] {
+    const facts: { label: string; value: unknown }[] = [
+      { label: 'Land Area', value: this.project?.landArea },
+      { label: 'Floors', value: this.project?.height },
+      { label: 'Apartments', value: this.project?.numberOfApartments },
+      { label: 'Car Parking', value: this.project?.numberOfParking },
+      { label: 'Units / Floor', value: this.project?.unitPerFloors },
+    ];
+
+    return facts
+      .filter((fact) => {
+        if (fact.value === null || fact.value === undefined) {
+          return false;
+        }
+        return `${fact.value}`.trim().length > 0;
+      })
+      .slice(0, 4)
+      .map((fact) => ({ label: fact.label, value: `${fact.value}` }));
+  }
+
+  get detailRows(): { label: string; value: string }[] {
+    const rows: { label: string; value: string | null | undefined }[] = [
+      { label: 'Address', value: this.project?.address },
+      { label: 'Land Area', value: this.project?.landArea },
+      { label: 'Building Height', value: this.project?.height },
+      { label: 'Building Type', value: this.project?.type },
+      { label: 'Apartments', value: this.project?.numberOfApartments },
+      { label: 'Car Parking', value: this.project?.numberOfParking },
+      { label: 'Motorbike Parking', value: this.project?.noOfMotorParking },
+      { label: 'Units per Floor', value: this.project?.unitPerFloors },
+      { label: 'Apartment Size', value: this.project?.sizeOfEachApartment },
+    ];
+
+    return rows.map((row) => ({
+      label: row.label,
+      value: row.value && `${row.value}`.trim().length > 0 ? `${row.value}` : '—',
+    }));
+  }
 }

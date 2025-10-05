@@ -11,6 +11,7 @@ export class LenisService {
   private router = inject(Router);
   private rafId?: number;
   private motionQuery?: MediaQueryList;
+  private viewportQuery?: MediaQueryList;
 
   constructor() {
     if (typeof window === 'undefined') {
@@ -34,6 +35,22 @@ export class LenisService {
       motionQuery.addListener(handleMotionPreference);
     }
 
+    this.viewportQuery = window.matchMedia('(max-width: 767px)');
+    const viewportQuery = this.viewportQuery;
+    const handleViewportChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        this.stopLenis();
+      } else {
+        this.init();
+      }
+    };
+
+    if (typeof viewportQuery.addEventListener === 'function') {
+      viewportQuery.addEventListener('change', handleViewportChange);
+    } else if (typeof viewportQuery.addListener === 'function') {
+      viewportQuery.addListener(handleViewportChange);
+    }
+
     this.init();
     this.handleRouteChange();
   }
@@ -54,9 +71,19 @@ export class LenisService {
       return;
     }
 
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+    const viewportQuery = this.viewportQuery ?? window.matchMedia('(max-width: 767px)');
+    if (viewportQuery.matches) {
+      this.stopLenis();
+      return;
+    }
+
+    const prefersTouchInput = window.matchMedia('(pointer: coarse)').matches;
 
     this.stopLenis();
+
+    if (prefersTouchInput) {
+      return;
+    }
 
     this.lenis = new Lenis({
       duration: 1.05,

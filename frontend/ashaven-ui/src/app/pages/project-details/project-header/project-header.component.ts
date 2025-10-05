@@ -1,14 +1,8 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  AfterViewChecked,
-  ElementRef,
-  ViewChild,
-  HostListener,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+
+type HeroStat = { label: string; value: string };
 
 @Component({
   selector: 'app-project-header',
@@ -17,83 +11,49 @@ import { RouterModule } from '@angular/router';
   templateUrl: './project-header.component.html',
   styleUrls: ['./project-header.component.css'],
 })
-export class ProjectHeaderComponent implements AfterViewInit, AfterViewChecked {
-  @Input() project: any; // Replace with your Project interface
-  @Input() baseUrl: string = ''; // Base URL for API
+export class ProjectHeaderComponent {
+  @Input() project: any;
+  @Input() baseUrl: string = '';
 
-  @ViewChild('parallaxContainer') parallaxContainer?: ElementRef;
-  @ViewChild('parallaxImage') parallaxImage?: ElementRef;
-  @ViewChild('parallaxImageRight') parallaxImageRight?: ElementRef;
-
-  imageError: boolean = false;
-  private ticking = false;
-
-  ngAfterViewInit() {
-    // Run initial update after DOM is painted
-    setTimeout(() => this.updateParallax(), 0);
+  get heroImage(): string {
+    if (this.project?.thumbnail && this.project?.content) {
+      return `url(${this.baseUrl}/api/attachment/get/${this.project.thumbnail})`;
+    }
+    return 'url(/images/fallback.png)';
   }
 
-  ngAfterViewChecked() {
-    // Ensure async-loaded content also gets parallax applied
-    this.updateParallax();
+  get heroStats(): HeroStat[] {
+    const stats: { label: string; value: unknown }[] = [
+      { label: 'Land Area', value: this.project?.landArea },
+      { label: 'Floors', value: this.project?.height },
+      { label: 'Apartments', value: this.project?.numberOfApartments },
+      { label: 'Parking', value: this.project?.numberOfParking },
+      { label: 'Units / Floor', value: this.project?.unitPerFloors },
+    ];
+
+    return stats
+      .filter((stat) => {
+        if (stat.value === null || stat.value === undefined) {
+          return false;
+        }
+        return `${stat.value}`.trim().length > 0;
+      })
+      .slice(0, 4)
+      .map((stat) => ({ label: stat.label, value: `${stat.value}` }));
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll() {
-    if (!this.ticking) {
-      window.requestAnimationFrame(() => {
-        this.updateParallax();
-        this.ticking = false;
-      });
-      this.ticking = true;
-    }
+  get location(): string {
+    return this.project?.address || 'No address available';
   }
 
-  updateParallax() {
-    if (
-      !this.parallaxContainer ||
-      !this.parallaxImage ||
-      !this.parallaxImageRight
-    ) {
-      return; // Exit safely if elements are not available
+  get projectTypeBadge(): string | null {
+    if (!this.project?.type) {
+      return null;
     }
-
-    const container = this.parallaxContainer.nativeElement;
-    const imgLeft = this.parallaxImage.nativeElement;
-    const imgRight = this.parallaxImageRight.nativeElement;
-
-    if (!container || !imgLeft || !imgRight) {
-      return;
-    }
-
-    const rect = container.getBoundingClientRect();
-    const windowHeight = window.innerHeight;
-
-    // Only apply parallax when container is in view
-    if (rect.top < windowHeight && rect.bottom > 0) {
-      const scrollY = window.scrollY || window.pageYOffset;
-      const offset = rect.top + scrollY;
-      const speed = 0.1; // Further reduced for minimal movement
-      const translateY = (scrollY - offset) * speed;
-
-      // Apply parallax to both images
-      imgLeft.style.transform = `translateY(${translateY}px)`;
-      imgRight.style.transform = `translateY(${translateY}px)`;
-
-      // Debug dimensions
-      console.log('Container:', rect.width, rect.height);
-      console.log('Left Image:', imgLeft.naturalWidth, imgLeft.naturalHeight);
-      console.log(
-        'Right Image:',
-        imgRight.naturalWidth,
-        imgRight.naturalHeight
-      );
-    }
+    return `${this.project.type} Collection`;
   }
 
-  onImageError(event: Event) {
-    const img = event.target as HTMLImageElement;
-    img.src = 'assets/images/fallback.png';
-    this.imageError = true;
+  get projectTitle(): string {
+    return this.project?.name || 'Project Details';
   }
 }

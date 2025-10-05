@@ -1,92 +1,227 @@
 <app-gallery-hero />
 
-<section
-  class="project-gallery py-12 sm:py-16 lg:py-20 bg-light"
-  id="projectGallery"
->
-  <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2
-      class="text-2xl sm:text-3xl md:text-4xl font-poppins font-bold text-dark mb-6 sm:mb-8 text-center fade-up"
-    >
-      Project Gallery
-    </h2>
+<section class="gallery-section" id="projectGallery">
+  <div class="gallery-section__aurora"></div>
+  <div class="gallery-section__aurora gallery-section__aurora--right"></div>
 
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 fade-up"
-    >
-      <div
-        *ngFor="let item of galleryItems; let i = index"
-        class="relative overflow-hidden bg-white shadow-lg hover:shadow-xl transition cursor-pointer rounded-lg"
-        (click)="openLightbox(i)"
-      >
-        <img
-          *ngIf="item.contentType === 'Image'"
-          [src]="baseUrl + '/api/attachment/get/' + item.contentName"
-          [alt]="item.title"
-          class="w-full h-48 sm:h-56 md:h-60 lg:h-64 object-cover rounded-lg"
-          (error)="onImageError($event)"
-        />
-        <video
-          *ngIf="item.contentType === 'Video'"
-          [src]="baseUrl + '/api/attachment/get/' + item.contentName"
-          controls
-          class="w-full h-48 sm:h-56 md:h-60 lg:h-64 object-cover rounded-lg"
-          (error)="onImageError($event)"
-        >
-        </video>
+  <div class="gallery-section__container">
+    <div class="gallery-section__intro fade-up">
+      <span class="gallery-section__eyebrow">Immersive Moments</span>
+      <div class="gallery-section__heading">
+        <h2 class="gallery-section__title">Project Gallery</h2>
+        <p class="gallery-section__description">
+          From visionary renderings to lived-in scenes, explore the crafted
+          stories that define AS Haven. Each capture celebrates the light,
+          textures, and perspectives that make our residences feel like art.
+        </p>
       </div>
 
-      <!-- Empty state -->
-      <div
-        *ngIf="!galleryItems.length"
-        class="col-span-full text-center py-8 text-dark font-poppins bg-accent-light/20 rounded-2xl"
-      >
-        No gallery items available. Please check back later.
+      <div class="gallery-section__meta">
+        <div class="gallery-stat">
+          <span class="gallery-stat__value">{{ totalItems }}</span>
+          <span class="gallery-stat__label">Showcased stories</span>
+        </div>
+        <div class="gallery-stat">
+          <span class="gallery-stat__value">{{ totalImages }}</span>
+          <span class="gallery-stat__label">Signature stills</span>
+        </div>
+        <div class="gallery-stat">
+          <span class="gallery-stat__value">{{ totalVideos }}</span>
+          <span class="gallery-stat__label">Immersive reels</span>
+        </div>
       </div>
     </div>
+
+    <div
+      class="gallery-section__filters fade-up"
+      role="tablist"
+      aria-label="Gallery filters"
+    >
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'all'"
+        (click)="setFilter('all')"
+        [attr.aria-pressed]="activeFilter === 'all'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'all'"
+      >
+        All
+        <span class="gallery-filter__count">{{ totalItems }}</span>
+      </button>
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'image'"
+        (click)="setFilter('image')"
+        [attr.aria-pressed]="activeFilter === 'image'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'image'"
+      >
+        Images
+        <span class="gallery-filter__count">{{ totalImages }}</span>
+      </button>
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'video'"
+        (click)="setFilter('video')"
+        [attr.aria-pressed]="activeFilter === 'video'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'video'"
+      >
+        Videos
+        <span class="gallery-filter__count">{{ totalVideos }}</span>
+      </button>
+    </div>
+
+    <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">
+      <div class="gallery-section__grid fade-up">
+        <ng-container *ngIf="featuredItem as hero">
+          <button
+            type="button"
+            class="gallery-card gallery-card--featured"
+            (click)="openItem(hero)"
+            [attr.aria-label]="getAriaLabel(hero)"
+          >
+            <span class="gallery-card__media">
+              <img
+                *ngIf="isImage(hero)"
+                [src]="mediaUrl(hero)"
+                [alt]="hero.title"
+                loading="lazy"
+                class="gallery-card__media-el"
+                (error)="onImageError($event)"
+              />
+              <video
+                *ngIf="isVideo(hero)"
+                [src]="mediaUrl(hero)"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                class="gallery-card__media-el"
+                (error)="onImageError($event)"
+              ></video>
+            </span>
+
+            <span class="gallery-card__overlay">
+              <span class="gallery-card__chip" [class.is-video]="isVideo(hero)">
+                {{ isVideo(hero) ? 'Video' : 'Image' }}
+              </span>
+              <span class="gallery-card__title">
+                {{ hero.title || 'Untitled showcase' }}
+              </span>
+              <span
+                *ngIf="hero.description"
+                class="gallery-card__description"
+                >{{ hero.description }}</span
+              >
+              <span class="gallery-card__cta">View showcase</span>
+            </span>
+          </button>
+        </ng-container>
+
+        <div class="gallery-section__grid-inner">
+          <button
+            type="button"
+            class="gallery-card"
+            *ngFor="let item of supportingItems; trackBy: trackById"
+            (click)="openItem(item)"
+            [attr.aria-label]="getAriaLabel(item)"
+          >
+            <span class="gallery-card__media">
+              <img
+                *ngIf="isImage(item)"
+                [src]="mediaUrl(item)"
+                [alt]="item.title"
+                loading="lazy"
+                class="gallery-card__media-el"
+                (error)="onImageError($event)"
+              />
+              <video
+                *ngIf="isVideo(item)"
+                [src]="mediaUrl(item)"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                class="gallery-card__media-el"
+                (error)="onImageError($event)"
+              ></video>
+            </span>
+
+            <span class="gallery-card__overlay">
+              <span class="gallery-card__chip" [class.is-video]="isVideo(item)">
+                {{ isVideo(item) ? 'Video' : 'Image' }}
+              </span>
+              <span class="gallery-card__title">
+                {{ item.title || 'Untitled showcase' }}
+              </span>
+              <span
+                *ngIf="item.description"
+                class="gallery-card__description"
+                >{{ item.description }}</span
+              >
+            </span>
+          </button>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </section>
+
+<ng-template #emptyGallery>
+  <div class="gallery-empty fade-up">
+    <div class="gallery-empty__card">
+      <span class="gallery-empty__eyebrow">Gallery coming soon</span>
+      <p class="gallery-empty__title">We are curating something special.</p>
+      <p class="gallery-empty__copy">
+        Our creative team is capturing new moments from the latest residences.
+        Check back shortly to experience the next chapter of AS Haven.
+      </p>
+    </div>
+  </div>
+</ng-template>
 
 <!-- Lightbox Modal -->
 <div
   *ngIf="lightboxOpen && currentItem"
-  class="fixed inset-0 md:mt-16 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4 sm:p-6"
+  class="gallery-lightbox"
   (touchstart)="onTouchStart($event)"
   (touchend)="onTouchEnd($event)"
 >
-  <div class="relative w-full max-w-3xl sm:max-w-5xl">
-    <!-- Close button -->
+  <div class="gallery-lightbox__content">
     <button
-      class="absolute top-2 right-2 sm:top-4 sm:right-4 text-white text-2xl sm:text-3xl z-50 bg-black/50 hover:bg-black/70 rounded-full p-1"
+      class="gallery-lightbox__close"
       (click)="closeLightbox()"
       aria-label="Close lightbox"
     >
-      ✖
+      <span aria-hidden="true">×</span>
     </button>
 
-    <!-- Image / Video -->
     <ng-container *ngIf="currentItem">
       <img
-        *ngIf="currentItem.contentType === 'Image'"
-        [src]="baseUrl + '/api/attachment/get/' + currentItem.contentName"
+        *ngIf="isImage(currentItem)"
+        [src]="mediaUrl(currentItem)"
         [alt]="currentItem.title"
-        class="w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg"
+        class="gallery-lightbox__media"
         (error)="onImageError($event)"
       />
 
       <video
-        *ngIf="currentItem.contentType === 'Video'"
-        [src]="baseUrl + '/api/attachment/get/' + currentItem.contentName"
+        *ngIf="isVideo(currentItem)"
+        [src]="mediaUrl(currentItem)"
         controls
         autoplay
-        class="w-full max-h-[70vh] sm:max-h-[80vh] object-contain rounded-lg"
+        playsinline
+        class="gallery-lightbox__media"
         (error)="onImageError($event)"
       ></video>
     </ng-container>
 
-    <!-- Prev / Next buttons -->
     <button
-      class="absolute top-1/2 left-1 sm:left-2 text-white text-3xl sm:text-4xl transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1 sm:p-2 z-50"
+      class="gallery-lightbox__nav gallery-lightbox__nav--prev"
       (click)="prevItem($event)"
       aria-label="Previous item"
     >
@@ -94,7 +229,7 @@
     </button>
 
     <button
-      class="absolute top-1/2 right-1 sm:right-2 text-white text-3xl sm:text-4xl transform -translate-y-1/2 bg-black/50 hover:bg-black/70 rounded-full p-1 sm:p-2 z-50"
+      class="gallery-lightbox__nav gallery-lightbox__nav--next"
       (click)="nextItem($event)"
       aria-label="Next item"
     >

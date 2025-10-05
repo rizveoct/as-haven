@@ -1,176 +1,171 @@
-<div class="min-h-screen bg-color-1 py-8 flex items-center justify-center font-[Inter]">
-  <div class="container mx-auto px-4 w-[85%]">
-    <div class="flex flex-col lg:flex-row gap-8 w-full mx-auto p-12">
-      <div class="flex-1 pt-20 fade-up">
-        <p class="text-green-500 font-semibold uppercase tracking-wider text-sm mb-2">
-          CONTACT
+<section id="connect" class="connect-section relative overflow-hidden">
+  <div class="connect-gradient"></div>
+  <div class="connect-aurora connect-aurora--emerald"></div>
+  <div class="connect-aurora connect-aurora--sky"></div>
+  <div class="connect-grid"></div>
+
+  <div class="relative max-w-6xl mx-auto px-6 py-24">
+    <div class="flex flex-col lg:flex-row items-start gap-12 lg:gap-16 fade-up">
+      <div class="space-y-6 lg:w-2/5">
+        <span class="connect-pill">Tell us about your vision</span>
+        <h2 class="text-3xl md:text-4xl font-semibold text-white leading-snug">
+          We orchestrate every detail—simply share your aspirations.
+        </h2>
+        <p class="text-white/80 text-base md:text-lg">
+          Complete the form and our concierge will design a bespoke plan with curated residences, floor plans, and financial guidance tailored to you.
         </p>
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-8">
-          Contact Us
-        </h1>
-
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Name Input -->
-            <div class="relative">
-              <input
-                type="text"
-                id="name"
-                formControlName="name"
-                placeholder="Full Name"
-                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
-              />
-              <label
-                for="name"
-                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
-              >
-                Full Name
-              </label>
-              <p *ngIf="isFieldInvalid('name')" class="text-red-500 text-sm mt-1">
-                Name is required and must be at least 2 characters.
-              </p>
-            </div>
-
-            <!-- Phone Input -->
-            <div class="relative">
-              <input
-                type="tel"
-                id="phone"
-                formControlName="phone"
-                placeholder="Phone Number"
-                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
-              />
-              <label
-                for="phone"
-                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
-              >
-                Phone Number
-              </label>
-            </div>
-
-            <!-- Email Input -->
-            <div class="relative">
-              <input
-                type="email"
-                id="email"
-                formControlName="email"
-                placeholder="Email"
-                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
-              />
-              <label
-                for="email"
-                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
-              >
-                Email
-              </label>
-              <p *ngIf="isFieldInvalid('email')" class="text-red-500 text-sm mt-1">
-                Valid email is required.
-              </p>
-            </div>
-
-            <!-- Subject Input -->
-            <div class="relative">
-              <input
-                type="text"
-                id="subject"
-                formControlName="subject"
-                placeholder="Subject"
-                class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent focus:border-green-500 focus:outline-none"
-              />
-              <label
-                for="subject"
-                class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
-              >
-                Subject
-              </label>
-              <p *ngIf="isFieldInvalid('subject')" class="text-red-500 text-sm mt-1">
-                Subject is required and must be at least 3 characters.
-              </p>
-            </div>
+        <div class="connect-stats">
+          <div>
+            <p class="stat-value">450+</p>
+            <p class="stat-label">Families guided home</p>
           </div>
-
-          <!-- Message Input -->
-          <div class="mt-4 relative">
-            <textarea
-              id="message"
-              formControlName="message"
-              placeholder="Message"
-              class="peer block w-full border-b border-lightDark bg-transparent py-2 text-gray-900 placeholder-transparent resize-none focus:border-green-500 focus:outline-none"
-            ></textarea>
-            <label
-              for="message"
-              class="absolute left-0 top-2 text-lightDark text-sm transition-all duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:opacity-100 opacity-0 -translate-y-5"
-            >
-              Message
-            </label>
-            <p *ngIf="isFieldInvalid('message')" class="text-red-500 text-sm mt-1">
-              Message is required and must be at least 10 characters.
-            </p>
+          <div>
+            <p class="stat-value">98%</p>
+            <p class="stat-label">Client satisfaction</p>
           </div>
-
-          <!-- Submit Button -->
-          <div class="mt-6">
-            <button
-              type="submit"
-              [disabled]="isSubmitting"
-              class="w-full md:w-auto px-9 py-5 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-600 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
-            >
-              {{ isSubmitting ? 'Sending...' : 'Send Message' }}
-            </button>
+          <div>
+            <p class="stat-value">24h</p>
+            <p class="stat-label">Average response time</p>
           </div>
-
-          <!-- Submission Feedback -->
-          <div *ngIf="submitMessage" class="mt-4 text-sm" [ngClass]="{'text-green-500': !submitMessage.includes('Error'), 'text-red-500': submitMessage.includes('Error')}">
-            {{ submitMessage }}
-          </div>
-        </form>
+        </div>
       </div>
 
-      <!-- Map -->
-      <div class="flex-1 flex justify-center items-center fade-up">
-        <div class="bg-white p-2 rounded-xl">
-          <div class="rounded-xl overflow-hidden shadow-lg relative w-[550px] h-[550px] animate-entrance">
-            <div class="absolute inset-0 bg-gray-200 animate-pulse" [class.hidden]="isMapLoaded"></div>
+      <div class="flex-1 grid grid-cols-1 xl:grid-cols-2 gap-10 w-full">
+        <div class="form-card">
+          <div class="form-header">
+            <h3>Your details</h3>
+            <p>We keep your information private and only use it to coordinate your experience.</p>
+          </div>
+
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div class="field-block">
+                <label class="field-label" for="name">Full Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  formControlName="name"
+                  class="field-input"
+                  placeholder="Enter your full name"
+                />
+                <p *ngIf="isFieldInvalid('name')" class="field-error">
+                  Name is required and must be at least 2 characters.
+                </p>
+              </div>
+
+              <div class="field-block">
+                <label class="field-label" for="phone">Phone Number</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  formControlName="phone"
+                  class="field-input"
+                  placeholder="e.g. +8801X-XXXXXXX"
+                />
+              </div>
+
+              <div class="field-block">
+                <label class="field-label" for="email">Email Address</label>
+                <input
+                  id="email"
+                  type="email"
+                  formControlName="email"
+                  class="field-input"
+                  placeholder="you@example.com"
+                />
+                <p *ngIf="isFieldInvalid('email')" class="field-error">
+                  Valid email is required.
+                </p>
+              </div>
+
+              <div class="field-block">
+                <label class="field-label" for="subject">Subject</label>
+                <input
+                  id="subject"
+                  type="text"
+                  formControlName="subject"
+                  class="field-input"
+                  placeholder="How can we help?"
+                />
+                <p *ngIf="isFieldInvalid('subject')" class="field-error">
+                  Subject is required and must be at least 3 characters.
+                </p>
+              </div>
+            </div>
+
+            <div class="field-block">
+              <label class="field-label" for="message">Project Details</label>
+              <textarea
+                id="message"
+                formControlName="message"
+                rows="4"
+                class="field-input field-textarea"
+                placeholder="Share location preferences, budget, timelines, or inspirations."
+              ></textarea>
+              <p *ngIf="isFieldInvalid('message')" class="field-error">
+                Message is required and must be at least 10 characters.
+              </p>
+            </div>
+
+            <div class="form-footer">
+              <button type="submit" [disabled]="isSubmitting" class="submit-btn">
+                {{ isSubmitting ? 'Sending...' : 'Submit enquiry' }}
+              </button>
+              <p class="privacy-note">By submitting, you agree to our friendly privacy policy.</p>
+            </div>
+
+            <div *ngIf="submitMessage" class="submit-feedback" [ngClass]="{'is-success': !submitMessage.includes('Error'), 'is-error': submitMessage.includes('Error')}">
+              {{ submitMessage }}
+            </div>
+          </form>
+        </div>
+
+        <div class="map-card">
+          <div class="map-card__header">
+            <span class="map-badge">Showroom &amp; Experience Centre</span>
+            <p>Tour our model residences, material library, and immersive planning studio.</p>
+          </div>
+          <div class="map-frame">
+            <div class="map-loading" [class.hidden]="isMapLoaded"></div>
             <iframe
               title="Office location on map"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.4565222014585!2d88.63948298340911!3d24.365417322189778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbf0303e5de2a9%3A0xa52f9edf660f1286!2sProshanti%2C%20Shaheed%20Jahan%20Ali%20Biswas%20Rd%2C%20Rajshahi!5e0!3m2!1sen!2sbd!4v1757905362847!5m2!1sen!2sbd"
-              class="absolute inset-0 w-full h-full border-0"
+              class="map-iframe"
               allowfullscreen
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
               (load)="onMapLoad()"
             ></iframe>
           </div>
+          <ul class="map-meta">
+            <li>
+              <span class="meta-title">Parking</span>
+              <span class="meta-desc">Complimentary valet on arrival</span>
+            </li>
+            <li>
+              <span class="meta-title">Weekend Hours</span>
+              <span class="meta-desc">Friday visits by appointment only</span>
+            </li>
+            <li>
+              <span class="meta-title">Virtual Access</span>
+              <span class="meta-desc">Live video tours available globally</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-
-
-<!-- Success Popup -->
-<div
-  *ngIf="showPopup"
-  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
->
-  <div class="bg-white rounded-2xl shadow-lg p-8 max-w-sm w-[90%] text-center relative">
-    <!-- Close Button -->
-    <button
-      class="absolute top-3 right-3 text-gray-600 hover:text-red-500 text-xl"
-      (click)="closePopup()"
-    >
-      ✖
-    </button>
-
-    <h3 class="text-2xl font-bold text-green-600 mb-4">🎉 Form Submitted!</h3>
-    <p class="text-gray-700">Thank you! We’ll reach out to you soon.</p>
-
-    <button
-      (click)="closePopup()"
-      class="mt-6 px-6 py-3 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
-    >
-      Close
-    </button>
+  <div
+    *ngIf="showPopup"
+    class="popup-overlay"
+  >
+    <div class="popup-card">
+      <button class="popup-close" (click)="closePopup()" aria-label="Close success message">✖</button>
+      <div class="popup-icon">🎉</div>
+      <h3>Form submitted!</h3>
+      <p>Thank you for reaching out. One of our specialists will connect with you shortly.</p>
+      <button class="submit-btn" (click)="closePopup()">Close</button>
+    </div>
   </div>
-</div>
+</section>

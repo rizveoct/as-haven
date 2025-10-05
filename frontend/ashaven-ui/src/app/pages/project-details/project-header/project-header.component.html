@@ -1,66 +1,48 @@
-<!-- MOBILE VIEW: keep as-is -->
-<div class="relative h-[50vh] md:hidden">
-  <div
-    class="h-full w-full bg-img"
-    [style.backgroundImage]="
-      project?.content
-        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
-        : 'url(/images/fallback.png)'
-    "
-  >
-    <!-- Dark overlay -->
-    <div class="absolute inset-0 bg-black/40"></div>
+<section class="project-hero" [style.backgroundImage]="heroImage">
+  <div class="project-hero__overlay"></div>
+  <div class="project-hero__glow project-hero__glow--one"></div>
+  <div class="project-hero__glow project-hero__glow--two"></div>
 
-    <div
-      class="relative z-10 h-full flex flex-col justify-center w-[85%] max-w-[85vw] pl-6"
-    >
-      <h1
-        class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-serif font-bold mb-2"
-      >
-        {{ project?.name || "Project Details" }}
-      </h1>
-      <p class="text-base md:text-lg lg:text-xl text-accentLight">
-        {{ project?.address || "No address available" }}
-      </p>
+  <div class="project-hero__content">
+    <div class="project-hero__badge" *ngIf="projectTypeBadge as badge">{{ badge }}</div>
+
+    <h1 class="project-hero__title">{{ projectTitle }}</h1>
+
+    <div class="project-hero__location">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 2.75C8.27208 2.75 5.25 5.77208 5.25 9.5C5.25 14.0781 11.1188 21.0554 11.3736 21.3547C11.7127 21.7528 12.2872 21.7527 12.6264 21.3547C12.8812 21.0554 18.75 14.0781 18.75 9.5C18.75 5.77208 15.7279 2.75 12 2.75Z"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M12 12.25C10.4812 12.25 9.25 11.0188 9.25 9.5C9.25 7.98122 10.4812 6.75 12 6.75C13.5188 6.75 14.75 7.98122 14.75 9.5C14.75 11.0188 13.5188 12.25 12 12.25Z"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span>{{ location }}</span>
+    </div>
+
+    <p class="project-hero__description">
+      Discover a sanctuary of contemporary architecture and bespoke amenities, crafted to elevate everyday moments for residents
+      and guests alike. Each detail has been considered to celebrate the skyline and the vibrant neighborhood below.
+    </p>
+
+    <div class="project-hero__stats" *ngIf="heroStats.length">
+      <div class="project-hero__stat" *ngFor="let stat of heroStats">
+        <span class="project-hero__stat-label">{{ stat.label }}</span>
+        <span class="project-hero__stat-value">{{ stat.value }}</span>
+      </div>
+    </div>
+
+    <div class="project-hero__actions">
+      <a class="project-hero__action project-hero__action--primary" href="#contacting">Book a Private Tour</a>
+      <a class="project-hero__action project-hero__action--secondary" href="#featureAndAmenities">Explore Amenities</a>
     </div>
   </div>
-</div>
-
-<!-- DESKTOP VIEW: full height, image shown twice horizontally (50% + 50%) -->
-<div class="hidden md:flex h-[100vh]">
-  <!-- Left half -->
-  <div
-    class="w-1/2 h-full bg-img relative"
-    [style.backgroundImage]="
-      project?.content
-        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
-        : 'url(/images/fallback.png)'
-    "
-  >
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div
-      class="relative z-10 h-full flex flex-col justify-center w-[85%] max-w-[85%] pl-16 lg:pl-24"
-    >
-      <h1
-        class="text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white font-serif font-bold mb-2"
-      >
-        {{ project?.name || "Project Details" }}
-      </h1>
-      <p class="text-base md:text-lg lg:text-xl text-accentLight">
-        {{ project?.address || "No address available" }}
-      </p>
-    </div>
-  </div>
-
-  <!-- Right half (duplicate image) -->
-  <div
-    class="w-1/2 h-full bg-img relative"
-    [style.backgroundImage]="
-      project?.content
-        ? 'url(' + baseUrl + '/api/attachment/get/' + project.thumbnail + ')'
-        : 'url(/images/fallback.png)'
-    "
-  >
-    <div class="absolute inset-0 bg-black/40"></div>
-  </div>
-</div>
+</section>

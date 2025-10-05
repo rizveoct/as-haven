@@ -1,145 +1,198 @@
-<div class="relative">
-  <!-- Hero Banner with fixed parallax -->
-  <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-    <!-- Background Image -->
+<div class="projects-page relative overflow-hidden">
+  <!-- Hero Banner with enhanced storytelling -->
+  <section class="hero-section relative">
     <div
-      class="absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
+      class="hero-bg absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
       style="background-image: url('/images/banner/banner-3.png')"
       [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
     ></div>
 
-    <!-- Optional overlay -->
-    <div class="absolute inset-0 bg-black/40"></div>
+    <div class="hero-overlay absolute inset-0"></div>
 
-    <!-- Centered content -->
-    <div
-      class="relative z-10 flex flex-col items-center justify-center h-full px-5 gap-2 "
-    >
-      <div
-        class="inline-flex items-baseline gap-2 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg max-w-[85%]"
-      >
-        <h1
-          class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--light)]"
+    <div class="hero-content relative z-10 w-[90%] sm:w-[85%] lg:w-[70%] mx-auto">
+      <span class="hero-badge">Signature Collection</span>
+      <h1 class="hero-title text-[var(--light)]">
+        Projects crafted to elevate every horizon
+      </h1>
+      <p class="hero-subtitle text-[var(--light)]/80">
+        Explore our portfolio of curated developments where contemporary design,
+        sustainable practices, and purposeful spaces come together. Tailor your
+        search to uncover ongoing landmarks, future icons, and celebrated
+        communities ready for you today.
+      </p>
+      <div class="hero-actions flex flex-col sm:flex-row items-center gap-4">
+        <a
+          href="#project-filters"
+          class="hero-primary"
         >
-          Projects
-        </h1>
+          Explore Projects
+          <i class="ri-arrow-right-up-line"></i>
+        </a>
+        <div class="hero-stats grid grid-cols-2 gap-4">
+          <div class="hero-stat">
+            <span class="hero-stat__value">35+</span>
+            <span class="hero-stat__label">Completed landmarks</span>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat__value">12</span>
+            <span class="hero-stat__label">Communities in progress</span>
+          </div>
+        </div>
       </div>
-      <p class="text-lg sm:text-xl text-[var(--light)]">Home > Projects</p>
     </div>
-  </div>
+
+  </section>
 
   <!-- Filter Bar -->
-  <div class="p-6">
-    <div class="w-[85%] container mx-auto px-4">
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 items-end">
-        <!-- Category -->
-        <div>
-          <label
-            for="category"
-            class="block text-sm font-semibold text-gray-800 font-poppins mb-2"
-            >Project Category</label
-          >
-          <select
-            #categorySelect
-            id="category"
-            name="category"
-            class="w-full px-4 py-3 text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-accent"
-          >
-            <option value="all" selected>All Categories</option>
-            <option value="Ongoing">Ongoing</option>
-            <option value="Upcoming">Upcoming</option>
-            <option value="Completed">Completed</option>
-          </select>
+  <section id="project-filters" class="filter-section">
+    <div class="container w-[90%] md:w-[85%] mx-auto">
+      <div class="filter-card">
+        <div class="filter-card__header">
+          <div>
+            <h2>Tailor your discovery</h2>
+            <p>
+              Narrow the collection by project momentum and typology to find the
+              experience that aligns with your aspirations.
+            </p>
+          </div>
+          <div class="filter-card__legend">
+            <span class="legend-dot legend-dot--ongoing"></span> Ongoing
+            <span class="legend-dot legend-dot--upcoming"></span> Upcoming
+            <span class="legend-dot legend-dot--completed"></span> Completed
+          </div>
         </div>
+        <div class="filter-grid">
+          <!-- Category -->
+          <label class="filter-field">
+            <span class="filter-label">Project category</span>
+            <select
+              #categorySelect
+              id="category"
+              name="category"
+              class="filter-select"
+            >
+              <option value="all" selected>All Categories</option>
+              <option value="Ongoing">Ongoing</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Completed">Completed</option>
+            </select>
+          </label>
 
-        <!-- Type -->
-        <div>
-          <label
-            for="type"
-            class="block text-sm font-semibold text-gray-800 font-poppins mb-2"
-            >Project Type</label
-          >
-          <select
-            #typeSelect
-            id="type"
-            name="type"
-            class="w-full px-4 py-3 border-accent text-sm text-gray-800 bg-transparent focus:outline-none focus:ring-2 focus:ring-accent"
-          >
-            <option value="all" selected>All Types</option>
-            <option value="Residential">Residential</option>
-            <option value="Commercial">Commercial</option>
-          </select>
-        </div>
+          <!-- Type -->
+          <label class="filter-field">
+            <span class="filter-label">Project type</span>
+            <select
+              #typeSelect
+              id="type"
+              name="type"
+              class="filter-select"
+            >
+              <option value="all" selected>All Types</option>
+              <option value="Residential">Residential</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </label>
 
-        <!-- Actions -->
-        <div class="flex gap-3">
-          <button
-            (click)="getActiveProjects()"
-            aria-label="Apply filters"
-            class="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold bg-accent text-white transition-all duration-300 hover:bg-accent-dark rounded-lg"
-          >
-            <i class="ri-filter-line"></i>
-            Filter
-          </button>
-          <button
-            (click)="resetFilters()"
-            aria-label="Reset filters"
-            class="flex items-center justify-center gap-2 w-full py-3 text-sm font-bold text-gray-800 bg-transparent border-2 border-accent hover:text-accent hover:bg-accent/10 transition-all duration-300 rounded-lg"
-          >
-            <i class="ri-restart-line"></i>
-            Reset
-          </button>
+          <!-- Actions -->
+          <div class="filter-actions">
+            <button
+              (click)="getActiveProjects()"
+              aria-label="Apply filters"
+              class="filter-button filter-button--primary"
+            >
+              <i class="ri-filter-line"></i>
+              Filter results
+            </button>
+            <button
+              (click)="resetFilters()"
+              aria-label="Reset filters"
+              class="filter-button filter-button--ghost"
+            >
+              <i class="ri-restart-line"></i>
+              Reset
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Projects Grid -->
-  <div class="py-16">
-    <div class="container w-[85%] mx-auto px-4">
-      <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4"
-      >
-        <div
+  <section class="projects-section">
+    <div class="container w-[90%] md:w-[85%] mx-auto">
+      <header class="projects-header">
+        <div>
+          <h2>Featured developments</h2>
+          <p>
+            Each destination blends architecture, landscape, and lifestyle to
+            create spaces that feel timeless from day one.
+          </p>
+        </div>
+        <div class="projects-count" *ngIf="state.list.length">
+          <span>{{ state.list.length }}</span>
+          curated results
+        </div>
+      </header>
+
+      <div class="projects-grid">
+        <article
           *ngFor="let item of state.list"
-          class="group relative flex flex-col max-w-[400px] w-full"
+          class="project-card group"
         >
           <a
             [routerLink]="['/projectdetails', item.id]"
-            class="block flex flex-col flex-grow"
+            class="project-card__link"
           >
-            <div class="relative overflow-hidden">
+            <div class="project-card__image">
               <img
-                class="w-full h-[320px] sm:h-[400px] md:h-[450px] lg:h-[500px] object-cover transition-transform duration-300 group-hover:scale-105"
                 [src]="baseUrl + '/api/attachment/get/' + item.thumbnail"
                 [attr.alt]="item.name || 'Project image'"
                 loading="lazy"
                 (error)="onImageError($event)"
               />
-            </div>
-            <div class="p-6 text-center flex flex-col">
-              <h2
-                class="text-xl font-bold font-poppins mb-2 group-hover:text-accent transition-colors duration-200"
-              >
-                {{ item.name }}
-              </h2>
-              <div
-                class="text-sm text-gray-600 flex justify-center items-center gap-3 mb-4"
-              >
-                <span>{{ item.address || "Unknown" }}</span>
-                <span class="w-2 h-2 bg-accent"></span>
-                <span>{{ item.type || "—" }}</span>
+              <div class="project-card__overlay"></div>
+              <div class="project-card__meta">
+                <span class="project-chip">
+                  <i class="ri-time-line"></i>
+                  {{ item.category || 'In development' }}
+                </span>
+                <span class="project-chip">
+                  <i class="ri-building-4-line"></i>
+                  {{ item.type || 'Mixed use' }}
+                </span>
               </div>
             </div>
+            <div class="project-card__body">
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.address || 'Address forthcoming' }}</p>
+              <span class="project-card__cta">
+                View details
+                <i class="ri-arrow-right-line"></i>
+              </span>
+            </div>
           </a>
-        </div>
+        </article>
         <div
           *ngIf="!state.list.length"
-          class="col-span-full text-center py-16 text-gray-800 font-poppins text-lg"
+          class="project-empty"
         >
           No projects match your filters. Try adjusting criteria.
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="projects-cta">
+    <div class="projects-cta__card">
+      <h2>Envision your next address with As Haven</h2>
+      <p>
+        Partner with our advisory team for bespoke walkthroughs, investment
+        guidance, and curated previews of upcoming releases.
+      </p>
+      <a href="/contact" class="projects-cta__action">
+        Connect with us
+        <i class="ri-arrow-right-up-line"></i>
+      </a>
+    </div>
+  </section>
 </div>

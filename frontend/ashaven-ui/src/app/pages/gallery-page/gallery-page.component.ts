@@ -25,6 +25,9 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   currentIndex = 0;
   baseUrl = environment.baseUrl;
   activeFilter: 'all' | 'image' | 'video' = 'all';
+  isLoading = false;
+  loadError = '';
+  skeletonPlaceholders = Array.from({ length: 6 });
 
   private touchStartX = 0;
   private touchEndX = 0;
@@ -46,15 +49,25 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   }
 
   async loadGalleryItems(): Promise<void> {
+    this.isLoading = true;
+    this.loadError = '';
+    this.cdr.detectChanges();
+
     try {
       const items = await this.galleryService.getAll();
       this.galleryItems = items
         .filter((item) => item.isActive)
         .sort((a, b) => a.order - b.order);
-      this.cdr.detectChanges();
-      this.deferAnimationRefresh();
+
+      if (this.galleryItems.length) {
+        this.deferAnimationRefresh();
+      }
     } catch (error) {
       console.error('Failed to load gallery items:', error);
+      this.loadError = 'Unable to load gallery items at the moment.';
+    } finally {
+      this.isLoading = false;
+      this.cdr.detectChanges();
     }
   }
 
@@ -118,6 +131,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
     ) {
       this.closeLightbox();
     } else {
+      this.deferAnimationRefresh();
       this.cdr.detectChanges();
     }
   }

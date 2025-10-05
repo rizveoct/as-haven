@@ -71,12 +71,6 @@ export class LenisService {
       return;
     }
 
-    const viewportQuery = this.viewportQuery ?? window.matchMedia('(max-width: 767px)');
-    if (viewportQuery.matches) {
-      this.stopLenis();
-      return;
-    }
-
     const prefersTouchInput = window.matchMedia('(pointer: coarse)').matches;
 
     this.stopLenis();

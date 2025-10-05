@@ -37,9 +37,8 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
     private cdr: ChangeDetectorRef
   ) {}
 
-  ngAfterViewInit() {
-    this.anim.animateOnScroll('.fade-up');
-    this.anim.animateOnScroll('.zoom-in');
+  ngAfterViewInit(): void {
+    this.registerScrollAnimations();
   }
 
   ngOnInit(): void {
@@ -53,6 +52,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
         .filter((item) => item.isActive)
         .sort((a, b) => a.order - b.order);
       this.cdr.detectChanges();
+      this.deferAnimationRefresh();
     } catch (error) {
       console.error('Failed to load gallery items:', error);
     }
@@ -203,5 +203,21 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
         this.prevItem(); // swipe right → prev
       }
     }
+  }
+
+  private registerScrollAnimations(): void {
+    this.anim.animateOnScroll('.fade-up', {
+      threshold: 0.15,
+      rootMargin: '0px 0px -80px',
+    });
+  }
+
+  private deferAnimationRefresh(): void {
+    if (typeof window === 'undefined' || !window.requestAnimationFrame) {
+      this.registerScrollAnimations();
+      return;
+    }
+
+    window.requestAnimationFrame(() => this.registerScrollAnimations());
   }
 }

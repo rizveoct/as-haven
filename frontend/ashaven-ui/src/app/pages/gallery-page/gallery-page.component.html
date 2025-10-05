@@ -16,21 +16,21 @@
         </p>
       </div>
 
-      <div class="gallery-section__meta">
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalItems }}</span>
-          <span class="gallery-stat__label">Showcased stories</span>
+      <div class="gallery-app__counts" aria-label="Gallery totals">
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalItems }}</span>
+          <span class="gallery-app__count-label">Total</span>
         </div>
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalImages }}</span>
-          <span class="gallery-stat__label">Signature stills</span>
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalImages }}</span>
+          <span class="gallery-app__count-label">Images</span>
         </div>
-        <div class="gallery-stat">
-          <span class="gallery-stat__value">{{ totalVideos }}</span>
-          <span class="gallery-stat__label">Immersive reels</span>
+        <div class="gallery-app__count">
+          <span class="gallery-app__count-value">{{ totalVideos }}</span>
+          <span class="gallery-app__count-label">Videos</span>
         </div>
       </div>
-    </div>
+    </header>
 
     <div class="gallery-section__panel fade-up" role="region" aria-live="polite">
       <div class="gallery-section__panel-content">
@@ -218,8 +218,7 @@
       <span class="gallery-empty__eyebrow">Gallery coming soon</span>
       <p class="gallery-empty__title">We are curating something special.</p>
       <p class="gallery-empty__copy">
-        Our creative team is capturing new moments from the latest residences.
-        Check back shortly to experience the next chapter of AS Haven.
+        Our creative team is capturing new moments from the latest residences. Check back shortly to experience the next chapter of AS Haven.
       </p>
     </div>
   </div>

@@ -32,50 +32,47 @@
       </div>
     </div>
 
-    <div class="gallery-section__filters-wrapper fade-up">
-      <p class="gallery-section__filters-label">Curate by</p>
-      <div
-        class="gallery-section__filters"
-        role="tablist"
-        aria-label="Gallery filters"
+    <div
+      class="gallery-section__filters fade-up"
+      role="tablist"
+      aria-label="Gallery filters"
+    >
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'all'"
+        (click)="setFilter('all')"
+        [attr.aria-pressed]="activeFilter === 'all'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'all'"
       >
-        <button
-          type="button"
-          class="gallery-filter"
-          [class.is-active]="activeFilter === 'all'"
-          (click)="setFilter('all')"
-          [attr.aria-pressed]="activeFilter === 'all'"
-          role="tab"
-          [attr.aria-selected]="activeFilter === 'all'"
-        >
-          All
-          <span class="gallery-filter__count">{{ totalItems }}</span>
-        </button>
-        <button
-          type="button"
-          class="gallery-filter"
-          [class.is-active]="activeFilter === 'image'"
-          (click)="setFilter('image')"
-          [attr.aria-pressed]="activeFilter === 'image'"
-          role="tab"
-          [attr.aria-selected]="activeFilter === 'image'"
-        >
-          Images
-          <span class="gallery-filter__count">{{ totalImages }}</span>
-        </button>
-        <button
-          type="button"
-          class="gallery-filter"
-          [class.is-active]="activeFilter === 'video'"
-          (click)="setFilter('video')"
-          [attr.aria-pressed]="activeFilter === 'video'"
-          role="tab"
-          [attr.aria-selected]="activeFilter === 'video'"
-        >
-          Videos
-          <span class="gallery-filter__count">{{ totalVideos }}</span>
-        </button>
-      </div>
+        All
+        <span class="gallery-filter__count">{{ totalItems }}</span>
+      </button>
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'image'"
+        (click)="setFilter('image')"
+        [attr.aria-pressed]="activeFilter === 'image'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'image'"
+      >
+        Images
+        <span class="gallery-filter__count">{{ totalImages }}</span>
+      </button>
+      <button
+        type="button"
+        class="gallery-filter"
+        [class.is-active]="activeFilter === 'video'"
+        (click)="setFilter('video')"
+        [attr.aria-pressed]="activeFilter === 'video'"
+        role="tab"
+        [attr.aria-selected]="activeFilter === 'video'"
+      >
+        Videos
+        <span class="gallery-filter__count">{{ totalVideos }}</span>
+      </button>
     </div>
 
     <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">

@@ -27,7 +27,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   activeFilter: 'all' | 'image' | 'video' = 'all';
   isLoading = false;
   loadError = '';
-  skeletonPlaceholders = Array.from({ length: 12 });
+  skeletonPlaceholders = Array.from({ length: 6 });
 
   private touchStartX = 0;
   private touchEndX = 0;

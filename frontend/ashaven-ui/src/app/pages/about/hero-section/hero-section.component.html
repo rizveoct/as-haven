@@ -1,27 +1,69 @@
-  <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-    <!-- Background Image -->
-    <div
-      class="absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
-      style="background-image: url('/images/banner/banner-3.png')"
-      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
-    ></div>
+<div class="hero relative w-full min-h-[70vh] md:min-h-[80vh] overflow-hidden">
+  <div
+    class="hero__bg absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
+    style="background-image: url('/images/banner/banner-3.png')"
+    [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+  ></div>
 
-    <!-- Optional overlay -->
-    <div class="absolute inset-0 bg-black/40"></div>
+  <div class="hero__overlay absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/75 to-[#030712]/40"></div>
 
-    <!-- Centered content -->
-    <div
-      class="relative z-10 flex flex-col items-center justify-center h-full px-5 gap-2"
-    >
-      <div
-        class="inline-flex items-baseline gap-2 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg max-w-[85%]"
-      >
-        <h1
-          class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--light)]"
-        >
-          About Us
-        </h1>
+  <div class="hero__accent hero__accent--one"></div>
+  <div class="hero__accent hero__accent--two"></div>
+
+  <div class="relative z-10 flex h-full w-full items-center">
+    <div class="mx-auto flex h-full w-[90%] max-w-6xl flex-col justify-center py-16 md:py-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div class="space-y-6 text-center lg:text-left">
+          <span class="inline-flex items-center justify-center gap-2 text-[0.7rem] uppercase tracking-[0.6em] text-white/70 lg:justify-start">
+            <span class="h-2 w-2 rounded-full bg-accent"></span>
+            Our story
+          </span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-white">
+            Crafting Havens Where Luxury Meets Serenity
+          </h1>
+          <p class="mx-auto max-w-2xl text-base text-white/80 sm:text-lg lg:mx-0">
+            From boutique residences to lifestyle communities, Prime Housing weaves timeless architecture,
+            mindful landscaping, and boutique hospitality into every address we touch.
+          </p>
+          <div class="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+            <a
+              routerLink="/project"
+              class="group inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-white backdrop-blur transition duration-300 hover:bg-white hover:text-dark"
+            >
+              Explore Projects
+              <i class="ri-arrow-right-up-line text-base transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"></i>
+            </a>
+            <div class="inline-flex items-center gap-3 rounded-full bg-white/5 px-5 py-3 text-white/80 backdrop-blur-xl ring-1 ring-white/10">
+              <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_15px_rgba(249,115,22,0.6)] animate-pulse"></span>
+              <span class="text-xs uppercase tracking-[0.3em]">Dhaka • Chattogram • Sylhet</span>
+            </div>
+          </div>
+        </div>
+        <div class="space-y-6">
+          <div class="rounded-3xl border border-white/10 bg-white/10 p-6 text-left text-white shadow-2xl backdrop-blur-2xl">
+            <h3 class="mb-3 text-sm font-semibold uppercase tracking-[0.4em] text-white/70">Signature highlights</h3>
+            <p class="text-sm leading-relaxed text-white/80">
+              Elevated rooftops, curated art, and concierge-inspired services bring our developments to life.
+              Every residence is positioned to capture natural light, intuitive flow, and a lasting sense of
+              belonging.
+            </p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl bg-white/10 px-4 py-6 text-center text-white backdrop-blur-xl ring-1 ring-white/15">
+              <span class="block text-3xl font-semibold">12+</span>
+              <span class="text-[0.65rem] uppercase tracking-[0.45em] text-white/70">Years crafting</span>
+            </div>
+            <div class="rounded-2xl bg-white/10 px-4 py-6 text-center text-white backdrop-blur-xl ring-1 ring-white/15">
+              <span class="block text-3xl font-semibold">38</span>
+              <span class="text-[0.65rem] uppercase tracking-[0.45em] text-white/70">Completed projects</span>
+            </div>
+            <div class="rounded-2xl bg-white/10 px-4 py-6 text-center text-white backdrop-blur-xl ring-1 ring-white/15">
+              <span class="block text-3xl font-semibold">4.9★</span>
+              <span class="text-[0.65rem] uppercase tracking-[0.45em] text-white/70">Resident rating</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="text-lg sm:text-xl text-[var(--light)]">Home > About Us</p>
     </div>
   </div>
+</div>

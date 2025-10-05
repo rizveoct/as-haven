@@ -1,3 +1,50 @@
 :host {
   display: block;
 }
+
+.mission-vision {
+  position: relative;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.05), rgba(241, 245, 249, 0.3));
+}
+
+.mission-vision__glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.mission-vision__glow--one {
+  top: -10rem;
+  right: -8rem;
+  width: clamp(20rem, 32vw, 28rem);
+  height: clamp(20rem, 32vw, 28rem);
+  background: rgba(249, 115, 22, 0.35);
+}
+
+.mission-vision__glow--two {
+  bottom: -6rem;
+  left: -6rem;
+  width: clamp(18rem, 30vw, 26rem);
+  height: clamp(18rem, 30vw, 26rem);
+  background: rgba(59, 130, 246, 0.25);
+}
+
+.mission-vision__image-wrapper {
+  position: relative;
+  width: min(100%, 460px);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2.5rem;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 60px -35px rgba(15, 23, 42, 0.35);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(15, 23, 42, 0.1));
+}
+
+.mission-vision__image-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.15), transparent 60%);
+}

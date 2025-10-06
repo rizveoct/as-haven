@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './gallery-hero.component.html',
   styleUrl: './gallery-hero.component.css',
 })
-export class GalleryHeroComponent {
+export class ContactHeroComponent {
   scrollY = 0;
 
   @HostListener('window:scroll', ['$event'])

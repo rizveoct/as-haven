@@ -9,13 +9,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { GalleryItem, GalleryService } from '../../services/gallery.service';
 import { environment } from '../../environments/environment';
-import { GalleryHeroComponent } from './gallery-hero/gallery-hero.component';
+import { ContactHeroComponent } from './gallery-hero/gallery-hero.component';
 import { AnimationService } from '../../services/animation.service';
 
 @Component({
   selector: 'app-gallery-page',
   standalone: true,
-  imports: [CommonModule, GalleryHeroComponent],
+  imports: [CommonModule, ContactHeroComponent],
   templateUrl: './gallery-page.component.html',
   styleUrls: ['./gallery-page.component.css'],
 })

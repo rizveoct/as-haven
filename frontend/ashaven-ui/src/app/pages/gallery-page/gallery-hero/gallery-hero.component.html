@@ -1,71 +1,39 @@
-<section
-  class="gallery-hero relative w-full min-h-[70vh] overflow-hidden rounded-[clamp(1.5rem,4vw,3rem)] md:min-h-[80vh]"
-  aria-labelledby="galleryHeroTitle"
->
-  <div
-    class="gallery-hero__bg absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
-    style="background-image: url('/images/banner/banner-3.png')"
-    [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
-  ></div>
+<section class="gallery-hero" aria-labelledby="galleryHeroTitle">
+  <div class="gallery-hero__background">
+    <div
+      class="gallery-hero__media"
+      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.2) + 'px)' }"
+    >
+      <img
+        src="/images/banner/banner-3.png"
+        alt="Gallery showcase"
+        loading="lazy"
+      />
+    </div>
+    <div class="gallery-hero__gradient"></div>
+    <div class="gallery-hero__glow gallery-hero__glow--left"></div>
+    <div class="gallery-hero__glow gallery-hero__glow--right"></div>
+  </div>
 
-  <div class="gallery-hero__overlay absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/75 to-[#030712]/40"></div>
-
-  <div class="gallery-hero__accent gallery-hero__accent--one"></div>
-  <div class="gallery-hero__accent gallery-hero__accent--two"></div>
-
-  <div class="relative z-10 flex h-full w-full items-center">
-    <div class="mx-auto flex h-full w-[90%] max-w-6xl flex-col justify-center py-16 md:py-24">
-      <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
-        <div class="space-y-6 text-center lg:text-left">
-          <span class="inline-flex items-center justify-center gap-2 text-[0.7rem] uppercase tracking-[0.6em] text-white/70 lg:justify-start">
-            <span class="h-2 w-2 rounded-full bg-accent"></span>
-            Immersive showcase
-          </span>
-          <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl" id="galleryHeroTitle">
-            Gallery
-          </h1>
-          <p class="mx-auto max-w-2xl text-base text-white/80 sm:text-lg lg:mx-0">
-            Discover the crafted stories, moods, and spaces that define AS Haven.
-          </p>
-          <nav class="flex items-center justify-center gap-3 text-sm text-white/60 lg:justify-start" aria-label="Breadcrumb">
-            <a routerLink="/" class="relative text-white/70 transition-colors duration-300 hover:text-white focus-visible:text-white">
-              Home
-            </a>
-            <span aria-hidden="true" class="text-white/40">/</span>
-            <span class="text-white">Gallery</span>
-          </nav>
-          <div class="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
-            <a
-              href="#projectGallery"
-              class="group inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-white backdrop-blur transition duration-300 hover:bg-white hover:text-dark"
-            >
-              Browse Collection
-              <i class="ri-arrow-right-up-line text-base transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-1"></i>
-            </a>
-            <div class="inline-flex items-center gap-3 rounded-full bg-white/5 px-5 py-3 text-white/80 backdrop-blur-xl ring-1 ring-white/10">
-              <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_15px_rgba(255,119,27,0.6)] animate-pulse"></span>
-              <span class="text-xs uppercase tracking-[0.3em]">Stills • Motion • Atmospheres</span>
-            </div>
-          </div>
-        </div>
-        <div class="space-y-5">
-          <div class="rounded-3xl border border-white/10 bg-white/10 p-6 text-left text-white shadow-2xl backdrop-blur-2xl">
-            <h3 class="mb-3 text-sm font-semibold uppercase tracking-[0.4em] text-white/70">Curated perspectives</h3>
-            <p class="text-sm leading-relaxed text-white/80">
-              Step into the ambience of each development through cinematic stills and motion. Every capture highlights the dialogue between architecture, light, and landscape.
-            </p>
-          </div>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl bg-white/10 px-4 py-6 text-center text-white backdrop-blur-xl ring-1 ring-white/15">
-              <span class="block text-xs uppercase tracking-[0.4em] text-white/60">Featured</span>
-              <span class="mt-2 block text-xl font-semibold">Architectural artistry</span>
-            </div>
-            <div class="rounded-2xl bg-white/10 px-4 py-6 text-center text-white backdrop-blur-xl ring-1 ring-white/15">
-              <span class="block text-xs uppercase tracking-[0.4em] text-white/60">Experience</span>
-              <span class="mt-2 block text-xl font-semibold">Still &amp; motion stories</span>
-            </div>
-          </div>
-        </div>
+  <div class="gallery-hero__content">
+    <div class="gallery-hero__badge">Immersive showcase</div>
+    <h1 class="gallery-hero__title" id="galleryHeroTitle">Gallery</h1>
+    <p class="gallery-hero__subtitle">
+      Discover the crafted stories, moods, and spaces that define AS Haven.
+    </p>
+    <nav class="gallery-hero__breadcrumb" aria-label="Breadcrumb">
+      <a routerLink="/" class="gallery-hero__breadcrumb-link">Home</a>
+      <span aria-hidden="true" class="gallery-hero__breadcrumb-separator">/</span>
+      <span class="gallery-hero__breadcrumb-current">Gallery</span>
+    </nav>
+    <div class="gallery-hero__meta">
+      <div class="gallery-hero__meta-card">
+        <span class="gallery-hero__meta-eyebrow">Curated visions</span>
+        <span class="gallery-hero__meta-value">Architectural artistry</span>
+      </div>
+      <div class="gallery-hero__meta-card">
+        <span class="gallery-hero__meta-eyebrow">Experience</span>
+        <span class="gallery-hero__meta-value">Still &amp; motion stories</span>
       </div>
     </div>
   </div>

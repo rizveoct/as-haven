@@ -3,16 +3,16 @@
 }
 
 .connect-section {
-  background: linear-gradient(135deg, #0b1221 0%, #0f1e33 45%, #132742 100%);
+  background: linear-gradient(135deg, var(--luxe-forest-900, #132b18) 0%, #0f2c1c 45%, #0c2216 100%);
   position: relative;
-  color: white;
+  color: rgba(241, 251, 236, 0.95);
 }
 
 .connect-gradient {
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.25), transparent 60%),
-              radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.24), transparent 55%);
+  background: radial-gradient(circle at top right, rgba(255, 119, 27, 0.28), transparent 60%),
+              radial-gradient(circle at bottom left, rgba(47, 118, 68, 0.28), transparent 55%);
   pointer-events: none;
 }
 
@@ -29,7 +29,7 @@
   height: 420px;
   top: -140px;
   left: -80px;
-  background: rgba(16, 185, 129, 0.45);
+  background: rgba(47, 118, 68, 0.45);
 }
 
 .connect-aurora--sky {
@@ -37,15 +37,15 @@
   height: 360px;
   bottom: -140px;
   right: -60px;
-  background: rgba(56, 189, 248, 0.4);
+  background: rgba(255, 119, 27, 0.35);
 }
 
 .connect-grid {
   position: absolute;
   inset: 0;
   opacity: 0.18;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(241, 251, 236, 0.12) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(241, 251, 236, 0.12) 1px, transparent 1px);
   background-size: 160px 160px;
   mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.8) 40%, transparent 90%);
   pointer-events: none;
@@ -57,8 +57,8 @@
   gap: 0.45rem;
   padding: 0.65rem 1.5rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(241, 251, 236, 0.25);
+  background: rgba(241, 251, 236, 0.12);
   font-size: 0.8rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -74,12 +74,12 @@
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: white;
+  color: var(--luxe-cream, #ffffff);
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(241, 251, 236, 0.75);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -88,9 +88,9 @@
   position: relative;
   border-radius: 28px;
   padding: 2.2rem;
-  background: rgba(8, 23, 45, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 30px 60px rgba(4, 12, 22, 0.45);
+  background: rgba(15, 46, 29, 0.78);
+  border: 1px solid rgba(241, 251, 236, 0.16);
+  box-shadow: 0 30px 60px rgba(6, 18, 11, 0.5);
   backdrop-filter: blur(14px);
 }
 
@@ -106,12 +106,12 @@
 .form-header h3 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: white;
+  color: var(--luxe-cream, #ffffff);
 }
 
 .form-header p {
   margin-top: 0.4rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(241, 251, 236, 0.75);
 }
 
 .field-block {
@@ -125,28 +125,28 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(241, 251, 236, 0.65);
 }
 
 .field-input {
   width: 100%;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(12, 30, 50, 0.7);
-  color: white;
+  border: 1px solid rgba(241, 251, 236, 0.18);
+  background: rgba(10, 32, 20, 0.7);
+  color: var(--luxe-cream, #ffffff);
   padding: 0.9rem 1.1rem;
   font-size: 0.95rem;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .field-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(241, 251, 236, 0.4);
 }
 
 .field-input:focus {
   outline: none;
-  border-color: rgba(45, 212, 191, 0.7);
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.18);
+  border-color: rgba(255, 119, 27, 0.65);
+  box-shadow: 0 0 0 4px rgba(255, 119, 27, 0.18);
 }
 
 .field-textarea {
@@ -156,7 +156,7 @@
 
 .field-error {
   font-size: 0.8rem;
-  color: #fca5a5;
+  color: #fcbdb0;
 }
 
 .form-footer {
@@ -175,16 +175,16 @@
   border: none;
   font-weight: 600;
   font-size: 0.95rem;
-  color: #04121f;
-  background: linear-gradient(135deg, #34d399 0%, #22d3ee 100%);
-  box-shadow: 0 18px 35px rgba(45, 212, 191, 0.2);
+  color: var(--luxe-cream, #ffffff);
+  background: linear-gradient(135deg, var(--luxe-amber, #ff771b) 0%, #d65f13 100%);
+  box-shadow: 0 18px 35px rgba(255, 119, 27, 0.28);
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 22px 40px rgba(45, 212, 191, 0.28);
+  box-shadow: 0 22px 40px rgba(255, 119, 27, 0.35);
 }
 
 .submit-btn:disabled {
@@ -194,7 +194,7 @@
 
 .privacy-note {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(241, 251, 236, 0.68);
 }
 
 .submit-feedback {
@@ -206,22 +206,22 @@
 }
 
 .submit-feedback.is-success {
-  background: rgba(45, 212, 191, 0.18);
-  color: #5ef5d8;
+  background: rgba(255, 119, 27, 0.16);
+  color: #ffe0c9;
 }
 
 .submit-feedback.is-error {
-  background: rgba(248, 113, 113, 0.15);
-  color: #fecaca;
+  background: rgba(220, 38, 38, 0.16);
+  color: #ffd6d6;
 }
 
 .map-card {
   position: relative;
   border-radius: 28px;
   padding: 2rem;
-  background: rgba(11, 27, 48, 0.78);
-  border: 1px solid rgba(148, 187, 233, 0.25);
-  box-shadow: 0 30px 60px rgba(4, 12, 22, 0.45);
+  background: rgba(12, 35, 22, 0.82);
+  border: 1px solid rgba(241, 251, 236, 0.18);
+  box-shadow: 0 30px 60px rgba(6, 18, 11, 0.5);
   backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
@@ -230,7 +230,7 @@
 
 .map-card__header p {
   margin-top: 0.5rem;
-  color: rgba(221, 237, 255, 0.72);
+  color: rgba(241, 251, 236, 0.75);
 }
 
 .map-badge {
@@ -242,22 +242,22 @@
   letter-spacing: 0.28em;
   padding: 0.6rem 1.5rem;
   border-radius: 999px;
-  background: rgba(59, 130, 246, 0.2);
-  border: 1px solid rgba(147, 197, 253, 0.35);
+  background: rgba(255, 119, 27, 0.2);
+  border: 1px solid rgba(255, 153, 82, 0.35);
 }
 
 .map-frame {
   position: relative;
   overflow: hidden;
   border-radius: 22px;
-  border: 1px solid rgba(59, 130, 246, 0.25);
+  border: 1px solid rgba(255, 153, 82, 0.25);
   min-height: 320px;
 }
 
 .map-loading {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(15, 118, 110, 0.25), rgba(59, 130, 246, 0.25));
+  background: linear-gradient(135deg, rgba(47, 118, 68, 0.25), rgba(255, 119, 27, 0.25));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,17 +294,17 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  color: rgba(148, 197, 253, 0.75);
+  color: rgba(241, 251, 236, 0.7);
 }
 
 .meta-desc {
-  color: rgba(224, 242, 254, 0.9);
+  color: rgba(241, 251, 236, 0.88);
 }
 
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 15, 27, 0.68);
+  background: rgba(7, 24, 15, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -317,11 +317,11 @@
   width: min(400px, 100%);
   border-radius: 24px;
   padding: 2.4rem 2rem;
-  background: linear-gradient(160deg, rgba(8, 23, 45, 0.95), rgba(15, 32, 55, 0.92));
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  box-shadow: 0 30px 80px rgba(2, 8, 23, 0.6);
+  background: linear-gradient(160deg, rgba(11, 40, 24, 0.95), rgba(14, 48, 28, 0.92));
+  border: 1px solid rgba(255, 153, 82, 0.3);
+  box-shadow: 0 30px 80px rgba(6, 18, 11, 0.6);
   text-align: center;
-  color: white;
+  color: rgba(241, 251, 236, 0.95);
 }
 
 .popup-icon {
@@ -336,7 +336,7 @@
 
 .popup-card p {
   margin-top: 0.75rem;
-  color: rgba(203, 213, 225, 0.9);
+  color: rgba(241, 251, 236, 0.75);
 }
 
 .popup-close {
@@ -345,7 +345,7 @@
   right: 1rem;
   background: transparent;
   border: none;
-  color: rgba(203, 213, 225, 0.85);
+  color: rgba(241, 251, 236, 0.75);
   font-size: 1.2rem;
   cursor: pointer;
 }

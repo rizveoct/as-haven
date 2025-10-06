@@ -55,9 +55,9 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
 
     try {
       const items = await this.galleryService.getAll();
-      this.galleryItems = items
-        .filter((item) => item.isActive)
-        .sort((a, b) => a.order - b.order);
+      this.galleryItems = (items || [])
+        .filter((item) => item?.isActive)
+        .sort((a, b) => (a?.order ?? 0) - (b?.order ?? 0));
 
       if (this.galleryItems.length) {
         this.deferAnimationRefresh();
@@ -71,6 +71,7 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /** Derived collections for template (fixes missing identifiers) */
   get filteredGalleryItems(): GalleryItem[] {
     if (this.activeFilter === 'image') {
       return this.galleryItems.filter((item) => this.isImage(item));
@@ -79,6 +80,16 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
       return this.galleryItems.filter((item) => this.isVideo(item));
     }
     return this.galleryItems;
+  }
+
+  get featuredItem(): GalleryItem | null {
+    return this.filteredGalleryItems.length
+      ? this.filteredGalleryItems[0]
+      : null;
+  }
+
+  get supportingItems(): GalleryItem[] {
+    return this.filteredGalleryItems.slice(1);
   }
 
   get totalItems(): number {
@@ -129,34 +140,34 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   }
 
   openItem(item: GalleryItem): void {
-    const actualIndex = this.galleryItems.findIndex(
-      (galleryItem) => galleryItem.id === item.id
-    );
+    const actualIndex = this.galleryItems.findIndex((g) => g.id === item.id);
     if (actualIndex !== -1) {
       this.openLightbox(actualIndex);
     }
   }
 
   mediaUrl(item: GalleryItem): string {
-    return `${this.baseUrl}/api/attachment/get/${item.contentName}`;
+    const name = item?.contentName ?? '';
+    return `${this.baseUrl}/api/attachment/get/${name}`;
   }
 
+  /** Robust content-type checks (handles 'image/jpeg', 'video/mp4', etc.) */
   isVideo(item: GalleryItem): boolean {
-    return item.contentType?.toLowerCase() === 'video';
+    return (item?.contentType ?? '').toLowerCase().startsWith('video');
   }
 
   isImage(item: GalleryItem): boolean {
-    return item.contentType?.toLowerCase() === 'image';
+    return (item?.contentType ?? '').toLowerCase().startsWith('image');
   }
 
   getAriaLabel(item: GalleryItem): string {
     const typeLabel = this.isVideo(item) ? 'Video' : 'Image';
-    const title = item.title?.trim().length ? item.title : 'Gallery item';
+    const title = item?.title?.trim().length ? item.title : 'Gallery item';
     return `${typeLabel}: ${title}`;
   }
 
   trackById(_: number, item: GalleryItem): string {
-    return item.id;
+    return item?.id ?? item?.contentName ?? String(_);
   }
 
   openLightbox(index: number): void {
@@ -201,13 +212,9 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   private handleSwipe(): void {
     const swipeDistance = this.touchStartX - this.touchEndX;
     const minSwipe = 50; // px threshold
-
     if (Math.abs(swipeDistance) > minSwipe) {
-      if (swipeDistance > 0) {
-        this.nextItem(); // swipe left → next
-      } else {
-        this.prevItem(); // swipe right → prev
-      }
+      if (swipeDistance > 0) this.nextItem(); // left
+      else this.prevItem(); // right
     }
   }
 
@@ -223,7 +230,6 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
       this.registerScrollAnimations();
       return;
     }
-
     window.requestAnimationFrame(() => this.registerScrollAnimations());
   }
 }

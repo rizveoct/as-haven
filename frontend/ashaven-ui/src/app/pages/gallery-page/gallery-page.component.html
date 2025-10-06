@@ -1,4 +1,4 @@
-<app-gallery-hero />
+<app-gallery-hero></app-gallery-hero>
 
 <section class="gallery-section" id="projectGallery">
   <div class="gallery-section__aurora"></div>
@@ -30,7 +30,8 @@
           <span class="gallery-app__count-label">Videos</span>
         </div>
       </div>
-    </header>
+    </div> <!-- FIX: was </header> -->
+    <!-- ^ closing the .gallery-section__intro div properly -->
 
     <div class="gallery-section__panel fade-up" role="region" aria-live="polite">
       <div class="gallery-section__panel-content">
@@ -42,11 +43,11 @@
             (click)="setFilter('all')"
             [attr.aria-pressed]="activeFilter === 'all'"
             role="tab"
-            [attr.aria-selected]="activeFilter === 'all'"
-          >
+            [attr.aria-selected]="activeFilter === 'all'">
             All
             <span class="gallery-filter__count">{{ totalItems }}</span>
           </button>
+
           <button
             type="button"
             class="gallery-filter"
@@ -54,11 +55,11 @@
             (click)="setFilter('image')"
             [attr.aria-pressed]="activeFilter === 'image'"
             role="tab"
-            [attr.aria-selected]="activeFilter === 'image'"
-          >
+            [attr.aria-selected]="activeFilter === 'image'">
             Images
             <span class="gallery-filter__count">{{ totalImages }}</span>
           </button>
+
           <button
             type="button"
             class="gallery-filter"
@@ -66,8 +67,7 @@
             (click)="setFilter('video')"
             [attr.aria-pressed]="activeFilter === 'video'"
             role="tab"
-            [attr.aria-selected]="activeFilter === 'video'"
-          >
+            [attr.aria-selected]="activeFilter === 'video'">
             Videos
             <span class="gallery-filter__count">{{ totalVideos }}</span>
           </button>
@@ -107,8 +107,8 @@
           <div
             class="gallery-skeleton__card"
             *ngFor="let placeholder of skeletonPlaceholders; index as i"
-            [class.gallery-skeleton__card--tall]="i % 3 === 0"
-          ></div>
+            [class.gallery-skeleton__card--tall]="i % 3 === 0">
+          </div>
         </div>
       </div>
     </ng-container>
@@ -121,17 +121,15 @@
               type="button"
               class="gallery-card gallery-card--featured"
               (click)="openItem(hero)"
-              [attr.aria-label]="getAriaLabel(hero)"
-            >
+              [attr.aria-label]="getAriaLabel(hero)">
               <span class="gallery-card__media">
                 <img
                   *ngIf="isImage(hero)"
                   [src]="mediaUrl(hero)"
-                  [alt]="hero.title"
+                  [alt]="hero.title || 'Gallery image'"
                   loading="lazy"
                   class="gallery-card__media-el"
-                  (error)="onImageError($event)"
-                />
+                  (error)="onImageError($event)" />
                 <video
                   *ngIf="isVideo(hero)"
                   [src]="mediaUrl(hero)"
@@ -140,8 +138,7 @@
                   playsinline
                   preload="metadata"
                   class="gallery-card__media-el"
-                  (error)="onImageError($event)"
-                ></video>
+                  (error)="onImageError($event)"></video>
               </span>
 
               <span class="gallery-card__overlay">
@@ -167,17 +164,15 @@
               class="gallery-card"
               *ngFor="let item of supportingItems; trackBy: trackById"
               (click)="openItem(item)"
-              [attr.aria-label]="getAriaLabel(item)"
-            >
+              [attr.aria-label]="getAriaLabel(item)">
               <span class="gallery-card__media">
                 <img
                   *ngIf="isImage(item)"
                   [src]="mediaUrl(item)"
-                  [alt]="item.title"
+                  [alt]="item.title || 'Gallery image'"
                   loading="lazy"
                   class="gallery-card__media-el"
-                  (error)="onImageError($event)"
-                />
+                  (error)="onImageError($event)" />
                 <video
                   *ngIf="isVideo(item)"
                   [src]="mediaUrl(item)"
@@ -186,8 +181,7 @@
                   playsinline
                   preload="metadata"
                   class="gallery-card__media-el"
-                  (error)="onImageError($event)"
-                ></video>
+                  (error)="onImageError($event)"></video>
               </span>
 
               <span class="gallery-card__overlay">
@@ -229,8 +223,7 @@
   *ngIf="lightboxOpen && currentItem"
   class="gallery-lightbox"
   (touchstart)="onTouchStart($event)"
-  (touchend)="onTouchEnd($event)"
->
+  (touchend)="onTouchEnd($event)">
   <div class="gallery-lightbox__content">
     <button class="gallery-lightbox__close" (click)="closeLightbox()" aria-label="Close lightbox">
       <span aria-hidden="true">×</span>
@@ -240,10 +233,9 @@
       <img
         *ngIf="isImage(currentItem)"
         [src]="mediaUrl(currentItem)"
-        [alt]="currentItem.title"
+        [alt]="currentItem.title || 'Gallery image'"
         class="gallery-lightbox__media"
-        (error)="onImageError($event)"
-      />
+        (error)="onImageError($event)" />
 
       <video
         *ngIf="isVideo(currentItem)"
@@ -252,16 +244,10 @@
         autoplay
         playsinline
         class="gallery-lightbox__media"
-        (error)="onImageError($event)"
-      ></video>
+        (error)="onImageError($event)"></video>
     </ng-container>
 
-    <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="prevItem($event)" aria-label="Previous item">
-      ❮
-    </button>
-
-    <button class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="nextItem($event)" aria-label="Next item">
-      ❯
-    </button>
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="prevItem($event)" aria-label="Previous item">❮</button>
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="nextItem($event)" aria-label="Next item">❯</button>
   </div>
 </div>

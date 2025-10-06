@@ -4,45 +4,10 @@
 
 .gallery-hero {
   position: relative;
-  background: #030712;
-  color: var(--light, #f9fafb);
+  background: #030712;  
   isolation: isolate;
 }
 
-.gallery-hero__bg {
-  transition: transform 0.6s ease;
-}
-
-.gallery-hero__overlay {
-  pointer-events: none;
-}
-
-.gallery-hero__accent {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(0);
-  opacity: 0.65;
-  pointer-events: none;
-  mix-blend-mode: screen;
-}
-
-.gallery-hero__accent--one {
-  top: -6rem;
-  right: -5rem;
-  width: clamp(16rem, 25vw, 21rem);
-  height: clamp(16rem, 25vw, 21rem);
-  background: radial-gradient(circle at 30% 30%, rgba(255, 119, 27, 0.45), transparent 70%);
-  animation: float 14s ease-in-out infinite;
-}
-
-.gallery-hero__accent--two {
-  bottom: -5rem;
-  left: -6rem;
-  width: clamp(18rem, 32vw, 28rem);
-  height: clamp(18rem, 32vw, 28rem);
-  background: radial-gradient(circle at 70% 70%, rgba(56, 189, 248, 0.35), transparent 65%);
-  animation: float 16s ease-in-out infinite reverse;
-}
 
 @keyframes float {
   0% {

@@ -24,7 +24,7 @@
       <!-- Add FAQ Form -->
       <div
         *ngIf="newFaq"
-        class="bg-[var(--white)] rounded-xl shadow-lg p-5 mb-4"
+        class="bg-[var(--white)] rounded-xl shadow-lg p-5 mb-4 luxe-dashboard-surface"
       >
         <ng-container *ngIf="newFaq">
           <input
@@ -64,7 +64,7 @@
     <div class="space-y-4">
       <div
         *ngFor="let faq of faqs"
-        class="faq-item bg-[var(--white)] rounded-xl shadow-lg p-5"
+        class="faq-item bg-[var(--white)] rounded-xl shadow-lg p-5 luxe-dashboard-surface"
       >
         <!-- Edit FAQ Form -->
         <div *ngIf="editingFaq && editingFaq.id === faq.id">

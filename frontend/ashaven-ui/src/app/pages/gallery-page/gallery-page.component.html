@@ -32,58 +32,68 @@
       </div>
     </div> <!-- FIX: was </header> -->
 
+    <div
+      class="gallery-app__toolbar fade-up"
+      role="region"
+      aria-live="polite"
+      aria-label="Gallery controls"
+    >
+      <div class="gallery-app__filters" role="tablist" aria-label="Gallery filters">
+        <button
+          type="button"
+          class="gallery-filter"
+          [class.is-active]="activeFilter === 'all'"
+          (click)="setFilter('all')"
+          [attr.aria-pressed]="activeFilter === 'all'"
+          role="tab"
+          [attr.aria-selected]="activeFilter === 'all'"
+        >
+          All
+          <span class="gallery-filter__count">{{ totalItems }}</span>
+        </button>
 
-    <div class="gallery-section__panel fade-up" role="region" aria-live="polite">
-      <div class="gallery-section__panel-content">
-        <div class="gallery-section__filters" role="tablist" aria-label="Gallery filters">
-          <button
-            type="button"
-            class="gallery-filter"
-            [class.is-active]="activeFilter === 'all'"
-            (click)="setFilter('all')"
-            [attr.aria-pressed]="activeFilter === 'all'"
-            role="tab"
-            [attr.aria-selected]="activeFilter === 'all'">
-            All
-            <span class="gallery-filter__count">{{ totalItems }}</span>
-          </button>
+        <button
+          type="button"
+          class="gallery-filter"
+          [class.is-active]="activeFilter === 'image'"
+          (click)="setFilter('image')"
+          [attr.aria-pressed]="activeFilter === 'image'"
+          role="tab"
+          [attr.aria-selected]="activeFilter === 'image'"
+        >
+          Images
+          <span class="gallery-filter__count">{{ totalImages }}</span>
+        </button>
 
-          <button
-            type="button"
-            class="gallery-filter"
-            [class.is-active]="activeFilter === 'image'"
-            (click)="setFilter('image')"
-            [attr.aria-pressed]="activeFilter === 'image'"
-            role="tab"
-            [attr.aria-selected]="activeFilter === 'image'">
-            Images
-            <span class="gallery-filter__count">{{ totalImages }}</span>
-          </button>
+        <button
+          type="button"
+          class="gallery-filter"
+          [class.is-active]="activeFilter === 'video'"
+          (click)="setFilter('video')"
+          [attr.aria-pressed]="activeFilter === 'video'"
+          role="tab"
+          [attr.aria-selected]="activeFilter === 'video'"
+        >
+          Videos
+          <span class="gallery-filter__count">{{ totalVideos }}</span>
+        </button>
+      </div>
 
-          <button
-            type="button"
-            class="gallery-filter"
-            [class.is-active]="activeFilter === 'video'"
-            (click)="setFilter('video')"
-            [attr.aria-pressed]="activeFilter === 'video'"
-            role="tab"
-            [attr.aria-selected]="activeFilter === 'video'">
-            Videos
-            <span class="gallery-filter__count">{{ totalVideos }}</span>
-          </button>
-        </div>
-
-        <div class="gallery-section__panel-actions">
-          <span *ngIf="!isLoading && !loadError" class="gallery-section__panel-status">
-            <span class="gallery-section__panel-dot" aria-hidden="true"></span>
-            {{ filteredGalleryItems.length }} curated
-            {{ activeFilter === 'video' ? 'reels' : activeFilter === 'image' ? 'stills' : 'stories' }}
-          </span>
-          <button class="gallery-section__refresh" type="button" (click)="loadGalleryItems()">
-            <span class="gallery-section__refresh-icon" aria-hidden="true">⟲</span>
-            Refresh
-          </button>
-        </div>
+      <div class="gallery-app__actions">
+        <span *ngIf="!isLoading && !loadError" class="gallery-app__status">
+          {{ filteredGalleryItems.length }}
+          {{
+            activeFilter === 'video'
+              ? 'videos'
+              : activeFilter === 'image'
+                ? 'photos'
+                : 'items'
+          }}
+        </span>
+        <button class="gallery-app__refresh" type="button" (click)="loadGalleryItems()">
+          <span class="gallery-app__refresh-icon" aria-hidden="true">⟲</span>
+          Refresh
+        </button>
       </div>
     </div>
 
@@ -102,104 +112,51 @@
 
     <ng-container *ngIf="isLoading; else galleryContent">
       <div class="gallery-skeleton fade-up" aria-hidden="true">
-        <div class="gallery-skeleton__card gallery-skeleton__card--hero"></div>
-        <div class="gallery-skeleton__grid">
-          <div
-            class="gallery-skeleton__card"
-            *ngFor="let placeholder of skeletonPlaceholders; index as i"
-            [class.gallery-skeleton__card--tall]="i % 3 === 0">
-          </div>
-        </div>
+        <div class="gallery-skeleton__card" *ngFor="let _ of skeletonPlaceholders"></div>
       </div>
     </ng-container>
 
     <ng-template #galleryContent>
       <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">
-        <div class="gallery-section__grid fade-up">
-          <ng-container *ngIf="featuredItem as hero">
-            <button
-              type="button"
-              class="gallery-card gallery-card--featured"
-              (click)="openItem(hero)"
-              [attr.aria-label]="getAriaLabel(hero)">
-              <span class="gallery-card__media">
-                <img
-                  *ngIf="isImage(hero)"
-                  [src]="mediaUrl(hero)"
-                  [alt]="hero.title || 'Gallery image'"
-                  loading="lazy"
-                  class="gallery-card__media-el"
-                  (error)="onImageError($event)" />
-                <video
-                  *ngIf="isVideo(hero)"
-                  [src]="mediaUrl(hero)"
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                  class="gallery-card__media-el"
-                  (error)="onImageError($event)"></video>
-              </span>
+        <div class="gallery-masonry fade-up" role="list">
+          <button
+            type="button"
+            class="gallery-masonry__item"
+            *ngFor="let item of filteredGalleryItems; trackBy: trackById"
+            (click)="openItem(item)"
+            [attr.aria-label]="getAriaLabel(item)"
+            role="listitem"
+          >
+            <span class="gallery-masonry__media">
+              <img
+                *ngIf="isImage(item)"
+                [src]="mediaUrl(item)"
+                [alt]="item.title || 'Gallery image'"
+                loading="lazy"
+                class="gallery-masonry__media-el"
+                (error)="onImageError($event)"
+              />
+              <video
+                *ngIf="isVideo(item)"
+                [src]="mediaUrl(item)"
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                class="gallery-masonry__media-el"
+                (error)="onImageError($event)"
+              ></video>
+            </span>
 
-              <span class="gallery-card__overlay">
-                <span class="gallery-card__chip" [class.is-video]="isVideo(hero)">
-                  {{ isVideo(hero) ? 'Video' : 'Image' }}
-                </span>
-                <span class="gallery-card__title">
-                  {{ hero.title || 'Untitled showcase' }}
-                </span>
-                <span *ngIf="hero.description" class="gallery-card__description">
-                  {{ hero.description }}
-                </span>
-                <span class="gallery-card__cta">
-                  {{ isVideo(hero) ? 'Watch reel' : 'View still' }}
-                </span>
+            <span class="gallery-masonry__meta">
+              <span class="gallery-masonry__title">
+                {{ item.title || 'Untitled item' }}
               </span>
-            </button>
-          </ng-container>
-
-          <div class="gallery-section__grid-inner">
-            <button
-              type="button"
-              class="gallery-card"
-              *ngFor="let item of supportingItems; trackBy: trackById"
-              (click)="openItem(item)"
-              [attr.aria-label]="getAriaLabel(item)">
-              <span class="gallery-card__media">
-                <img
-                  *ngIf="isImage(item)"
-                  [src]="mediaUrl(item)"
-                  [alt]="item.title || 'Gallery image'"
-                  loading="lazy"
-                  class="gallery-card__media-el"
-                  (error)="onImageError($event)" />
-                <video
-                  *ngIf="isVideo(item)"
-                  [src]="mediaUrl(item)"
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                  class="gallery-card__media-el"
-                  (error)="onImageError($event)"></video>
+              <span class="gallery-masonry__chip" [class.is-video]="isVideo(item)">
+                {{ isVideo(item) ? 'Video' : 'Photo' }}
               </span>
-
-              <span class="gallery-card__overlay">
-                <span class="gallery-card__chip" [class.is-video]="isVideo(item)">
-                  {{ isVideo(item) ? 'Video' : 'Image' }}
-                </span>
-                <span class="gallery-card__title">
-                  {{ item.title || 'Untitled showcase' }}
-                </span>
-                <span *ngIf="item.description" class="gallery-card__description">
-                  {{ item.description }}
-                </span>
-                <span class="gallery-card__cta">
-                  {{ isVideo(item) ? 'Watch reel' : 'View still' }}
-                </span>
-              </span>
-            </button>
-          </div>
+            </span>
+          </button>
         </div>
       </ng-container>
     </ng-template>

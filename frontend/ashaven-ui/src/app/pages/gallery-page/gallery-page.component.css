@@ -1,4 +1,4 @@
-/* SECTION WRAPPER */
+/* SECTION LAYOUT */
 .gallery-section {
   position: relative;
   overflow: hidden;
@@ -17,7 +17,6 @@
   padding: clamp(2rem, 6vw, 3rem) 0 clamp(4rem, 11vw, 6rem);
 }
 
-/* Subtle aurora blobs already present – just recolor to match hero */
 .gallery-section__aurora,
 .gallery-section__aurora--right {
   position: absolute;
@@ -68,14 +67,14 @@
   max-width: 60ch;
 }
 
-.gallery-section__intro .gallery-section__eyebrow {
+.gallery-section__eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--light-70);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .gallery-section__title {
@@ -115,6 +114,8 @@
   border: 1px solid var(--ring-10);
   backdrop-filter: blur(12px);
   color: var(--light-90);
+  backdrop-filter: blur(14px);
+  min-width: 5.5rem;
 }
 
 .gallery-app__count-value {
@@ -153,11 +154,11 @@
 }
 
 .gallery-filter {
-  --pad-x: 0.95rem;
-  --pad-y: 0.55rem;
-  padding: var(--pad-y) var(--pad-x);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   border-radius: 999px;
-  color: var(--light-80);
+  padding: 0.5rem 1rem;
   border: 1px solid transparent;
   background: transparent;
   transition:
@@ -174,9 +175,9 @@
 
 .gallery-filter.is-active {
   color: var(--ink-900);
-  background: linear-gradient(135deg, var(--accent-amber), #d85f18);
-  border-color: transparent;
-  box-shadow: 0 10px 24px var(--accent-amber-30);
+  background: rgba(37, 99, 235, 0.12);
+  border-color: rgba(37, 99, 235, 0.32);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.28);
 }
 
 .gallery-filter .gallery-filter__count {
@@ -246,9 +247,48 @@
   gap: clamp(1.5rem, 4vw, 2.2rem);
 }
 
-.gallery-card {
-  position: relative;
-  border-radius: 1.2rem;
+.gallery-app__refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #ffffff;
+  color: var(--ink-700);
+  font-weight: 600;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-app__refresh-icon {
+  font-size: 1rem;
+}
+
+.gallery-app__refresh:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.16);
+}
+
+.gallery-app__refresh:focus-visible {
+  outline: 2px solid rgba(37, 99, 235, 0.55);
+  outline-offset: 2px;
+}
+
+/* MASONRY GRID */
+.gallery-masonry {
+  column-count: 1;
+  column-gap: 1.2rem;
+}
+
+.gallery-masonry__item {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  margin: 0 0 1.2rem;
+  width: 100%;
+  border-radius: 1.1rem;
   overflow: hidden;
   background: var(--ink-800);
   border: 1px solid var(--ring-15);
@@ -385,6 +425,27 @@
   );
   background-size: 200% 100%;
   animation: shimmer 1.6s infinite linear;
+  break-inside: avoid;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* EMPTY + ERROR */
+.gallery-empty,
+.gallery-error {
+  display: grid;
+  place-items: center;
+  padding: clamp(3rem, 6vw, 4rem) 0;
+}
+
+.gallery-empty__card,
+.gallery-error__card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 1.2rem;
   min-height: 12rem;
 }
@@ -472,8 +533,16 @@
 }
 
 .gallery-lightbox__close {
-  background: var(--glass-10);
-  border: 1px solid var(--ring-10);
+  position: absolute;
+  top: -3.5rem;
+  right: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: grid;
+  place-items: center;
+  border-radius: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(15, 23, 42, 0.45);
   color: var(--light-100);
   border-radius: 0.8rem;
   position: absolute;
@@ -488,9 +557,13 @@
 }
 
 .gallery-lightbox__nav {
-  background: var(--glass-10);
-  border: 1px solid var(--ring-10);
-  color: var(--light-100);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
   border-radius: 999px;
   width: 2.5rem;
   height: 2.5rem;

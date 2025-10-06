@@ -82,16 +82,6 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
     return this.galleryItems;
   }
 
-  get featuredItem(): GalleryItem | null {
-    return this.filteredGalleryItems.length
-      ? this.filteredGalleryItems[0]
-      : null;
-  }
-
-  get supportingItems(): GalleryItem[] {
-    return this.filteredGalleryItems.slice(1);
-  }
-
   get totalItems(): number {
     return this.galleryItems.length;
   }

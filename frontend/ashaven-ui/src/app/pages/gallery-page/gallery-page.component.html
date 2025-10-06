@@ -1,44 +1,46 @@
 <app-gallery-hero></app-gallery-hero>
 
 <section class="gallery-section" id="projectGallery">
-  <div class="gallery-section__aurora"></div>
-  <div class="gallery-section__aurora gallery-section__aurora--right"></div>
+  <div class="gallery-section__glow gallery-section__glow--left" aria-hidden="true"></div>
+  <div class="gallery-section__glow gallery-section__glow--right" aria-hidden="true"></div>
 
-  <div class="gallery-section__container">
-    <div class="gallery-section__intro fade-up">
-      <span class="gallery-section__eyebrow">Immersive Moments</span>
-      <div class="gallery-section__heading">
-        <h2 class="gallery-section__title">Project Gallery</h2>
-        <p class="gallery-section__description">
-          From visionary renderings to lived-in scenes, explore the curated
-          narratives that define AS Haven. Every capture celebrates light,
+  <div class="gallery-shell">
+    <header class="gallery-intro fade-up">
+      <span class="gallery-eyebrow">
+        <span class="gallery-eyebrow__dot"></span>
+        Immersive moments
+      </span>
+      <div class="gallery-heading">
+        <h2 class="gallery-title">Project Gallery</h2>
+        <p class="gallery-description">
+          From visionary renderings to lived-in scenes, explore the curated narratives that define AS Haven. Every capture celebrates light,
           craftsmanship, and the mood of each residence.
         </p>
       </div>
 
-      <div class="gallery-app__counts" aria-label="Gallery totals">
-        <div class="gallery-app__count">
-          <span class="gallery-app__count-value">{{ totalItems }}</span>
-          <span class="gallery-app__count-label">Total</span>
+      <dl class="gallery-totals" aria-label="Gallery totals">
+        <div class="gallery-total">
+          <dt class="gallery-total__label">Total</dt>
+          <dd class="gallery-total__value">{{ totalItems }}</dd>
         </div>
-        <div class="gallery-app__count">
-          <span class="gallery-app__count-value">{{ totalImages }}</span>
-          <span class="gallery-app__count-label">Images</span>
+        <div class="gallery-total">
+          <dt class="gallery-total__label">Images</dt>
+          <dd class="gallery-total__value">{{ totalImages }}</dd>
         </div>
-        <div class="gallery-app__count">
-          <span class="gallery-app__count-value">{{ totalVideos }}</span>
-          <span class="gallery-app__count-label">Videos</span>
+        <div class="gallery-total">
+          <dt class="gallery-total__label">Videos</dt>
+          <dd class="gallery-total__value">{{ totalVideos }}</dd>
         </div>
-      </div>
-    </div> <!-- FIX: was </header> -->
+      </dl>
+    </header>
 
     <div
-      class="gallery-app__toolbar fade-up"
+      class="gallery-toolbar fade-up"
       role="region"
       aria-live="polite"
       aria-label="Gallery controls"
     >
-      <div class="gallery-app__filters" role="tablist" aria-label="Gallery filters">
+      <div class="gallery-filters" role="tablist" aria-label="Gallery filters">
         <button
           type="button"
           class="gallery-filter"
@@ -48,7 +50,7 @@
           role="tab"
           [attr.aria-selected]="activeFilter === 'all'"
         >
-          All
+          <span class="gallery-filter__label">All</span>
           <span class="gallery-filter__count">{{ totalItems }}</span>
         </button>
 
@@ -61,7 +63,7 @@
           role="tab"
           [attr.aria-selected]="activeFilter === 'image'"
         >
-          Images
+          <span class="gallery-filter__label">Images</span>
           <span class="gallery-filter__count">{{ totalImages }}</span>
         </button>
 
@@ -74,13 +76,14 @@
           role="tab"
           [attr.aria-selected]="activeFilter === 'video'"
         >
-          Videos
+          <span class="gallery-filter__label">Videos</span>
           <span class="gallery-filter__count">{{ totalVideos }}</span>
         </button>
       </div>
 
-      <div class="gallery-app__actions">
-        <span *ngIf="!isLoading && !loadError" class="gallery-app__status">
+      <div class="gallery-actions">
+        <span *ngIf="!isLoading && !loadError" class="gallery-status">
+          <span class="gallery-status__dot" aria-hidden="true"></span>
           {{ filteredGalleryItems.length }}
           {{
             activeFilter === 'video'
@@ -90,8 +93,8 @@
                 : 'items'
           }}
         </span>
-        <button class="gallery-app__refresh" type="button" (click)="loadGalleryItems()">
-          <span class="gallery-app__refresh-icon" aria-hidden="true">⟲</span>
+        <button class="gallery-refresh" type="button" (click)="loadGalleryItems()">
+          <i class="ri-refresh-line" aria-hidden="true"></i>
           Refresh
         </button>
       </div>
@@ -101,8 +104,7 @@
       <div class="gallery-error__card">
         <h3 class="gallery-error__title">We couldn't load the gallery.</h3>
         <p class="gallery-error__copy">
-          Please check your connection and try again. The curated visuals will
-          be right back.
+          Please check your connection and try again. The curated visuals will be right back.
         </p>
         <button class="gallery-error__retry" type="button" (click)="loadGalleryItems()">
           Try again
@@ -121,19 +123,19 @@
         <div class="gallery-masonry fade-up" role="list">
           <button
             type="button"
-            class="gallery-masonry__item"
+            class="gallery-card"
             *ngFor="let item of filteredGalleryItems; trackBy: trackById"
             (click)="openItem(item)"
             [attr.aria-label]="getAriaLabel(item)"
             role="listitem"
           >
-            <span class="gallery-masonry__media">
+            <span class="gallery-card__media">
               <img
                 *ngIf="isImage(item)"
                 [src]="mediaUrl(item)"
                 [alt]="item.title || 'Gallery image'"
                 loading="lazy"
-                class="gallery-masonry__media-el"
+                class="gallery-card__image"
                 (error)="onImageError($event)"
               />
               <video
@@ -143,17 +145,19 @@
                 loop
                 playsinline
                 preload="metadata"
-                class="gallery-masonry__media-el"
+                class="gallery-card__image"
                 (error)="onImageError($event)"
               ></video>
             </span>
 
-            <span class="gallery-masonry__meta">
-              <span class="gallery-masonry__title">
-                {{ item.title || 'Untitled item' }}
-              </span>
-              <span class="gallery-masonry__chip" [class.is-video]="isVideo(item)">
+            <span class="gallery-card__meta">
+              <span class="gallery-card__type" [class.gallery-card__type--video]="isVideo(item)">
+                <i class="ri-camera-3-line" *ngIf="!isVideo(item)" aria-hidden="true"></i>
+                <i class="ri-play-circle-line" *ngIf="isVideo(item)" aria-hidden="true"></i>
                 {{ isVideo(item) ? 'Video' : 'Photo' }}
+              </span>
+              <span class="gallery-card__title">
+                {{ item.title || 'Untitled item' }}
               </span>
             </span>
           </button>
@@ -180,7 +184,8 @@
   *ngIf="lightboxOpen && currentItem"
   class="gallery-lightbox"
   (touchstart)="onTouchStart($event)"
-  (touchend)="onTouchEnd($event)">
+  (touchend)="onTouchEnd($event)"
+>
   <div class="gallery-lightbox__content">
     <button class="gallery-lightbox__close" (click)="closeLightbox()" aria-label="Close lightbox">
       <span aria-hidden="true">×</span>
@@ -192,7 +197,8 @@
         [src]="mediaUrl(currentItem)"
         [alt]="currentItem.title || 'Gallery image'"
         class="gallery-lightbox__media"
-        (error)="onImageError($event)" />
+        (error)="onImageError($event)"
+      />
 
       <video
         *ngIf="isVideo(currentItem)"
@@ -201,10 +207,15 @@
         autoplay
         playsinline
         class="gallery-lightbox__media"
-        (error)="onImageError($event)"></video>
+        (error)="onImageError($event)"
+      ></video>
     </ng-container>
 
-    <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="prevItem($event)" aria-label="Previous item">❮</button>
-    <button class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="nextItem($event)" aria-label="Next item">❯</button>
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--prev" (click)="prevItem($event)" aria-label="Previous item">
+      <i class="ri-arrow-left-s-line" aria-hidden="true"></i>
+    </button>
+    <button class="gallery-lightbox__nav gallery-lightbox__nav--next" (click)="nextItem($event)" aria-label="Next item">
+      <i class="ri-arrow-right-s-line" aria-hidden="true"></i>
+    </button>
   </div>
 </div>

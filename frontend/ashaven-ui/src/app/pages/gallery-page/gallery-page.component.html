@@ -113,14 +113,14 @@
     </div>
 
     <ng-container *ngIf="isLoading; else galleryContent">
-      <div class="gallery-skeleton fade-up" aria-hidden="true">
+      <div class="gallery-skeleton " aria-hidden="true">
         <div class="gallery-skeleton__card" *ngFor="let _ of skeletonPlaceholders"></div>
       </div>
     </ng-container>
 
     <ng-template #galleryContent>
       <ng-container *ngIf="filteredGalleryItems.length; else emptyGallery">
-        <div class="gallery-masonry fade-up" role="list">
+        <div class="gallery-masonry" role="list">
           <button
             type="button"
             class="gallery-card"
@@ -168,7 +168,7 @@
 </section>
 
 <ng-template #emptyGallery>
-  <div class="gallery-empty fade-up">
+  <div class="gallery-empty">
     <div class="gallery-empty__card">
       <span class="gallery-empty__eyebrow">Gallery coming soon</span>
       <p class="gallery-empty__title">We are curating something special.</p>

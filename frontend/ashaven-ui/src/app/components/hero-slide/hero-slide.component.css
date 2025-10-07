@@ -20,9 +20,28 @@
   overflow: hidden;
   color: var(--neo-text);
   box-shadow: 0 40px 120px rgba(16, 38, 24, 0.55);
-  width: min(90%, 72rem);
-  margin: 0 auto;
+  
+  /* 👇 Make the hero full width */
+  width: 100%;
+  margin: 0;
   box-sizing: border-box;
+}
+
+
+.neo-hero__container {
+  width: 100%;
+  max-width: none;
+}
+
+/* Make the grid itself 90% of the screen and center it */
+.neo-hero__grid {
+  width: 75%;
+  margin: 0 auto;
+  /* keep your existing props below */
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr) minmax(220px, 260px);
+  gap: clamp(1.8rem, 5vw, 3.5rem);
+  align-items: center;
 }
 
 .neo-hero__background {
@@ -78,24 +97,14 @@
   mix-blend-mode: screen;
 }
 
-.neo-hero__container {
-  position: relative;
-  z-index: 2;
-  width: min(90%, 72rem);
-  margin: 0 auto;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-}
 
-.neo-hero__grid {
+/* .neo-hero__grid {
   display: grid;
   grid-template-columns: minmax(260px, 360px) minmax(0, 1fr) minmax(220px, 260px);
   gap: clamp(1.8rem, 5vw, 3.5rem);
   width: 100%;
   align-items: center;
-}
+} */
 
 .neo-hero__sidebar {
   display: flex;

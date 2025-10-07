@@ -1,0 +1,45 @@
+:host {
+  display: block;
+}
+
+.home-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 6vw, 4.5rem);
+  padding-block: clamp(2.5rem, 7vw, 5rem);
+}
+
+.home-section {
+  display: block;
+  width: min(90%, 72rem);
+  margin: 0 auto;
+}
+
+.home-section--hero {
+  width: min(92%, 80rem);
+}
+
+.home-section--vision {
+  width: min(92%, 76rem);
+}
+
+@media (max-width: 1024px) {
+  .home-section,
+  .home-section--hero,
+  .home-section--vision {
+    width: min(94%, 60rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-layout {
+    gap: clamp(2.5rem, 10vw, 3rem);
+    padding-block: clamp(2rem, 12vw, 3.5rem);
+  }
+
+  .home-section,
+  .home-section--hero,
+  .home-section--vision {
+    width: 92%;
+  }
+}

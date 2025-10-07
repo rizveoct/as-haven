@@ -6,7 +6,7 @@
   position: relative;
   display: flex;
   justify-content: center;
-  padding: clamp(0.5rem, 1.8vw, 1.1rem) 0;
+  padding: clamp(3rem, 1.8vw, 1.1rem) 0;
   transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1),
     opacity 1s ease, filter 1s ease;
 }

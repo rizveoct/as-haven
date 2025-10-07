@@ -214,7 +214,7 @@
 
 .neo-hero__stage-frame {
   position: relative;
-  width: min(440px, 100%);
+  width: min(600px, 100%);
   aspect-ratio: 4 / 5;
   border-radius: clamp(2rem, 5vw, 3rem);
   overflow: hidden;

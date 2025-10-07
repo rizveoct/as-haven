@@ -48,7 +48,7 @@
 
 @media (min-width: 1024px) {
   .page-width {
-    max-width: min(85vw, 1200px);
+    max-width: min(85vw, 1680px);
   }
 }
 
@@ -128,7 +128,7 @@ img {
 
 @media (min-width: 1024px) {
   .neo-section {
-    max-width: min(85vw, 1200px);
+    max-width: min(85vw, 1680px);
   }
 }
 

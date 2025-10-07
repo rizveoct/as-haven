@@ -7,8 +7,10 @@
   overflow: hidden;
   border-radius: var(--neo-radius-lg);
   min-height: clamp(420px, 65vh, 560px);
-  margin-inline: clamp(1rem, 5vw, 3rem);
   box-shadow: 0 45px 110px rgba(19, 53, 31, 0.28);
+  width: min(90%, 72rem);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .neo-vision__background {
@@ -104,6 +106,6 @@
 
 @media (max-width: 767px) {
   .neo-vision {
-    margin-inline: clamp(0.5rem, 4vw, 1.2rem);
+    width: 90%;
   }
 }

@@ -78,17 +78,9 @@
 .neo-hero__container {
   position: relative;
   z-index: 2;
-  width: min(92vw, 1200px);
-  margin: 0 auto;
   height: 100%;
   display: flex;
   align-items: center;
-}
-
-@media (min-width: 1024px) {
-  .neo-hero__container {
-    width: min(85vw, 1200px);
-  }
 }
 
 .neo-hero__grid {

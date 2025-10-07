@@ -112,9 +112,10 @@ img {
   backdrop-filter: blur(24px);
 }
 
+
 .neo-section {
   position: relative;
-  padding: clamp(4rem, 8vw, 6.5rem) clamp(1.5rem, 6vw, 4.5rem);
+  padding: clamp(4rem, 8vw, 6.5rem) clamp(1.5rem, 4vw, 3.75rem);
   width: min(92vw, 1200px);
   margin: 0 auto;
   display: flex;

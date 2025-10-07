@@ -41,13 +41,14 @@
 }
 
 .page-width {
-  width: min(92vw, 1200px);
+  width: 100%;
+  max-width: min(92vw, 1200px);
   margin-inline: auto;
 }
 
 @media (min-width: 1024px) {
   .page-width {
-    width: min(85vw, 1200px);
+    max-width: min(85vw, 1200px);
   }
 }
 
@@ -116,7 +117,8 @@ img {
 .neo-section {
   position: relative;
   padding: clamp(4rem, 8vw, 6.5rem) clamp(1.5rem, 4vw, 3.75rem);
-  width: min(92vw, 1200px);
+  width: 100%;
+  max-width: min(92vw, 1200px);
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -126,7 +128,7 @@ img {
 
 @media (min-width: 1024px) {
   .neo-section {
-    width: min(85vw, 1200px);
+    max-width: min(85vw, 1200px);
   }
 }
 

@@ -8,8 +8,8 @@
   border-radius: 0;
   min-height: clamp(420px, 65vh, 560px);
   box-shadow: 0 45px 110px rgba(19, 53, 31, 0.28);
-  width: 100%;
-  margin: 0;
+  width: min(90%, 72rem);
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -107,3 +107,8 @@
   box-shadow: 0 35px 75px rgba(255, 119, 27, 0.38);
 }
 
+@media (max-width: 767px) {
+  .neo-vision {
+    width: 90%;
+  }
+}

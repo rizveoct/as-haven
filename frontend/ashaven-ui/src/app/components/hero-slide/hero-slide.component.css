@@ -20,6 +20,9 @@
   overflow: hidden;
   color: var(--neo-text);
   box-shadow: 0 40px 120px rgba(16, 38, 24, 0.55);
+  width: min(90%, 72rem);
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .neo-hero__background {

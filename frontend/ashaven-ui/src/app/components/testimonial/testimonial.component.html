@@ -1,65 +1,67 @@
-<section class="neo-section neo-testimonial" *ngIf="testimonials.length">
-  <div class="neo-section__header">
-    <span class="neo-section__tag">Testimonials</span>
-    <h2 class="neo-section__title">Voices from Our Community</h2>
-    <p class="neo-section__subtitle">
-      Stories from residents, partners, and collaborators experiencing AS Haven’s immersive approach to place-making.
-    </p>
-  </div>
-
-  <div class="neo-testimonial__surface">
-    <button
-      class="neo-testimonial__control neo-testimonial__control--prev"
-      (click)="prev()"
-      aria-label="Previous testimonial"
-      type="button"
-    >
-      <span>&larr;</span>
-    </button>
-
-    <article
-      *ngIf="currentTestimonial"
-      class="neo-testimonial__card"
-      [@slideAnimation]="currentIndex"
-    >
-      <div class="neo-testimonial__profile">
-        <div class="neo-testimonial__avatar">
-          <img
-            *ngIf="currentTestimonial?.image; else placeholderImage"
-            [src]="baseURL + '/api/attachment/get/' + currentTestimonial.image"
-            [alt]="currentTestimonial.name"
-            (error)="onImageError($event)"
-          />
-          <ng-template #placeholderImage>
-            <img
-              src="https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg"
-              alt="Placeholder image"
-            />
-          </ng-template>
-        </div>
-        <div class="neo-testimonial__quote" aria-hidden="true">”</div>
-      </div>
-
-      <p class="neo-testimonial__text">
-        {{ currentTestimonial.description }}
+<section class="neo-section neo-section--wide neo-testimonial" *ngIf="testimonials.length">
+  <div class="neo-section__inner">
+    <div class="neo-section__header">
+      <span class="neo-section__tag">Testimonials</span>
+      <h2 class="neo-section__title">Voices from Our Community</h2>
+      <p class="neo-section__subtitle">
+        Stories from residents, partners, and collaborators experiencing AS Haven’s immersive approach to place-making.
       </p>
+    </div>
 
-      <div class="neo-testimonial__meta">
-        <h3>{{ currentTestimonial.name }}</h3>
-      </div>
-    </article>
+    <div class="neo-testimonial__surface">
+      <button
+        class="neo-testimonial__control neo-testimonial__control--prev"
+        (click)="prev()"
+        aria-label="Previous testimonial"
+        type="button"
+      >
+        <span>&larr;</span>
+      </button>
 
-    <button
-      class="neo-testimonial__control neo-testimonial__control--next"
-      (click)="next()"
-      aria-label="Next testimonial"
-      type="button"
-    >
-      <span>&rarr;</span>
-    </button>
-  </div>
+      <article
+        *ngIf="currentTestimonial"
+        class="neo-testimonial__card"
+        [@slideAnimation]="currentIndex"
+      >
+        <div class="neo-testimonial__profile">
+          <div class="neo-testimonial__avatar">
+            <img
+              *ngIf="currentTestimonial?.image; else placeholderImage"
+              [src]="baseURL + '/api/attachment/get/' + currentTestimonial.image"
+              [alt]="currentTestimonial.name"
+              (error)="onImageError($event)"
+            />
+            <ng-template #placeholderImage>
+              <img
+                src="https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg"
+                alt="Placeholder image"
+              />
+            </ng-template>
+          </div>
+          <div class="neo-testimonial__quote" aria-hidden="true">”</div>
+        </div>
 
-  <div class="neo-testimonial__pagination">
-    {{ currentIndex + 1 }} / {{ testimonials.length }}
+        <p class="neo-testimonial__text">
+          {{ currentTestimonial.description }}
+        </p>
+
+        <div class="neo-testimonial__meta">
+          <h3>{{ currentTestimonial.name }}</h3>
+        </div>
+      </article>
+
+      <button
+        class="neo-testimonial__control neo-testimonial__control--next"
+        (click)="next()"
+        aria-label="Next testimonial"
+        type="button"
+      >
+        <span>&rarr;</span>
+      </button>
+    </div>
+
+    <div class="neo-testimonial__pagination">
+      {{ currentIndex + 1 }} / {{ testimonials.length }}
+    </div>
   </div>
 </section>

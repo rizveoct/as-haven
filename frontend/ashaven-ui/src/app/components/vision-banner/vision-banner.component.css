@@ -5,7 +5,7 @@
 .neo-vision {
   position: relative;
   overflow: hidden;
-  border-radius: var(--neo-radius-lg);
+  border-radius: 0;
   min-height: clamp(420px, 65vh, 560px);
   box-shadow: 0 45px 110px rgba(19, 53, 31, 0.28);
   width: min(90%, 72rem);
@@ -60,8 +60,9 @@
   padding: clamp(3rem, 8vw, 5rem) clamp(2rem, 6vw, 4.5rem);
   display: grid;
   gap: clamp(1rem, 3vw, 1.5rem);
-  max-width: min(600px, 90%);
   color: var(--neo-text);
+  width: min(90%, 72rem);
+  margin: 0 auto;
 }
 
 .neo-vision__title {
@@ -77,10 +78,12 @@
   margin-left: clamp(0rem, 4vw, 1.5rem);
 }
 
+
 .neo-vision__description {
   font-size: clamp(1rem, 1.9vw, 1.2rem);
   line-height: 1.8;
   color: rgba(241, 251, 236, 0.75);
+  max-width: 60ch;
 }
 
 .neo-vision__cta {

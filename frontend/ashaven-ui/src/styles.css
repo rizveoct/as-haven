@@ -127,6 +127,10 @@ img {
   z-index: -1;
 }
 
+.neo-section--wide::after {
+  max-width: min(98%, 72rem);
+}
+
 .neo-section__header {
   display: flex;
   flex-direction: column;

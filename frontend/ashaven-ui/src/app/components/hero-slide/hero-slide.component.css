@@ -12,14 +12,16 @@
   position: relative;
   isolation: isolate;
   min-height: clamp(620px, 88vh, 900px);
-  padding: clamp(2.5rem, 4vw, 4.5rem);
-  border-radius: clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(2.5rem, 4vw, 4.5rem) 0;
+  border-radius: 0;
   background: radial-gradient(circle at 12% 16%, rgba(255, 255, 255, 0.08), transparent 60%),
     radial-gradient(circle at 90% 0%, rgba(255, 119, 27, 0.22), transparent 70%),
     linear-gradient(140deg, rgba(20, 44, 27, 0.94), rgba(10, 24, 15, 0.9));
   overflow: hidden;
   color: var(--neo-text);
   box-shadow: 0 40px 120px rgba(16, 38, 24, 0.55);
+  width: 100%;
+  margin: 0;
 }
 
 .neo-hero__background {
@@ -78,11 +80,12 @@
 .neo-hero__container {
   position: relative;
   z-index: 2;
-  max-width: 1200px;
+  width: min(90%, 72rem);
   margin: 0 auto;
   height: 100%;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .neo-hero__grid {
@@ -419,7 +422,8 @@
 
 @media (max-width: 900px) {
   .neo-hero {
-    border-radius: 2.5rem;
+    border-radius: 0;
+    padding: clamp(2.5rem, 6vw, 3.5rem) 0;
   }
 
   .neo-hero__grid {
@@ -448,8 +452,8 @@
 
 @media (max-width: 600px) {
   .neo-hero {
-    padding: 2.5rem 1.5rem;
-    border-radius: 1.8rem;
+    padding: 2.5rem 0;
+    border-radius: 0;
   }
 
   .neo-hero__meta {

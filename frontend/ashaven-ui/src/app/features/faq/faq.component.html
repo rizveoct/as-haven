@@ -24,19 +24,19 @@
       <!-- Add FAQ Form -->
       <div
         *ngIf="newFaq"
-        class="bg-[var(--white)] rounded-xl shadow-lg p-5 mb-4"
+        class="bg-brand rounded-xl shadow-lg p-5 mb-4"
       >
         <ng-container *ngIf="newFaq">
           <input
             [(ngModel)]="newFaq.question"
             placeholder="Enter question"
-            class="w-full p-2 mb-2 border border-[var(--gray)] rounded text-[var(--dark)]"
+            class="w-full p-2 mb-2 border border-[var(--gray)] bg-brand rounded text-[var(--dark)]"
             required
           />
           <textarea
             [(ngModel)]="newFaq.answer"
             placeholder="Enter answer"
-            class="w-full p-2 mb-2 border border-[var(--gray)] rounded text-[var(--dark)]"
+            class="w-full p-2 mb-2 border border-[var(--gray)] bg-brand rounded text-[var(--dark)]"
             required
           ></textarea>
         </ng-container>

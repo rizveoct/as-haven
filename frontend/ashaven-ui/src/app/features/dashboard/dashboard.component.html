@@ -9,7 +9,7 @@
     </div>
 
     <nav class="luxe-dashboard__nav" aria-label="Dashboard navigation">
-      <a routerLink="/dashboard" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+      <a routerLink="/dashboard" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" class="luxe-dashboard__nav-item">
         <i class="fas fa-chart-line"></i>
         <span>Overview</span>
       </a>
@@ -25,10 +25,10 @@
         <i class="fas fa-users"></i>
         <span>Advisory team</span>
       </a>
-      <a routerLink="/dashboard/consultant" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
+      <!-- <a routerLink="/dashboard/consultant" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
         <i class="fas fa-handshake"></i>
         <span>Consultants</span>
-      </a>
+      </a> -->
       <a routerLink="/dashboard/testimonials" routerLinkActive="is-active" class="luxe-dashboard__nav-item">
         <i class="fas fa-comment-dots"></i>
         <span>Testimonials</span>
@@ -57,7 +57,7 @@
       <button type="button" (click)="toggleSidebar()" aria-label="Close navigation">&times;</button>
     </div>
     <nav class="luxe-dashboard__nav" aria-label="Mobile dashboard navigation">
-      <a routerLink="/dashboard" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+      <a routerLink="/dashboard" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
         <i class="fas fa-chart-line"></i>
         <span>Overview</span>
       </a>
@@ -73,10 +73,10 @@
         <i class="fas fa-users"></i>
         <span>Advisory team</span>
       </a>
-      <a routerLink="/dashboard/consultant" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
+      <!-- <a routerLink="/dashboard/consultant" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
         <i class="fas fa-handshake"></i>
         <span>Consultants</span>
-      </a>
+      </a> -->
       <a routerLink="/dashboard/testimonials" routerLinkActive="is-active" (click)="closeSidebar()" class="luxe-dashboard__nav-item">
         <i class="fas fa-comment-dots"></i>
         <span>Testimonials</span>

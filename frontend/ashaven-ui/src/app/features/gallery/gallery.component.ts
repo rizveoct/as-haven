@@ -24,6 +24,14 @@ interface GalleryItem {
 })
 export class GalleryComponent implements OnInit {
   galleryList: GalleryItem[] = [];
+
+  // 🔹 Pagination state
+  currentPage = 1;
+  pageSize = 10;
+  totalItems = 0;
+  public Math = Math;
+
+  // UI state
   showCreateModal = false;
   showEditModal = false;
   newItem: GalleryItem = {
@@ -46,16 +54,69 @@ export class GalleryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadGallery();
+    this.loadGallery(); // initial load
   }
 
+  /**
+   * CLIENT-SIDE PAGINATION (default)
+   * Fetch all, then slice on the client.
+   * If your API supports paging, see server-side section below.
+   */
   async loadGallery(): Promise<void> {
     try {
       this.galleryList = await this.galleryService.getAll();
+      this.totalItems = this.galleryList.length;
+      // keep currentPage in range if list shrank
+      const lastPage = this.pageCount;
+      if (this.currentPage > lastPage) {
+        this.currentPage = Math.max(1, lastPage);
+      }
     } catch (error) {
       this.toastr.error('Failed to load gallery items');
+      this.galleryList = [];
+      this.totalItems = 0;
     }
   }
+
+  // 🔹 Computed: current page slice
+  get pagedGallery(): GalleryItem[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    return this.galleryList.slice(start, end);
+  }
+
+  // 🔹 Computed: total pages
+  get pageCount(): number {
+    return Math.max(1, Math.ceil(this.totalItems / this.pageSize));
+  }
+
+  // 🔹 Pages array for template *ngFor
+  get pages(): number[] {
+    return Array.from({ length: this.pageCount }, (_, i) => i + 1);
+  }
+
+  // 🔹 Change page by ±1
+  changePage(delta: number): void {
+    const next = this.currentPage + delta;
+    if (next >= 1 && next <= this.pageCount) {
+      this.currentPage = next;
+    }
+  }
+
+  // 🔹 Jump to specific page
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.pageCount) {
+      this.currentPage = page;
+    }
+  }
+
+  // 🔹 Change page size
+  onPageSizeChange(size: number): void {
+    this.pageSize = Number(size);
+    this.currentPage = 1; // reset to first page
+  }
+
+  /* -------------------- Modals -------------------- */
 
   toggleCreateModal(): void {
     this.showCreateModal = !this.showCreateModal;
@@ -91,16 +152,12 @@ export class GalleryComponent implements OnInit {
 
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-    }
+    if (input.files?.length) this.selectedFile = input.files[0];
   }
 
   onEditFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.editSelectedFile = input.files[0];
-    }
+    if (input.files?.length) this.editSelectedFile = input.files[0];
   }
 
   async createData(): Promise<void> {
@@ -108,11 +165,8 @@ export class GalleryComponent implements OnInit {
       this.toastr.error('Title and content type are required');
       return;
     }
-
     const formData = new FormData();
-    if (this.selectedFile) {
-      formData.append('contentname', this.selectedFile);
-    }
+    if (this.selectedFile) formData.append('contentname', this.selectedFile);
     formData.append('type', this.newItem.contentType);
     formData.append('title', this.newItem.title);
     formData.append('description', this.newItem.description);
@@ -125,7 +179,7 @@ export class GalleryComponent implements OnInit {
         this.toggleCreateModal();
         await this.loadGallery();
       }
-    } catch (error) {
+    } catch {
       this.toastr.error('Failed to create gallery item');
     }
   }
@@ -135,11 +189,9 @@ export class GalleryComponent implements OnInit {
       this.toastr.error('Title and content type are required');
       return;
     }
-
     const formData = new FormData();
-    if (this.editSelectedFile) {
+    if (this.editSelectedFile)
       formData.append('contentname', this.editSelectedFile);
-    }
     formData.append('id', this.editItem.id);
     formData.append('type', this.editItem.contentType);
     formData.append('title', this.editItem.title);
@@ -153,7 +205,7 @@ export class GalleryComponent implements OnInit {
         this.toggleEditModal();
         await this.loadGallery();
       }
-    } catch (error) {
+    } catch {
       this.toastr.error('Failed to update gallery item');
     }
   }
@@ -163,6 +215,8 @@ export class GalleryComponent implements OnInit {
     this.showEditModal = true;
   }
 
+  /* -------------------- CRUD -------------------- */
+
   async itemActiveInactive(id: string, value: boolean): Promise<void> {
     try {
       const response = await this.galleryService.setActiveInactive(id, value);
@@ -170,7 +224,7 @@ export class GalleryComponent implements OnInit {
         this.toastr.success(response);
         await this.loadGallery();
       }
-    } catch (error) {
+    } catch {
       this.toastr.error('Failed to update status');
     }
   }
@@ -182,7 +236,7 @@ export class GalleryComponent implements OnInit {
         this.toastr.success(response);
         await this.loadGallery();
       }
-    } catch (error) {
+    } catch {
       this.toastr.error('Failed to delete gallery item');
     }
   }

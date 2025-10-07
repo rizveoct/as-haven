@@ -1,4 +1,5 @@
 <div class="container mx-auto px-4">
+  <!-- Header + Create button (unchanged) -->
   <div class="flex items-center mb-4">
     <h6 class="text-lg font-bold text-dark grow">List of Gallery</h6>
     <div class="shrink-0">
@@ -10,240 +11,34 @@
         <span class="align-middle">Create Gallery</span>
       </button>
     </div>
+  </div>
 
-    <!-- Create Modal -->
-    <div
-      *ngIf="showCreateModal"
-      class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50"
-    >
-      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-          <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Add Gallery</h3>
-            <button
-              type="button"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              (click)="toggleCreateModal()"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-          <form (ngSubmit)="createData()" enctype="multipart/form-data">
-            <div class="grid gap-4 mb-4 sm:grid-cols-2">
-              <div class="sm:col-span-2">
-                <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                <input
-                  id="title"
-                  name="title"
-                  type="text"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  placeholder="Enter Title"
-                  required
-                  [(ngModel)]="newItem.title"
-                />
-              </div>
-              <div class="sm:col-span-2">
-                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                <textarea
-                  id="description"
-                  name="description"
-                  rows="4"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-accent focus:border-accent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  placeholder="Write description here"
-                  [(ngModel)]="newItem.description"
-                ></textarea>
-              </div>
-              <div class="sm:col-span-2">
-                <label for="contentType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content Type</label>
-                <select
-                  id="contentType"
-                  name="contentType"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  [(ngModel)]="newItem.contentType"
-                >
-                  <option value="">Select content type</option>
-                  <option value="Image">Image</option>
-                  <option value="Video">Video</option>
-                </select>
-              </div>
-              <div class="sm:col-span-2">
-                <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  {{ newItem.contentType === 'Video' ? 'Upload file (Video max 15MB)' : 'Upload file' }}
-                </label>
-                <input
-                  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  id="image"
-                  type="file"
-                  (change)="onFileChange($event)"
-                />
-              </div>
-              <div class="sm:col-span-2">
-                <label for="order" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Order</label>
-                <input
-                  id="order"
-                  name="order"
-                  type="number"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  required
-                  [(ngModel)]="newItem.order"
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              class="text-white inline-flex items-center bg-accent hover:bg-accent-dark focus:ring-4 focus:outline-none focus:ring-accent/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              <svg
-                class="mr-1 -ml-1 w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Save
-            </button>
-          </form>
-        </div>
-      </div>
+  <!-- Controls: Page size + status -->
+  <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-center gap-2">
+      <label class="text-sm text-gray-600">Rows per page:</label>
+      <select
+        class="border rounded-md px-2 py-1 text-sm bg-white dark:bg-gray-800 dark:text-gray-200"
+        [ngModel]="pageSize"
+        (ngModelChange)="onPageSizeChange($event)"
+      >
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option [ngValue]="20">20</option>
+        <option [ngValue]="50">50</option>
+      </select>
     </div>
 
-    <!-- Edit Modal -->
-    <div
-      *ngIf="showEditModal"
-      class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-[calc(100%-1rem)] max-h-full bg-black bg-opacity-50"
-    >
-      <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
-        <div class="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-          <div class="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Edit Gallery</h3>
-            <button
-              type="button"
-              class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              (click)="toggleEditModal()"
-            >
-              <svg
-                aria-hidden="true"
-                class="w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              <span class="sr-only">Close modal</span>
-            </button>
-          </div>
-          <form (ngSubmit)="editData()" enctype="multipart/form-data">
-            <div class="grid gap-4 mb-4 sm:grid-cols-2">
-              <div class="sm:col-span-2">
-                <label for="edittitle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                <input
-                  id="edittitle"
-                  name="edittitle"
-                  type="text"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  placeholder="Enter Title"
-                  required
-                  [(ngModel)]="editItem.title"
-                />
-                <input
-                  id="editid"
-                  name="editid"
-                  type="text"
-                  class="hidden"
-                  [(ngModel)]="editItem.id"
-                />
-              </div>
-              <div class="sm:col-span-2">
-                <label for="editdescription" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                <textarea
-                  id="editdescription"
-                  name="editdescription"
-                  rows="4"
-                  class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-accent focus:border-accent dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  placeholder="Write description here"
-                  [(ngModel)]="editItem.description"
-                ></textarea>
-              </div>
-              <div class="sm:col-span-2">
-                <label for="editContentType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content Type</label>
-                <select
-                  id="editContentType"
-                  name="editContentType"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  [(ngModel)]="editItem.contentType"
-                >
-                  <option value="">Select content type</option>
-                  <option value="Image">Image</option>
-                  <option value="Video">Video</option>
-                </select>
-              </div>
-              <div class="sm:col-span-2">
-                <label for="editimage" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                  {{ editItem.contentType === 'Video' ? 'Upload file (Video max 15MB)' : 'Upload file' }}
-                </label>
-                <input
-                  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  id="editimage"
-                  type="file"
-                  (change)="onEditFileChange($event)"
-                />
-              </div>
-              <div class="sm:col-span-2">
-                <label for="editorder" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Order</label>
-                <input
-                  id="editorder"
-                  name="editorder"
-                  type="number"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-accent focus:border-accent block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-accent-dark dark:focus:border-accent-dark"
-                  required
-                  [(ngModel)]="editItem.order"
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              class="text-white inline-flex items-center bg-accent hover:bg-accent-dark focus:ring-4 focus:outline-none focus:ring-accent/20 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-              <svg
-                class="mr-1 -ml-1 w-6 h-6"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                  clip-rule="evenodd"
-                ></path>
-              </svg>
-              Update
-            </button>
-          </form>
-        </div>
-      </div>
+    <div class="text-sm text-gray-600">
+      Showing
+      <span class="font-semibold">
+        {{ (currentPage - 1) * pageSize + 1 }}
+        –
+        {{
+          Math.min(currentPage * pageSize, totalItems)
+        }}
+      </span>
+      of <span class="font-semibold">{{ totalItems }}</span>
     </div>
   </div>
 
@@ -265,64 +60,184 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let item of galleryList"
+          *ngFor="let item of pagedGallery"
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600"
         >
-          <th
-            scope="row"
-            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
             {{ item.title }}
           </th>
           <td class="px-6 py-4">{{ item.description }}</td>
           <td class="px-6 py-4">{{ item.contentType }}</td>
           <td class="px-6 py-4">
             <ng-container *ngIf="item.contentType === 'Image'">
-              <img class="w-16 h-10" [src]="baseUrl + '/api/attachment/get/' + item.contentName" alt="">
+              <img class="w-16 h-10 object-cover rounded" [src]="baseUrl + '/api/attachment/get/' + item.contentName" alt="">
             </ng-container>
             <ng-container *ngIf="item.contentType === 'Video'">
-              <video class="w-16 h-10" controls>
+              <video class="w-16 h-10 rounded" preload="metadata">
                 <source [src]="baseUrl + '/api/attachment/get/' + item.contentName" type="video/mp4" />
               </video>
             </ng-container>
           </td>
           <td class="px-6 py-4">
-            <ng-container *ngIf="item.isActive">
-              <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-500 dark:bg-green-500/20 dark:border-transparent inline-flex items-center">
-                <i class="ri-checkbox-line text-green-500 mr-1.5"></i> Active
+            <ng-container *ngIf="item.isActive; else inactive">
+              <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-green-100 border-transparent text-green-600 dark:bg-green-500/20 dark:text-green-400 inline-flex items-center">
+                <i class="ri-checkbox-line mr-1.5"></i> Active
               </span>
             </ng-container>
-            <ng-container *ngIf="!item.isActive">
-              <span class="px-2.5 py-0.5 inline-flex items-center text-xs font-medium rounded border bg-red-100 border-transparent text-red-500 dark:bg-red-500/20 dark:border-transparent">
-                <i class="ri-close-circle-line text-red-400 mr-1.5"></i> Inactive
+            <ng-template #inactive>
+              <span class="px-2.5 py-0.5 text-xs font-medium rounded border bg-red-100 border-transparent text-red-600 dark:bg-red-500/20 dark:text-red-400 inline-flex items-center">
+                <i class="ri-close-circle-line mr-1.5"></i> Inactive
               </span>
-            </ng-container>
+            </ng-template>
           </td>
           <td class="px-6 py-4">{{ item.order }}</td>
           <td class="px-6 py-4 text-right">
             <button
               (click)="openEditModal(item)"
-              class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+              class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-1 me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
             >Edit</button>
-            <ng-container *ngIf="item.isActive">
+
+            <ng-container *ngIf="item.isActive; else activateBtn">
               <button
                 (click)="itemActiveInactive(item.id, false)"
-                class="ml-2 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
               >Deactivate</button>
             </ng-container>
-            <ng-container *ngIf="!item.isActive">
+            <ng-template #activateBtn>
               <button
                 (click)="itemActiveInactive(item.id, true)"
-                class="ml-2 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
+                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-1 me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800"
               >Activate</button>
-            </ng-container>
+            </ng-template>
+
             <button
               (click)="itemDelete(item.id)"
-              class="ml-2 text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+              class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
             >Delete</button>
           </td>
         </tr>
+
+        <tr *ngIf="!totalItems" class="text-center">
+          <td colspan="7" class="p-3">No items found.</td>
+        </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="text-sm text-gray-600">
+      Page <span class="font-semibold">{{ currentPage }}</span> of
+      <span class="font-semibold">{{ pageCount }}</span>
+    </div>
+
+    <div class="inline-flex items-center gap-1">
+      <button
+        (click)="changePage(-1)"
+        [disabled]="currentPage === 1"
+        class="px-3 py-2 rounded-md border text-sm bg-accent "
+      >
+        Previous
+      </button>
+
+      <!-- Numbered pages -->
+      <ng-container *ngFor="let p of pages">
+        <button
+          (click)="goToPage(p)"
+          class="w-9 h-9 rounded-md border text-sm"
+          [class.bg-accent]="p === currentPage"
+          [class.text-white]="p === currentPage"
+          [class.border-accent]="p === currentPage"
+        >
+          {{ p }}
+        </button>
+      </ng-container>
+
+      <button
+        (click)="changePage(1)"
+        [disabled]="currentPage === pageCount"
+        class="px-3 py-2 rounded-md border text-sm bg-accent "
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <!-- CREATE MODAL (NEW) -->
+  <div *ngIf="showCreateModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50" (click)="toggleCreateModal()">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800" (click)="$event.stopPropagation()">
+      <div class="mt-3">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Create New Gallery</h3>
+        <form (ngSubmit)="createData()" class="space-y-4">
+          <div>
+            <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title *</label>
+            <input type="text" id="title" [(ngModel)]="newItem.title" name="title" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          </div>
+          <div>
+            <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+            <textarea id="description" [(ngModel)]="newItem.description" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+          </div>
+          <div>
+            <label for="contentType" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content Type *</label>
+            <select id="contentType" [(ngModel)]="newItem.contentType" name="contentType" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option value="">Select Type</option>
+              <option value="Image">Image</option>
+              <option value="Video">Video</option>
+            </select>
+          </div>
+          <div>
+            <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content File</label>
+            <input type="file" id="file" (change)="onFileChange($event)" accept="image/*,video/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-accent-dark">
+          </div>
+          <div>
+            <label for="order" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Order</label>
+            <input type="number" id="order" [(ngModel)]="newItem.order" name="order" min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          </div>
+          <div class="flex justify-end space-x-2 pt-4">
+            <button type="button" (click)="toggleCreateModal()" class="px-4 py-2 text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">Cancel</button>
+            <button type="submit" class="px-4 py-2 text-white bg-accent border border-accent rounded-md hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT MODAL (NEW - similar structure for completeness) -->
+  <div *ngIf="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50" (click)="toggleEditModal()">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-gray-800" (click)="$event.stopPropagation()">
+      <div class="mt-3">
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Edit Gallery</h3>
+        <form (ngSubmit)="editData()" class="space-y-4">
+          <div>
+            <label for="editTitle" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Title *</label>
+            <input type="text" id="editTitle" [(ngModel)]="editItem.title" name="title" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          </div>
+          <div>
+            <label for="editDescription" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Description</label>
+            <textarea id="editDescription" [(ngModel)]="editItem.description" name="description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"></textarea>
+          </div>
+          <div>
+            <label for="editContentType" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content Type *</label>
+            <select id="editContentType" [(ngModel)]="editItem.contentType" name="contentType" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <option value="">Select Type</option>
+              <option value="Image">Image</option>
+              <option value="Video">Video</option>
+            </select>
+          </div>
+          <div>
+            <label for="editFile" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Update Content File</label>
+            <input type="file" id="editFile" (change)="onEditFileChange($event)" accept="image/*,video/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-accent file:text-white hover:file:bg-accent-dark">
+          </div>
+          <div>
+            <label for="editOrder" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Order</label>
+            <input type="number" id="editOrder" [(ngModel)]="editItem.order" name="order" min="0" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-accent focus:ring focus:ring-accent focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+          </div>
+          <div class="flex justify-end space-x-2 pt-4">
+            <button type="button" (click)="toggleEditModal()" class="px-4 py-2 text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">Cancel</button>
+            <button type="submit" class="px-4 py-2 text-white bg-accent border border-accent rounded-md hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>

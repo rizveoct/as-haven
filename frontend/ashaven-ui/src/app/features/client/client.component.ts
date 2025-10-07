@@ -28,9 +28,7 @@ export class ClientComponent implements OnInit {
     this.contactusService.getAll(this.currentPage, this.pageSize).subscribe({
       next: (data: Contactus[]) => {
         this.contacts = data;
-        this.errorMessage = null;
-        // If API provides totalItems, update it here (e.g., from response headers or metadata)
-        // For now, assume totalItems is unknown
+        this.errorMessage = null;        
       },
       error: (error: Error) => {
         this.errorMessage = error.message;

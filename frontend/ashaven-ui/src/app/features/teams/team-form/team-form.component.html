@@ -4,7 +4,7 @@
   aria-modal="true"
 >
   <div
-    class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
+    class="relative w-full max-w-2xl bg-brand rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
   >
     <!-- Header -->
     <div class="flex justify-between items-center mb-5">
@@ -36,7 +36,7 @@
             name="name"
             [(ngModel)]="_team.name"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="Enter team member name"
             required
           />
@@ -60,7 +60,7 @@
             name="designation"
             [(ngModel)]="_team.designation"
             rows="2"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-brand border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="Enter designation (e.g., Real Estate Agent)"
           ></textarea>
         </div>
@@ -75,7 +75,7 @@
             name="description"
             [(ngModel)]="_team.description"
             rows="3"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="Describe the team member's role or bio"
           ></textarea>
         </div>
@@ -90,7 +90,7 @@
             name="facebook"
             [(ngModel)]="_team.facebook"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="https://facebook.com/username"
             required
           />
@@ -104,7 +104,7 @@
             name="twitter"
             [(ngModel)]="_team.twiter"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="https://twitter.com/username"
             required
           />
@@ -118,7 +118,7 @@
             name="linkedin"
             [(ngModel)]="_team.linkthen"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="https://linkedin.com/in/username"
             required
           />
@@ -134,7 +134,7 @@
             name="image"
             type="file"
             (change)="onFileChange($event)"
-            class="w-full p-2.5 bg-light border border-lightDark rounded-lg text-dark file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-sm"
+            class="w-full p-2.5 bg-light border border-lightDark bg-brand rounded-lg text-dark file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-sm"
           />
         </div>
 
@@ -148,7 +148,7 @@
             name="order"
             [(ngModel)]="_team.order"
             type="number"
-            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
             placeholder="Enter display order"
             required
           />

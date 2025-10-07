@@ -32,7 +32,6 @@
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
-  background: #e5e7eb;
   border-radius: 4px;
 }
 
@@ -47,9 +46,9 @@
 
 /* Prevent parent container from blocking scroll */
 .fixed.inset-0 {
-  overflow: hidden; /* Prevent body scroll when modal is open */
+  overflow: hidden; 
 }
 
 body {
-  overflow: hidden; /* Ensure body doesn't scroll when modal is open */
+  overflow: hidden; 
 }

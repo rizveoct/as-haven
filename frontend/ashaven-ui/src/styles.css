@@ -116,19 +116,25 @@ img {
 
 .neo-section {
   position: relative;
-  padding: clamp(4rem, 8vw, 6.5rem) clamp(1.5rem, 4vw, 3.75rem);
+  padding-block: clamp(4rem, 8vw, 6.5rem);
   width: 100%;
-  max-width: min(92vw, 1200px);
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2rem, 5vw, 3.5rem);
   z-index: 1;
 }
 
+.neo-section__inner {
+  width: 100%;
+  max-width: min(92vw, 1200px);
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
 @media (min-width: 1024px) {
-  .neo-section {
+  .neo-section__inner {
     max-width: min(85vw, 1680px);
+    padding-inline: 0;
   }
 }
 
@@ -137,13 +143,20 @@ img {
   position: absolute;
   inset: 0;
   margin: auto;
-  max-width: 98%;
+  width: 100%;
+  max-width: min(92vw, 1200px);
   border-radius: calc(var(--neo-radius-lg) * 1.15);
   background: radial-gradient(circle at top, rgba(255, 119, 27, 0.08), transparent 70%),
     radial-gradient(circle at bottom left, rgba(32, 71, 38, 0.12), transparent 65%);
   filter: blur(80px);
   opacity: 0.6;
   z-index: -1;
+}
+
+@media (min-width: 1024px) {
+  .neo-section::after {
+    max-width: min(85vw, 1680px);
+  }
 }
 
 .neo-section__header {

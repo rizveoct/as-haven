@@ -7,7 +7,8 @@
   overflow: hidden;
   border-radius: var(--neo-radius-lg);
   min-height: clamp(420px, 65vh, 560px);
-  margin-inline: clamp(1rem, 5vw, 3rem);
+  width: min(92vw, 1200px);
+  margin: 0 auto;
   box-shadow: 0 45px 110px rgba(19, 53, 31, 0.28);
 }
 
@@ -102,8 +103,8 @@
   box-shadow: 0 35px 75px rgba(255, 119, 27, 0.38);
 }
 
-@media (max-width: 767px) {
+@media (min-width: 1024px) {
   .neo-vision {
-    margin-inline: clamp(0.5rem, 4vw, 1.2rem);
+    width: min(85vw, 1200px);
   }
 }

@@ -7,7 +7,7 @@
   overflow: hidden;
   padding: clamp(4rem, 10vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem);
   color: var(--luxe-forest-900);
-  background-color: var(--luxe-forest-900);
+  background-color: var(--neo-glow-secondary);
 
 }
 
@@ -62,7 +62,8 @@
   margin: 0 auto;
   padding: clamp(3rem, 7vw, 4.5rem);
   border-radius: calc(var(--neo-radius-lg) * 1.1);
-  background: linear-gradient(170deg, rgba(255, 255, 255, 0.96), rgba(241, 251, 236, 0.92));
+  /* background: linear-gradient(170deg, rgba(255, 255, 255, 0.96), rgba(241, 251, 236, 0.92)); */
+  background-color: #fefefe;
   border: 1px solid rgba(32, 71, 38, 0.12);
   box-shadow: 0 45px 120px rgba(19, 53, 31, 0.22);
   backdrop-filter: blur(18px);
@@ -95,7 +96,7 @@
 }
 
 .neo-footer__logo {
-  width: clamp(3.5rem, 10vw, 4.5rem);
+  width: clamp(6.5rem, 10vw, 8.5rem);
   height: auto;
   object-fit: contain;
   filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.25));

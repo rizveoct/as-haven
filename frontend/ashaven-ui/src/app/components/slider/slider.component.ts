@@ -30,6 +30,7 @@ interface Slide {
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './slider.component.html',
+  styleUrl: './slider.component.css',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {

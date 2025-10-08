@@ -7,6 +7,8 @@
   overflow: hidden;
   padding: clamp(4rem, 10vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem);
   color: var(--luxe-forest-900);
+  background-color: var(--luxe-forest-900);
+
 }
 
 .neo-footer__background {
@@ -82,6 +84,8 @@
     justify-content: space-between;
   }
 }
+
+
 
 .neo-footer__brand {
   max-width: clamp(16rem, 38vw, 24rem);

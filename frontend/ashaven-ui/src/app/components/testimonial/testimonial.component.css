@@ -7,6 +7,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
+  margin-top: 15px;
   gap: clamp(1rem, 3vw, 1.6rem);
 }
 
@@ -113,6 +114,7 @@
 @media (max-width: 767px) {
   .neo-testimonial__surface {
     grid-template-columns: 1fr;
+    margin-top: 15px;
   }
 
   .neo-testimonial__control {

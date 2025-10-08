@@ -38,6 +38,41 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
   slides: Slide[] = [];
   baseUrl = environment.baseUrl;
   private subscription = new Subscription();
+  private fallbackSlides: Slide[] = [
+    {
+      id: 'signature-lagoon',
+      image:
+        'https://images.unsplash.com/photo-1616594039964-5c07b911c927?auto=format&fit=crop&w=1200&q=80',
+      name: 'Lagoonview Residences',
+      category: 'Signature',
+      address: 'Emerald Bay, Lagos',
+      type: 'Waterfront Villas',
+      description:
+        'Wraparound terraces, cascading water features, and private marinas curated for sun-washed living beside the lagoon.',
+    },
+    {
+      id: 'signature-orchard',
+      image:
+        'https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80',
+      name: 'The Orchard Lofts',
+      category: 'Signature',
+      address: 'Ikoyi Crest, Lagos',
+      type: 'Skyline Lofts',
+      description:
+        'Sun-drenched duplex lofts with winter gardens, biophilic interiors, and concierge wellness programming.',
+    },
+    {
+      id: 'signature-dune',
+      image:
+        'https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=80',
+      name: 'Dune Estate',
+      category: 'Signature',
+      address: 'Eko Atlantic, Lagos',
+      type: 'Coastal Penthouses',
+      description:
+        'Elevated sky homes framed by Atlantic panoramas, featuring private plunge pools and tailored lifestyle services.',
+    },
+  ];
 
   constructor(private projectService: ProjectService) {}
 
@@ -53,27 +88,34 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.subscription.add(
       this.projectService.getActiveProjects().subscribe({
         next: (projects: Project[]) => {
-          this.slides = projects.map((project) => ({
+          const apiSlides = projects.map((project, index) => ({
             id: project.id,
             image: project.thumbnail
               ? `${this.baseUrl}/api/attachment/get/${project.thumbnail}`
-              : 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg',
+              : this.fallbackSlides[index % this.fallbackSlides.length].image,
             name: project.name || 'Untitled Project',
-            category: project.category || 'Unknown',
+            category: project.category || 'Collection',
             address: project.address || '—',
             type: project.type || '—',
             description:
               project.description || 'Discover elegance in every detail.',
           }));
 
-          // Wait a tick so Angular renders <swiper-slide> nodes, then initialize Swiper element
-          setTimeout(() => this.initSwiper(), 50);
+          this.applySlides(apiSlides.length ? apiSlides : this.fallbackSlides);
         },
         error: (err) => {
           console.error('Error loading projects:', err);
+          this.applySlides(this.fallbackSlides);
         },
       })
     );
+  }
+
+  private applySlides(slides: Slide[]) {
+    this.slides = slides;
+
+    // Wait a tick so Angular renders <swiper-slide> nodes, then initialize Swiper element
+    setTimeout(() => this.initSwiper(), 50);
   }
 
   private initSwiper() {
@@ -93,11 +135,11 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Assign configuration as properties (use JS props because we used init="false")
-    Object.assign(swiperEl, {
-      // core
-      slidesPerView: 3,
-      spaceBetween: 24,
-      loop: true,
+      Object.assign(swiperEl, {
+        // core
+        slidesPerView: 3,
+        spaceBetween: 24,
+        loop: true,
       speed: 800,
 
       // autoplay module
@@ -106,11 +148,11 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
         disableOnInteraction: false,
       },
 
-      // navigation - selectors must exist in DOM at initialize time
-      navigation: {
-        nextEl: '.neo-slider__control--next',
-        prevEl: '.neo-slider__control--prev',
-      },
+        // navigation - selectors must exist in DOM at initialize time
+        navigation: {
+          nextEl: '.signature-slider__control--next',
+          prevEl: '.signature-slider__control--prev',
+        },
 
       // pagination - we will place an element with class .swiper-pagination in template
       pagination: {

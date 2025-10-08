@@ -135,45 +135,41 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Assign configuration as properties (use JS props because we used init="false")
-      Object.assign(swiperEl, {
-        // core
-        slidesPerView: 3,
-        spaceBetween: 24,
-        loop: true,
-      speed: 800,
-
-      // autoplay module
+    Object.assign(swiperEl, {
+      slidesPerView: 1.1,
+      spaceBetween: 28,
+      centeredSlides: true,
+      loop: this.slides.length > 1,
+      speed: 900,
+      grabCursor: true,
       autoplay: {
-        delay: 4000,
+        delay: 4200,
         disableOnInteraction: false,
       },
-
-        // navigation - selectors must exist in DOM at initialize time
-        navigation: {
-          nextEl: '.signature-slider__control--next',
-          prevEl: '.signature-slider__control--prev',
-        },
-
-      // pagination - we will place an element with class .swiper-pagination in template
+      navigation: {
+        nextEl: '.signature-slider__control--next',
+        prevEl: '.signature-slider__control--prev',
+      },
       pagination: {
         el: '.swiper-pagination',
         clickable: true,
       },
-
-      breakpoints: {
-        0: { slidesPerView: 1 }, // 📱 Mobile
-        640: { slidesPerView: 1 }, // Small tablets
-        768: { slidesPerView: 2 }, // Medium tablets
-        1024: { slidesPerView: 3 }, // Laptops/desktops
+      keyboard: {
+        enabled: true,
       },
-
-      // events (optional)
+      breakpoints: {
+        0: { slidesPerView: 1.05, spaceBetween: 18 },
+        640: { slidesPerView: 1.15, spaceBetween: 22 },
+        900: { slidesPerView: 1.4, spaceBetween: 26 },
+        1200: { slidesPerView: 1.8, spaceBetween: 30 },
+        1536: { slidesPerView: 2.3, spaceBetween: 34 },
+      },
       on: {
         init() {
-          // console.log('swiper init', arguments);
+          // custom init hook placeholder
         },
         slideChange() {
-          // console.log('slide changed');
+          // custom slide hook placeholder
         },
       },
     });

@@ -1,45 +1,56 @@
 <section class="neo-section neo-section--wide signature-slider">
-  <div class="signature-slider__halo" aria-hidden="true"></div>
+  <div class="signature-slider__aura" aria-hidden="true"></div>
+  <div class="signature-slider__mesh" aria-hidden="true"></div>
 
   <header class="signature-slider__header">
-    <div class="signature-slider__intro">
-      <span class="signature-slider__tag">Featured Signature Collection</span>
-      <h2 class="signature-slider__title">Signature Properties</h2>
+    <div class="signature-slider__headline">
+      <span class="signature-slider__tag">Signature Collection</span>
+      <h2 class="signature-slider__title">
+        Featured Signature
+        <span>Properties</span>
+      </h2>
     </div>
     <p class="signature-slider__subtitle">
-      Discover luminous residences shaped by mindful architecture, botanical landscapes, and curated amenities for a life steeped in calm luxury.
+      Immerse yourself in luminous residences with resort-grade amenities, biophilic interiors, and thoughtful architecture
+      crafted for restorative living.
     </p>
   </header>
 
   <div class="signature-slider__surface">
+    <div class="signature-slider__surface-glow" aria-hidden="true"></div>
+
     <swiper-container
       #swiper
       init="false"
       class="signature-slider__container"
       aria-label="Signature properties slider"
     >
-      <swiper-slide *ngFor="let slide of slides" class="signature-slider__slide">
+      <swiper-slide *ngFor="let slide of slides; let idx = index" class="signature-slider__slide">
         <article class="signature-card">
-          <figure class="signature-card__visual">
+          <figure class="signature-card__media">
             <img [src]="slide.image" [alt]="slide.name" loading="lazy" />
-            <div class="signature-card__visual-overlay"></div>
+            <div class="signature-card__veil" aria-hidden="true"></div>
+            <div class="signature-card__beam" aria-hidden="true"></div>
+            <span class="signature-card__index" aria-hidden="true">0{{ idx + 1 }}</span>
             <div class="signature-card__chips" aria-hidden="true">
-              <span class="signature-card__chip">{{ slide.category }}</span>
-              <span class="signature-card__chip signature-card__chip--soft">{{ slide.type }}</span>
+              <span>{{ slide.category }}</span>
+              <span>{{ slide.type }}</span>
             </div>
           </figure>
 
-          <div class="signature-card__body">
-            <span class="signature-card__eyebrow">{{ slide.address }}</span>
+          <div class="signature-card__panel">
+            <span class="signature-card__location">{{ slide.address }}</span>
             <h3 class="signature-card__title">{{ slide.name }}</h3>
             <p class="signature-card__description">{{ slide.description }}</p>
 
+            <div class="signature-card__divider" aria-hidden="true"></div>
+
             <dl class="signature-card__meta">
-              <div class="signature-card__meta-item">
+              <div>
                 <dt>Collection</dt>
                 <dd>{{ slide.category }}</dd>
               </div>
-              <div class="signature-card__meta-item">
+              <div>
                 <dt>Residence Type</dt>
                 <dd>{{ slide.type }}</dd>
               </div>
@@ -63,14 +74,18 @@
         aria-label="Previous slide"
         class="signature-slider__control signature-slider__control--prev"
       >
-        <span>&larr;</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 6 9 12l6 6" />
+        </svg>
       </button>
       <button
         type="button"
         aria-label="Next slide"
         class="signature-slider__control signature-slider__control--next"
       >
-        <span>&rarr;</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
       </button>
     </div>
   </div>

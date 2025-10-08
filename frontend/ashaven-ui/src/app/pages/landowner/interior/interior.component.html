@@ -23,10 +23,10 @@
       </div>
     </div>
     <!-- Slider -->
-    <div class="slider-wrapper">
+    <div class="slider-wrapper" #sliderWrapper>
       <div
         class="slides"
-        [style.transform]="'translateX(' + currentTranslate + 'px)'"
+        #slidesContainer
         (mousedown)="onMouseDown($event)"
         (touchstart)="onMouseDown($event)"
         (mouseenter)="onMouseEnter()"

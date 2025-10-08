@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  NgZone,
+} from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { Consultant } from '../../../models/model';
@@ -19,7 +27,9 @@ interface Slide {
   templateUrl: './interior.component.html',
   styleUrls: ['./interior.component.css'],
 })
-export class InteriorSliderComponent implements OnInit, OnDestroy {
+export class InteriorSliderComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   slides: Slide[] = [];
   baseUrl = environment.baseUrl;
   currentTranslate = 0;
@@ -30,6 +40,9 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
   startX = 0;
   startTranslate = 0;
   isPaused = false;
+  private isViewportPaused = false;
+  private isAnimationActive = false;
+  private intersectionObserver?: IntersectionObserver;
   swipeDistance = 0;
   swipeThreshold = 50;
   selectedSlide: Slide | null = null;
@@ -37,8 +50,27 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
 
   constructor(
     private projectService: ConsultantService,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone
   ) {}
+
+  @ViewChild('slidesContainer', { static: true })
+  private slidesContainer?: ElementRef<HTMLDivElement>;
+
+  @ViewChild('sliderWrapper', { static: true })
+  private sliderWrapper?: ElementRef<HTMLElement>;
+
+  private readonly documentMouseMoveListener = (
+    event: MouseEvent | TouchEvent
+  ) => this.onMouseMove(event);
+
+  private readonly documentTouchMoveListener = (
+    event: MouseEvent | TouchEvent
+  ) => this.onMouseMove(event);
+
+  private readonly documentMouseUpListener = () => this.onMouseUp();
+
+  private readonly documentTouchEndListener = () => this.onMouseUp();
 
   openModal(slide: Slide, event: MouseEvent | TouchEvent) {
     if (this.swipeDistance > this.swipeThreshold) {
@@ -56,11 +88,25 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadProjects();
-    this.animateSlide();
+  }
+
+  ngAfterViewInit(): void {
+    this.setupIntersectionObserver();
+    this.updateTransform();
+    this.ngZone.runOutsideAngular(() => {
+      this.isAnimationActive = true;
+      this.animateSlide();
+    });
   }
 
   ngOnDestroy() {
+    this.isAnimationActive = false;
     cancelAnimationFrame(this.animationFrameId);
+    document.removeEventListener('mousemove', this.documentMouseMoveListener);
+    document.removeEventListener('touchmove', this.documentTouchMoveListener);
+    document.removeEventListener('mouseup', this.documentMouseUpListener);
+    document.removeEventListener('touchend', this.documentTouchEndListener);
+    this.intersectionObserver?.disconnect();
   }
 
   loadProjects() {
@@ -81,6 +127,8 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
 
         // duplicate for infinite loop
         this.slides = [...this.slides, ...this.slides];
+
+        this.updateTransform();
       },
       error: (err) => {
         console.error('Error loading projects:', err);
@@ -90,14 +138,19 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
   }
 
   animateSlide() {
-    if (!this.isPaused && !this.isDragging) {
+    if (!this.isAnimationActive) {
+      return;
+    }
+
+    if (!this.isPaused && !this.isDragging && !this.isViewportPaused) {
       this.currentTranslate += this.speed; // move right instead of left
       const totalWidth = this.slideWidth * this.slides.length;
 
-      // when we've gone too far right, reset to the negative half
-      if (this.currentTranslate >= 0) {
+      if (totalWidth > 0 && this.currentTranslate >= 0) {
         this.currentTranslate = -(totalWidth / 2);
       }
+
+      this.updateTransform();
     }
     this.animationFrameId = requestAnimationFrame(() => this.animateSlide());
   }
@@ -113,6 +166,7 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     if (this.currentTranslate > 0) {
       this.currentTranslate = -(this.slideWidth * (this.slides.length / 2));
     }
+    this.updateTransform();
   }
 
   nextSlide() {
@@ -121,6 +175,7 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     if (Math.abs(this.currentTranslate) >= totalWidth / 2) {
       this.currentTranslate = 0;
     }
+    this.updateTransform();
   }
 
   onMouseDown(event: MouseEvent | TouchEvent) {
@@ -130,12 +185,12 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     this.startX = 'touches' in event ? event.touches[0].clientX : event.clientX;
     this.startTranslate = this.currentTranslate;
     this.swipeDistance = 0; // Reset swipe distance
-    document.addEventListener('mousemove', this.onMouseMove.bind(this));
-    document.addEventListener('touchmove', this.onMouseMove.bind(this));
-    document.addEventListener('mouseup', this.onMouseUp.bind(this), {
+    document.addEventListener('mousemove', this.documentMouseMoveListener);
+    document.addEventListener('touchmove', this.documentTouchMoveListener);
+    document.addEventListener('mouseup', this.documentMouseUpListener, {
       once: true,
     });
-    document.addEventListener('touchend', this.onMouseUp.bind(this), {
+    document.addEventListener('touchend', this.documentTouchEndListener, {
       once: true,
     });
   }
@@ -152,14 +207,18 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     } else if (this.currentTranslate > 0) {
       this.currentTranslate = -(totalWidth / 2);
     }
+    this.updateTransform();
   }
 
   onMouseUp() {
     this.isDragging = false;
     this.isPaused = false;
     this.swipeDistance = 0; // Reset swipe distance on touch end
-    document.removeEventListener('mousemove', this.onMouseMove.bind(this));
-    document.removeEventListener('touchmove', this.onMouseMove.bind(this));
+    document.removeEventListener('mousemove', this.documentMouseMoveListener);
+    document.removeEventListener('touchmove', this.documentTouchMoveListener);
+    document.removeEventListener('mouseup', this.documentMouseUpListener);
+    document.removeEventListener('touchend', this.documentTouchEndListener);
+    this.updateTransform();
   }
 
   onMouseEnter() {
@@ -183,5 +242,31 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch((err) => console.error('Navigation error:', err));
+  }
+
+  private setupIntersectionObserver(): void {
+    const target = this.sliderWrapper?.nativeElement;
+    if (!target) {
+      return;
+    }
+
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        this.isViewportPaused = !(entry?.isIntersecting ?? false);
+      },
+      { threshold: 0.1 }
+    );
+
+    this.intersectionObserver.observe(target);
+  }
+
+  private updateTransform(): void {
+    const element = this.slidesContainer?.nativeElement;
+    if (!element) {
+      return;
+    }
+
+    element.style.transform = `translateX(${this.currentTranslate}px)`;
   }
 }

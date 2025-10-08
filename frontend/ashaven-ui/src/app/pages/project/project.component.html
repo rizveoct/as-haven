@@ -1,78 +1,83 @@
-<div class="projects-page relative overflow-hidden">
-  <!-- Hero Banner with enhanced storytelling -->
-  <section class="hero-section relative">
-    <div
-      class="hero-bg absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
-      style="background-image: url('/images/banner/banner-3.png')"
-      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
-    ></div>
+<div class="relative overflow-hidden bg-gradient-to-b from-pure via-mist to-[#e7f4e3] text-ink">
+  <section class="relative flex min-h-[26rem] items-center justify-center overflow-hidden py-20 sm:py-24">
+    <div class="absolute inset-0">
+      <div
+        class="absolute -top-16 left-0 h-[120%] w-full bg-cover bg-center transition-transform duration-500"
+        style="background-image: url('/images/banner/banner-3.png')"
+        [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
+    </div>
 
-    <div class="hero-overlay absolute inset-0"></div>
-
-    <div class="hero-content relative z-10 w-[90%] sm:w-[85%] lg:w-[70%] mx-auto">
-      <span class="inline-flex items-center justify-center gap-2 text-[0.7rem] uppercase tracking-[0.6em] text-white/70 lg:justify-start">
-            <span class="h-2 w-2 rounded-full bg-accent"></span>
-            Signature Collection
-          </span>
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-white">
+    <div class="relative z-10 mx-auto flex w-[min(90%,72rem)] flex-col gap-8 text-white">
+      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.6em] text-white/70">
+        <span class="h-2 w-2 rounded-full bg-accent"></span>
+        Signature Collection
+      </span>
+      <h1 class="font-serif text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
         Projects crafted to elevate every horizon
       </h1>
-      <p class="mx-auto max-w-2xl text-base text-white/80 sm:text-lg lg:mx-0">
-        Explore our portfolio of curated developments where contemporary design,
-        sustainable practices, and purposeful spaces come together. Tailor your
-        search to uncover ongoing landmarks, future icons, and celebrated
-        communities ready for you today.
+      <p class="max-w-2xl text-base text-white/80 sm:text-lg">
+        Explore our portfolio of curated developments where contemporary design, sustainable practices, and purposeful spaces
+        come together. Tailor your search to uncover ongoing landmarks, future icons, and celebrated communities ready for you
+        today.
       </p>
-      <div class="hero-actions flex flex-col sm:flex-row items-center gap-4">
+      <div class="flex flex-col items-center gap-6 text-sm sm:flex-row">
         <a
           href="#project-filters"
-          class="hero-primary"
+          class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-semibold text-pure shadow-lg shadow-[0_18px_45px_rgba(255,119,27,0.35)] transition hover:-translate-y-0.5 hover:bg-orange-500"
         >
           Explore Projects
           <i class="ri-arrow-right-up-line"></i>
         </a>
-        <div class="hero-stats grid grid-cols-2 gap-4">
-          <div class="hero-stat">
-            <span class="hero-stat__value">35+</span>
-            <span class="hero-stat__label">Completed landmarks</span>
+        <div class="grid w-full max-w-xs grid-cols-2 gap-4 rounded-2xl border border-white/30 bg-white/10 p-4 text-left backdrop-blur">
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Completed landmarks</span>
+            <span class="text-2xl font-semibold">35+</span>
           </div>
-          <div class="hero-stat">
-            <span class="hero-stat__value">12</span>
-            <span class="hero-stat__label">Communities in progress</span>
+          <div class="space-y-1">
+            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">In progress</span>
+            <span class="text-2xl font-semibold">12</span>
           </div>
         </div>
       </div>
     </div>
-
   </section>
 
-  <!-- Filter Bar -->
-  <section id="project-filters" class="filter-section">
-    <div class="container w-[90%] md:w-[85%] mx-auto">
-      <div class="filter-card">
-        <div class="filter-card__header">
-          <div>
-            <h2>Tailor your discovery</h2>
-            <p>
-              Narrow the collection by project momentum and typology to find the
-              experience that aligns with your aspirations.
+  <section id="project-filters" class="relative -mt-16 pb-16">
+    <div class="mx-auto w-[min(90%,68rem)]">
+      <div class="rounded-3xl border border-brand/15 bg-pure/90 p-6 shadow-[0_24px_60px_rgba(19,53,31,0.15)] backdrop-blur md:p-10">
+        <div class="flex flex-col gap-6 pb-6">
+          <div class="space-y-3">
+            <h2 class="text-2xl font-semibold text-brand">Tailor your discovery</h2>
+            <p class="max-w-2xl text-sm text-brand/70">
+              Narrow the collection by project momentum and typology to find the experience that aligns with your aspirations.
             </p>
           </div>
-          <div class="filter-card__legend">
-            <span class="legend-dot legend-dot--ongoing"></span> Ongoing
-            <span class="legend-dot legend-dot--upcoming"></span> Upcoming
-            <span class="legend-dot legend-dot--completed"></span> Completed
+          <div class="flex flex-wrap items-center gap-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand/70">
+            <span class="inline-flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-gradient-to-br from-brand to-emerald-500"></span>
+              Ongoing
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-gradient-to-br from-accent to-orange-400"></span>
+              Upcoming
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <span class="h-3 w-3 rounded-full bg-gradient-to-br from-emerald-200 to-emerald-400"></span>
+              Completed
+            </span>
           </div>
         </div>
-        <div class="filter-grid">
-          <!-- Category -->
-          <label class="filter-field">
-            <span class="filter-label">Project category</span>
+
+        <div class="grid gap-6 md:grid-cols-[repeat(3,minmax(0,1fr))] md:items-end">
+          <label class="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand/60">
+            Project category
             <select
               #categorySelect
               id="category"
               name="category"
-              class="filter-select"
+              class="w-full rounded-2xl border border-brand/20 bg-white/90 px-4 py-3 text-base font-medium text-brand shadow-sm outline-none transition focus:border-accent focus:shadow-[0_0_0_3px_rgba(255,119,27,0.2)]"
             >
               <option value="all" selected>All Categories</option>
               <option value="Ongoing">Ongoing</option>
@@ -81,14 +86,13 @@
             </select>
           </label>
 
-          <!-- Type -->
-          <label class="filter-field">
-            <span class="filter-label">Project type</span>
+          <label class="flex flex-col gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand/60">
+            Project type
             <select
               #typeSelect
               id="type"
               name="type"
-              class="filter-select"
+              class="w-full rounded-2xl border border-brand/20 bg-white/90 px-4 py-3 text-base font-medium text-brand shadow-sm outline-none transition focus:border-accent focus:shadow-[0_0_0_3px_rgba(255,119,27,0.2)]"
             >
               <option value="all" selected>All Types</option>
               <option value="Residential">Residential</option>
@@ -96,12 +100,11 @@
             </select>
           </label>
 
-          <!-- Actions -->
-          <div class="filter-actions">
+          <div class="flex flex-wrap gap-3">
             <button
               (click)="getActiveProjects()"
               aria-label="Apply filters"
-              class="filter-button filter-button--primary"
+              class="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-pure shadow-lg shadow-[0_18px_45px_rgba(255,119,27,0.35)] transition hover:-translate-y-0.5 hover:bg-orange-500"
             >
               <i class="ri-filter-line"></i>
               Filter results
@@ -109,7 +112,7 @@
             <button
               (click)="resetFilters()"
               aria-label="Reset filters"
-              class="filter-button filter-button--ghost"
+              class="inline-flex items-center gap-2 rounded-full border border-brand/20 px-6 py-3 text-sm font-semibold text-brand/70 transition hover:-translate-y-0.5 hover:border-brand hover:text-brand"
             >
               <i class="ri-restart-line"></i>
               Reset
@@ -120,79 +123,69 @@
     </div>
   </section>
 
-  <!-- Projects Grid -->
-  <section class="projects-section">
-    <div class="container w-[90%] md:w-[85%] mx-auto">
-      <header class="projects-header">
-        <div>
-          <h2>Featured developments</h2>
-          <p>
-            Each destination blends architecture, landscape, and lifestyle to
-            create spaces that feel timeless from day one.
+  <section class="pb-20">
+    <div class="mx-auto w-[min(90%,72rem)]">
+      <header class="flex flex-col gap-4 pb-10 sm:flex-row sm:items-end sm:justify-between">
+        <div class="space-y-3">
+          <h2 class="font-serif text-3xl font-semibold text-brand">Featured developments</h2>
+          <p class="max-w-2xl text-sm text-brand/70">
+            Each destination blends architecture, landscape, and lifestyle to create spaces that feel timeless from day one.
           </p>
         </div>
-        <div class="projects-count" *ngIf="state.list.length">
-          <span>{{ state.list.length }}</span>
+        <div *ngIf="state.list.length" class="inline-flex items-baseline gap-2 rounded-full border border-brand/20 px-4 py-2 text-sm font-semibold text-brand/70">
+          <span class="text-xl font-bold text-brand">{{ state.list.length }}</span>
           curated results
         </div>
       </header>
 
-      <div class="projects-grid">
-        <article
-          *ngFor="let item of state.list"
-          class="project-card group"
-        >
-          <a
-            [routerLink]="['/projectdetails', item.id]"
-            class="project-card__link"
-          >
-            <div class="project-card__image">
+      <div class="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+        <article *ngFor="let item of state.list" class="group overflow-hidden rounded-3xl border border-brand/10 bg-white shadow-[0_24px_45px_rgba(32,71,38,0.12)] transition hover:-translate-y-1 hover:shadow-[0_32px_65px_rgba(32,71,38,0.18)]">
+          <a [routerLink]="['/projectdetails', item.id]" class="flex h-full flex-col">
+            <div class="relative overflow-hidden">
               <img
                 [src]="baseUrl + '/api/attachment/get/' + item.thumbnail"
                 [attr.alt]="item.name || 'Project image'"
                 loading="lazy"
                 (error)="onImageError($event)"
+                class="h-60 w-full object-cover transition duration-500 group-hover:scale-105"
               />
-              <div class="project-card__overlay"></div>
-              <div class="project-card__meta">
-                <span class="project-chip">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent opacity-0 transition group-hover:opacity-100"></div>
+              <div class="absolute bottom-4 left-4 flex flex-wrap gap-2">
+                <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-brand">
                   <i class="ri-time-line"></i>
                   {{ item.category || 'In development' }}
                 </span>
-                <span class="project-chip">
+                <span class="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-brand">
                   <i class="ri-building-4-line"></i>
                   {{ item.type || 'Mixed use' }}
                 </span>
               </div>
             </div>
-            <div class="project-card__body">
-              <h3>{{ item.name }}</h3>
-              <p>{{ item.address || 'Address forthcoming' }}</p>
-              <span class="project-card__cta">
+            <div class="flex flex-1 flex-col gap-3 px-6 py-6">
+              <h3 class="text-xl font-semibold text-brand">{{ item.name }}</h3>
+              <p class="text-sm text-brand/70">{{ item.address || 'Address forthcoming' }}</p>
+              <span class="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-accent">
                 View details
                 <i class="ri-arrow-right-line"></i>
               </span>
             </div>
           </a>
         </article>
-        <div
-          *ngIf="!state.list.length"
-          class="project-empty"
-        >
+
+        <div *ngIf="!state.list.length" class="col-span-full rounded-3xl border border-dashed border-brand/20 bg-white/80 p-10 text-center text-brand/70">
           No projects match your filters. Try adjusting criteria.
         </div>
       </div>
     </div>
   </section>
 
-  <section class="projects-cta">
-    <div class="projects-cta__card">
-      <h2>Envision your next address with As Haven</h2>
-      <p>
-        Partner with our advisory team for bespoke walkthroughs, investment
-        guidance, and curated previews of upcoming releases.
+  <section class="pb-24">
+    <div class="mx-auto w-[min(90%,62rem)] rounded-3xl bg-gradient-to-br from-brand to-emerald-900 px-8 py-12 text-center text-white shadow-[0_30px_80px_rgba(19,53,31,0.25)]">
+      <h2 class="font-serif text-3xl font-semibold">Envision your next address with As Haven</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base text-white/80">
+        Partner with our advisory team for bespoke walkthroughs, investment guidance, and curated previews of upcoming releases.
       </p>
-      <a href="/contact" class="projects-cta__action">
+      <a href="/contact" class="mt-6 inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-pure shadow-lg shadow-[0_18px_45px_rgba(255,119,27,0.35)] transition hover:-translate-y-0.5 hover:bg-orange-500">
         Connect with us
         <i class="ri-arrow-right-up-line"></i>
       </a>

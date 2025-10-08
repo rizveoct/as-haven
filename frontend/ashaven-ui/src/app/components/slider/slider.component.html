@@ -24,27 +24,27 @@
         aria-label="Signature properties slider"
       >
         <swiper-slide *ngFor="let slide of slides" class="signature-slider__slide">
-          <article class="signature-card">
-            <a [routerLink]="['/projectdetails', slide.id]" class="signature-card__link">
-              <div class="signature-card__image">
+          <article class="project-card signature-slider__card">
+            <a [routerLink]="['/projectdetails', slide.id]" class="project-card__link">
+              <div class="project-card__image">
                 <img [src]="slide.image" [alt]="slide.name" loading="lazy" (error)="onImageError($event)" />
-                <div class="signature-card__overlay"></div>
-                <div class="signature-card__meta">
-                  <span class="signature-chip">
+                <div class="project-card__overlay"></div>
+                <div class="project-card__meta">
+                  <span class="project-chip">
                     <i class="ri-time-line"></i>
                     {{ slide.category }}
                   </span>
-                  <span class="signature-chip">
+                  <span class="project-chip">
                     <i class="ri-building-4-line"></i>
                     {{ slide.type }}
                   </span>
                 </div>
               </div>
-              <div class="signature-card__body">
-                <span class="signature-card__eyebrow">{{ slide.address }}</span>
+              <div class="project-card__body">
                 <h3>{{ slide.name }}</h3>
-                <p>{{ slide.description }}</p>
-                <span class="signature-card__cta">
+                <p class="project-card__address">{{ slide.address }}</p>
+                <p class="project-card__description">{{ slide.description }}</p>
+                <span class="project-card__cta">
                   View details
                   <i class="ri-arrow-right-line"></i>
                 </span>

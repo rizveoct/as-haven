@@ -95,7 +95,7 @@
   padding: clamp(0.5rem, 2vw, 1.1rem);
 }
 
-.signature-card {
+.signature-slider__card {
   border-radius: 1.75rem;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.96);
@@ -104,12 +104,12 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.signature-card:hover {
-  transform: translateY(-8px);
+.signature-slider__card:hover {
+  transform: translateY(-6px);
   box-shadow: 0 32px 64px rgba(19, 53, 31, 0.22);
 }
 
-.signature-card__link {
+.project-card__link {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -117,31 +117,31 @@
   text-decoration: none;
 }
 
-.signature-card__image {
+.project-card__image {
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
 }
 
-.signature-card__image img {
+.project-card__image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.35s ease;
 }
 
-.signature-card:hover .signature-card__image img {
+.signature-slider__card:hover .project-card__image img {
   transform: scale(1.06);
 }
 
-.signature-card__overlay {
+.project-card__overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(180deg, rgba(19, 53, 31, 0.05) 0%, rgba(19, 53, 31, 0.6) 100%);
   opacity: 0.85;
 }
 
-.signature-card__meta {
+.project-card__meta {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
@@ -152,11 +152,11 @@
   z-index: 1;
 }
 
-.signature-chip {
+.project-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.42rem 0.9rem;
+  padding: 0.4rem 0.75rem;
   border-radius: 999px;
   background: rgba(241, 251, 236, 0.92);
   font-size: 0.8rem;
@@ -165,37 +165,47 @@
   box-shadow: 0 12px 24px rgba(32, 71, 38, 0.15);
 }
 
-.signature-chip i {
+.project-chip i {
   font-size: 1rem;
 }
 
-.signature-card__body {
-  padding: 1.75rem 1.8rem 1.6rem;
+.project-card__body {
+  padding: 1.75rem 1.75rem 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   flex-grow: 1;
 }
 
-.signature-card__eyebrow {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: rgba(32, 71, 38, 0.55);
-}
-
-.signature-card__body h3 {
+.project-card__body h3 {
   font-size: 1.35rem;
   font-weight: 700;
   color: var(--luxe-forest-900, #132b18);
 }
 
-.signature-card__body p {
+.project-card__body p {
   color: rgba(32, 71, 38, 0.65);
   line-height: 1.5;
 }
 
-.signature-card__cta {
+.project-card__address {
+  font-weight: 600;
+  color: rgba(32, 71, 38, 0.58);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.project-card__description {
+  color: rgba(32, 71, 38, 0.68);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card__cta {
   margin-top: auto;
   display: inline-flex;
   align-items: center;
@@ -205,7 +215,7 @@
   transition: transform 0.2s ease;
 }
 
-.signature-card:hover .signature-card__cta {
+.signature-slider__card:hover .project-card__cta {
   transform: translateX(4px);
 }
 

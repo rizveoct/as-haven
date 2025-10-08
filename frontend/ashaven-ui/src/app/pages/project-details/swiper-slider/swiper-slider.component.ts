@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
+  ElementRef,
+  ViewChild,
+  NgZone,
+} from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ProjectService } from '../../../services/project.service';
@@ -21,17 +29,22 @@ interface Slide {
   templateUrl: './swiper-slider.component.html',
   styleUrls: ['./swiper-slider.component.css'],
 })
-export class SwiperSliderComponent implements OnInit, OnDestroy {
+export class SwiperSliderComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   slides: Slide[] = [];
   baseUrl = environment.baseUrl;
   currentTranslate = 0;
-  slideWidth = 400 + 16; 
-  speed = 0.5; 
+  slideWidth = 400 + 16;
+  speed = 0.5;
   animationFrameId!: number;
   isDragging = false;
   startX = 0;
   startTranslate = 0;
   isPaused = false;
+  private isViewportPaused = false;
+  private isAnimationActive = false;
+  private intersectionObserver?: IntersectionObserver;
   swipeDistance = 0;
   swipeThreshold = 50;
   private readonly documentMouseMoveListener = (
@@ -42,19 +55,39 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
   ) => this.onMouseMove(event);
   private readonly documentMouseUpListener = () => this.onMouseUp();
   private readonly documentTouchEndListener = () => this.onMouseUp();
-  constructor(private projectService: ProjectService, private router: Router) {}
+  @ViewChild('slidesContainer', { static: true })
+  private slidesContainer?: ElementRef<HTMLDivElement>;
+
+  @ViewChild('sliderWrapper', { static: true })
+  private sliderWrapper?: ElementRef<HTMLElement>;
+
+  constructor(
+    private projectService: ProjectService,
+    private router: Router,
+    private ngZone: NgZone
+  ) {}
 
   ngOnInit() {
     this.loadProjects();
-    this.animateSlide();
+  }
+
+  ngAfterViewInit(): void {
+    this.setupIntersectionObserver();
+    this.updateTransform();
+    this.ngZone.runOutsideAngular(() => {
+      this.isAnimationActive = true;
+      this.animateSlide();
+    });
   }
 
   ngOnDestroy() {
+    this.isAnimationActive = false;
     cancelAnimationFrame(this.animationFrameId);
     document.removeEventListener('mousemove', this.documentMouseMoveListener);
     document.removeEventListener('touchmove', this.documentTouchMoveListener);
     document.removeEventListener('mouseup', this.documentMouseUpListener);
     document.removeEventListener('touchend', this.documentTouchEndListener);
+    this.intersectionObserver?.disconnect();
   }
 
   loadProjects() {
@@ -70,7 +103,9 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
           address: project.address,
           type: project.type || '—',
         }));
-        this.slides = [...this.slides, ...this.slides]; 
+        this.slides = [...this.slides, ...this.slides];
+
+        this.updateTransform();
       },
       error: (err) => {
         console.error('Error loading projects:', err);
@@ -80,12 +115,17 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
   }
 
   animateSlide() {
-    if (!this.isPaused && !this.isDragging) {
+    if (!this.isAnimationActive) {
+      return;
+    }
+
+    if (!this.isPaused && !this.isDragging && !this.isViewportPaused) {
       this.currentTranslate -= this.speed;
       const totalWidth = this.slideWidth * this.slides.length;
-      if (Math.abs(this.currentTranslate) >= totalWidth / 2) {
+      if (totalWidth > 0 && Math.abs(this.currentTranslate) >= totalWidth / 2) {
         this.currentTranslate = 0;
       }
+      this.updateTransform();
     }
     this.animationFrameId = requestAnimationFrame(() => this.animateSlide());
   }
@@ -101,6 +141,7 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
     if (this.currentTranslate > 0) {
       this.currentTranslate = -(this.slideWidth * (this.slides.length / 2));
     }
+    this.updateTransform();
   }
 
   nextSlide() {
@@ -109,6 +150,7 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
     if (Math.abs(this.currentTranslate) >= totalWidth / 2) {
       this.currentTranslate = 0;
     }
+    this.updateTransform();
   }
 
   onMouseDown(event: MouseEvent | TouchEvent) {
@@ -140,6 +182,7 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
     } else if (this.currentTranslate > 0) {
       this.currentTranslate = -(totalWidth / 2);
     }
+    this.updateTransform();
   }
 
   onMouseUp() {
@@ -150,6 +193,7 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
     document.removeEventListener('touchmove', this.documentTouchMoveListener);
     document.removeEventListener('mouseup', this.documentMouseUpListener);
     document.removeEventListener('touchend', this.documentTouchEndListener);
+    this.updateTransform();
   }
 
   onMouseEnter() {
@@ -173,5 +217,31 @@ export class SwiperSliderComponent implements OnInit, OnDestroy {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch((err) => console.error('Navigation error:', err));
+  }
+
+  private setupIntersectionObserver(): void {
+    const target = this.sliderWrapper?.nativeElement;
+    if (!target) {
+      return;
+    }
+
+    this.intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        this.isViewportPaused = !(entry?.isIntersecting ?? false);
+      },
+      { threshold: 0.1 }
+    );
+
+    this.intersectionObserver.observe(target);
+  }
+
+  private updateTransform(): void {
+    const element = this.slidesContainer?.nativeElement;
+    if (!element) {
+      return;
+    }
+
+    element.style.transform = `translateX(${this.currentTranslate}px)`;
   }
 }

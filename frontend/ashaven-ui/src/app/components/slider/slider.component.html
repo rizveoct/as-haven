@@ -1,55 +1,69 @@
 <section class="signature-slider">
-  <div class="signature-slider__backdrop" aria-hidden="true"></div>
+  <div class="signature-slider__aura" aria-hidden="true"></div>
 
-  <div class="signature-slider__inner">
+  <div class="signature-slider__grid">
     <header class="signature-slider__header">
-      <div class="signature-slider__headline">
+      <div class="signature-slider__intro">
         <span class="signature-slider__tag">Signature Collection</span>
         <h2 class="signature-slider__title">
-          Featured Signature
-          <span>Properties</span>
+          Destinations imagined
+          <span>for luminous living</span>
         </h2>
       </div>
       <p class="signature-slider__subtitle">
-        Explore an ensemble of residences that mirror the crafted cards from our project showcase—refined silhouettes,
-        grounded palettes, and lifestyle stories for every address.
+        Immerse yourself in a carousel of residences sculpted with the same craft as our product portfolio—layered glass,
+        botanical palettes, and storytelling details that unfold with every slide.
       </p>
     </header>
 
-    <div class="signature-slider__viewport">
+    <div class="signature-slider__deck">
       <swiper-container
         #swiper
         init="false"
         class="signature-slider__container"
         aria-label="Signature properties slider"
       >
-        <swiper-slide *ngFor="let slide of slides" class="signature-slider__slide">
-          <article class="project-card signature-slider__card">
-            <a [routerLink]="['/projectdetails', slide.id]" class="project-card__link">
-              <div class="project-card__image">
-                <img [src]="slide.image" [alt]="slide.name" loading="lazy" (error)="onImageError($event)" />
-                <div class="project-card__overlay"></div>
-                <div class="project-card__meta">
-                  <span class="project-chip">
-                    <i class="ri-time-line"></i>
-                    {{ slide.category }}
-                  </span>
-                  <span class="project-chip">
-                    <i class="ri-building-4-line"></i>
-                    {{ slide.type }}
-                  </span>
-                </div>
-              </div>
-              <div class="project-card__body">
-                <h3>{{ slide.name }}</h3>
-                <p class="project-card__address">{{ slide.address }}</p>
-                <p class="project-card__description">{{ slide.description }}</p>
-                <span class="project-card__cta">
-                  View details
-                  <i class="ri-arrow-right-line"></i>
+        <swiper-slide *ngFor="let slide of slides; let idx = index" class="signature-slider__slide">
+          <article class="signature-card">
+            <span class="signature-card__index">{{ idx + 1 | number: '2.0-0' }}</span>
+
+            <div class="signature-card__media">
+              <img [src]="slide.image" [alt]="slide.name" loading="lazy" (error)="onImageError($event)" />
+              <div class="signature-card__veil"></div>
+              <div class="signature-card__chips">
+                <span class="signature-card__chip">
+                  <i class="ri-compass-3-line"></i>
+                  {{ slide.category }}
+                </span>
+                <span class="signature-card__chip signature-card__chip--accent">
+                  <i class="ri-building-4-line"></i>
+                  {{ slide.type }}
                 </span>
               </div>
-            </a>
+            </div>
+
+            <div class="signature-card__content">
+              <span class="signature-card__eyebrow">As Haven Signature</span>
+              <h3 class="signature-card__title">{{ slide.name }}</h3>
+              <p class="signature-card__address">{{ slide.address }}</p>
+              <p class="signature-card__description">{{ slide.description }}</p>
+
+              <div class="signature-card__stats">
+                <div class="signature-card__stat">
+                  <span class="signature-card__stat-label">Collection</span>
+                  <span class="signature-card__stat-value">{{ slide.category }}</span>
+                </div>
+                <div class="signature-card__stat">
+                  <span class="signature-card__stat-label">Typology</span>
+                  <span class="signature-card__stat-value">{{ slide.type }}</span>
+                </div>
+              </div>
+
+              <a [routerLink]="['/projectdetails', slide.id]" class="signature-card__cta">
+                Explore residence
+                <i class="ri-arrow-right-up-line"></i>
+              </a>
+            </div>
           </article>
         </swiper-slide>
         <div class="swiper-pagination signature-slider__pagination"></div>

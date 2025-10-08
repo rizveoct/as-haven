@@ -16,22 +16,41 @@
         aria-label="Signature properties slider"
       >
         <swiper-slide *ngFor="let slide of slides" class="neo-slider__slide">
-          <article class="neo-slider__card">
-            <div class="neo-slider__media">
-              <img [src]="slide.image" [alt]="slide.name" loading="lazy" />
-              <div class="neo-slider__media-overlay"></div>
-            </div>
-            <div class="neo-slider__content">
-              <span class="neo-slider__badge">{{ slide.category }}</span>
-              <h3>{{ slide.name }}</h3>
-              <p class="neo-slider__address">{{ slide.address }}</p>
-              <p class="neo-slider__description">{{ slide.description }}</p>
-              <a [routerLink]="['/projectdetails', slide.id]" class="neo-slider__cta">
-                Explore Residence
-              </a>
-            </div>
+          <!-- Exact project-card design -->
+          <article class="project-card group">
+            <a [routerLink]="['/projectdetails', slide.id]" class="project-card__link">
+              <div class="project-card__image">
+                <img
+                  [src]="slide.image"
+                  [attr.alt]="slide.name || 'Project image'"
+                  loading="lazy"
+                  (error)="onImageError($event)"
+                />
+                <div class="project-card__overlay"></div>
+                <div class="project-card__meta">
+                  <span class="project-chip">
+                    <i class="ri-time-line"></i>
+                    {{ slide.category || 'In development' }}
+                  </span>
+                  <span class="project-chip">
+                    <i class="ri-building-4-line"></i>
+                    {{ slide.type || 'Mixed use' }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="project-card__body">
+                <h3>{{ slide.name }}</h3>
+                <p>{{ slide.address || 'Address forthcoming' }}</p>
+                <span class="project-card__cta">
+                  View details
+                  <i class="ri-arrow-right-line"></i>
+                </span>
+              </div>
+            </a>
           </article>
         </swiper-slide>
+
         <div class="swiper-pagination neo-slider__pagination"></div>
       </swiper-container>
 

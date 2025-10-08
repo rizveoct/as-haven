@@ -77,6 +77,13 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (img.src !== '/images/fallback.png') {
+      img.src = '/images/fallback.png';
+    }
+  }
+
   private initSwiper() {
     const swiperEl = this.swiperRef?.nativeElement as any;
     if (!swiperEl) {

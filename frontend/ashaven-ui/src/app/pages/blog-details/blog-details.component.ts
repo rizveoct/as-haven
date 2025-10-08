@@ -4,6 +4,7 @@ import {
   ElementRef,
   Renderer2,
   signal,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +21,7 @@ import { AnimationService } from '../../services/animation.service';
   templateUrl: './blog-details.component.html',
   styleUrls: ['./blog-details.component.css'],
 })
-export class BlogDetailsComponent implements OnInit {
+export class BlogDetailsComponent implements OnInit, OnDestroy {
   baseURL = environment.baseUrl;
   blogId!: string;
 
@@ -29,6 +30,9 @@ export class BlogDetailsComponent implements OnInit {
   countdowns = signal<string[]>([]);
   countdown = signal<any>(null);
   offerActive = signal<boolean>(true);
+  private countdownInterval?: ReturnType<typeof setInterval>;
+  private resizeObserver?: ResizeObserver;
+  private resizeListener?: () => void;
 
   constructor(
     private http: HttpClient,
@@ -62,11 +66,12 @@ export class BlogDetailsComponent implements OnInit {
       updateHeight();
 
       // Watch for image resize (responsive)
-      const observer = new ResizeObserver(() => updateHeight());
-      observer.observe(image);
+      this.resizeObserver = new ResizeObserver(() => updateHeight());
+      this.resizeObserver.observe(image);
 
       // Also adjust on window resize
-      window.addEventListener('resize', updateHeight);
+      this.resizeListener = () => updateHeight();
+      window.addEventListener('resize', this.resizeListener);
     }
   }
 
@@ -114,7 +119,8 @@ export class BlogDetailsComponent implements OnInit {
 
   startCountdown() {
     this.updateCountdowns();
-    setInterval(() => this.updateCountdowns(), 1000);
+    this.clearCountdown();
+    this.countdownInterval = setInterval(() => this.updateCountdowns(), 1000);
   }
 
   updateCountdowns() {
@@ -171,6 +177,27 @@ export class BlogDetailsComponent implements OnInit {
     const img = event.target as HTMLImageElement;
     if (img && img.src !== fallback) {
       img.src = fallback;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearCountdown();
+
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+      this.resizeObserver = undefined;
+    }
+
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
+      this.resizeListener = undefined;
+    }
+  }
+
+  private clearCountdown() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
     }
   }
 }

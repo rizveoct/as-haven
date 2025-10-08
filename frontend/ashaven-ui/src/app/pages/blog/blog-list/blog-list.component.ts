@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -11,15 +11,20 @@ import { environment } from '../../../environments/environment';
   imports: [CommonModule, RouterModule, BlogCardComponent],
   templateUrl: './blog-list.component.html',
 })
-export class BlogListComponent implements OnInit {
+export class BlogListComponent implements OnInit, OnDestroy {
   baseURL = environment.baseUrl;
   list = signal<any[]>([]);
   countdowns = signal<string[]>([]);
+  private countdownInterval?: ReturnType<typeof setInterval>;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
     this.getBlogs();
+  }
+
+  ngOnDestroy(): void {
+    this.clearCountdown();
   }
 
   getBlogs() {
@@ -33,7 +38,8 @@ export class BlogListComponent implements OnInit {
 
   startCountdown() {
     this.updateCountdowns();
-    setInterval(() => this.updateCountdowns(), 1000);
+    this.clearCountdown();
+    this.countdownInterval = setInterval(() => this.updateCountdowns(), 1000);
   }
 
   updateCountdowns() {
@@ -59,5 +65,12 @@ export class BlogListComponent implements OnInit {
 
   pad(n: number) {
     return String(n).padStart(2, '0');
+  }
+
+  private clearCountdown() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
   }
 }

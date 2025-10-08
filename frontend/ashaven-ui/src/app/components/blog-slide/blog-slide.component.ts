@@ -1,4 +1,12 @@
-import { Component, OnInit, signal, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  signal,
+  Output,
+  EventEmitter,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { BlogCardComponent } from "../blog-card/blog-card.component";
@@ -12,11 +20,12 @@ import { RouterModule } from '@angular/router';
   templateUrl: './blog-slide.component.html',
   styleUrl: './blog-slide.component.css',
 })
-export class BlogSlideComponent implements OnInit, AfterViewInit {
+export class BlogSlideComponent implements OnInit, AfterViewInit, OnDestroy {
   baseURL = environment.baseUrl;
   list = signal<any[]>([]);
   countdowns = signal<string[]>([]);
   @Output() scrollContainer = new EventEmitter<HTMLElement>();
+  private countdownInterval?: ReturnType<typeof setInterval>;
 
   constructor(private http: HttpClient) {}
 
@@ -43,7 +52,8 @@ export class BlogSlideComponent implements OnInit, AfterViewInit {
 
   startCountdown() {
     this.updateCountdowns();
-    setInterval(() => this.updateCountdowns(), 1000);
+    this.clearCountdown();
+    this.countdownInterval = setInterval(() => this.updateCountdowns(), 1000);
   }
 
   updateCountdowns() {
@@ -67,5 +77,16 @@ export class BlogSlideComponent implements OnInit, AfterViewInit {
 
   pad(n: number) {
     return String(n).padStart(2, '0');
+  }
+
+  ngOnDestroy(): void {
+    this.clearCountdown();
+  }
+
+  private clearCountdown() {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = undefined;
+    }
   }
 }

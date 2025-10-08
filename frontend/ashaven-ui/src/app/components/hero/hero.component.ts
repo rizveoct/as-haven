@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   trigger,
@@ -40,7 +45,7 @@ import {
     ]),
   ],
 })
-export class HeroComponent {
+export class HeroComponent implements OnDestroy {
   currentSlideIndex = signal(0);
 
   slides = [
@@ -67,8 +72,10 @@ export class HeroComponent {
     },
   ];
 
+  private autoSlideInterval?: ReturnType<typeof setInterval>;
+
   constructor() {
-    setInterval(() => this.nextSlide(), 5000);
+    this.autoSlideInterval = setInterval(() => this.nextSlide(), 5000);
   }
 
   getTranslateX(index: number): string {
@@ -89,5 +96,12 @@ export class HeroComponent {
 
   goToSlide(index: number) {
     this.currentSlideIndex.set(index);
+  }
+
+  ngOnDestroy(): void {
+    if (this.autoSlideInterval) {
+      clearInterval(this.autoSlideInterval);
+      this.autoSlideInterval = undefined;
+    }
   }
 }

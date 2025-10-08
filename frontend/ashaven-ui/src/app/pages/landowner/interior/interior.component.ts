@@ -40,6 +40,18 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
+  private readonly documentMouseMoveListener = (
+    event: MouseEvent | TouchEvent
+  ) => this.onMouseMove(event);
+
+  private readonly documentTouchMoveListener = (
+    event: MouseEvent | TouchEvent
+  ) => this.onMouseMove(event);
+
+  private readonly documentMouseUpListener = () => this.onMouseUp();
+
+  private readonly documentTouchEndListener = () => this.onMouseUp();
+
   openModal(slide: Slide, event: MouseEvent | TouchEvent) {
     if (this.swipeDistance > this.swipeThreshold) {
       event.preventDefault();
@@ -61,6 +73,10 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     cancelAnimationFrame(this.animationFrameId);
+    document.removeEventListener('mousemove', this.documentMouseMoveListener);
+    document.removeEventListener('touchmove', this.documentTouchMoveListener);
+    document.removeEventListener('mouseup', this.documentMouseUpListener);
+    document.removeEventListener('touchend', this.documentTouchEndListener);
   }
 
   loadProjects() {
@@ -130,12 +146,12 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     this.startX = 'touches' in event ? event.touches[0].clientX : event.clientX;
     this.startTranslate = this.currentTranslate;
     this.swipeDistance = 0; // Reset swipe distance
-    document.addEventListener('mousemove', this.onMouseMove.bind(this));
-    document.addEventListener('touchmove', this.onMouseMove.bind(this));
-    document.addEventListener('mouseup', this.onMouseUp.bind(this), {
+    document.addEventListener('mousemove', this.documentMouseMoveListener);
+    document.addEventListener('touchmove', this.documentTouchMoveListener);
+    document.addEventListener('mouseup', this.documentMouseUpListener, {
       once: true,
     });
-    document.addEventListener('touchend', this.onMouseUp.bind(this), {
+    document.addEventListener('touchend', this.documentTouchEndListener, {
       once: true,
     });
   }
@@ -158,8 +174,10 @@ export class InteriorSliderComponent implements OnInit, OnDestroy {
     this.isDragging = false;
     this.isPaused = false;
     this.swipeDistance = 0; // Reset swipe distance on touch end
-    document.removeEventListener('mousemove', this.onMouseMove.bind(this));
-    document.removeEventListener('touchmove', this.onMouseMove.bind(this));
+    document.removeEventListener('mousemove', this.documentMouseMoveListener);
+    document.removeEventListener('touchmove', this.documentTouchMoveListener);
+    document.removeEventListener('mouseup', this.documentMouseUpListener);
+    document.removeEventListener('touchend', this.documentTouchEndListener);
   }
 
   onMouseEnter() {

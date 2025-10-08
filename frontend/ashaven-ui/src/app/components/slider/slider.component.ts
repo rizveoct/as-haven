@@ -136,8 +136,8 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Assign configuration as properties (use JS props because we used init="false")
     Object.assign(swiperEl, {
-      slidesPerView: 1.1,
-      spaceBetween: 28,
+      slidesPerView: 1.2,
+      spaceBetween: 24,
       centeredSlides: true,
       loop: this.slides.length > 1,
       speed: 900,
@@ -159,10 +159,10 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       breakpoints: {
         0: { slidesPerView: 1.05, spaceBetween: 18 },
-        640: { slidesPerView: 1.15, spaceBetween: 22 },
-        900: { slidesPerView: 1.4, spaceBetween: 26 },
-        1200: { slidesPerView: 1.8, spaceBetween: 30 },
-        1536: { slidesPerView: 2.3, spaceBetween: 34 },
+        640: { slidesPerView: 1.3, spaceBetween: 22 },
+        900: { slidesPerView: 1.7, spaceBetween: 26 },
+        1280: { slidesPerView: 2.3, spaceBetween: 30 },
+        1536: { slidesPerView: 2.8, spaceBetween: 34 },
       },
       on: {
         init() {
@@ -176,6 +176,13 @@ export class SliderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Initialize
     swiperEl.initialize();
+  }
+
+  onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    if (img && img.src !== '/images/fallback.png') {
+      img.src = '/images/fallback.png';
+    }
   }
 
   ngOnDestroy(): void {

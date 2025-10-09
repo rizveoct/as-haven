@@ -14,8 +14,7 @@ import { Contactus } from '../../../models/model';
   selector: 'app-contact-info-map',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './contact-info-map.component.html',
-  styleUrls: ['./contact-info-map.component.css'],
+  templateUrl: './contact-info-map.component.html'
 })
 export class ContactInfoMapComponent implements OnInit {
   contactForm: FormGroup;

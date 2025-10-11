@@ -3,7 +3,8 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  HostListener,
+  NgZone,
+  OnDestroy,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -11,6 +12,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 // import { LenisService } from '../../services/lenis.service';
+import { ScrollService } from '../../services/scroll.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 interface ProjectItem {
   id: number | string;
@@ -30,23 +34,38 @@ interface ProjectItem {
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
 })
-export class ProjectsComponent implements AfterViewInit {
+export class ProjectsComponent implements AfterViewInit, OnDestroy {
   @ViewChild('categorySelect') categorySelect!: ElementRef<HTMLSelectElement>;
   @ViewChild('typeSelect') typeSelect!: ElementRef<HTMLSelectElement>;
 
-  scrollY = 0;
+  scrollTransform = 'translateY(-60px)';
   baseUrl = environment.baseUrl;
 
   state = {
     list: [] as ProjectItem[],
   };
 
+  private destroy$ = new Subject<void>();
+
   constructor(
     private http: HttpClient,
     // private lenisService: LenisService,
     private toastr: ToastrService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private scrollService: ScrollService,
+    private zone: NgZone
+  ) {
+    this.scrollService.scrollY$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((scrollY) => {
+        const transform = `translateY(${scrollY * 0.3 - 60}px)`;
+        if (transform !== this.scrollTransform) {
+          this.zone.run(() => {
+            this.scrollTransform = transform;
+          });
+        }
+      });
+  }
 
   ngAfterViewInit(): void {
     // Read category from query params (e.g., /projects?category=Ongoing)
@@ -116,8 +135,8 @@ export class ProjectsComponent implements AfterViewInit {
     }
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    this.scrollY = window.scrollY;
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

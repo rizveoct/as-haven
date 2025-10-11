@@ -277,7 +277,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   scrollToContactForm() {
     const contactForm = document.getElementById('contacting');
     if (contactForm) {
-      contactForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      contactForm.scrollIntoView({ block: 'start' });
     }
   }
 }

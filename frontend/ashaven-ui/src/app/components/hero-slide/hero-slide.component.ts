@@ -157,7 +157,6 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
     el.scrollIntoView({
       block: 'nearest',
       inline: 'nearest',
-      behavior: 'smooth',
     });
   }
 }

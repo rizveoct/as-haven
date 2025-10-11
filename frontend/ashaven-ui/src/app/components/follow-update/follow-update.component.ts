@@ -39,7 +39,6 @@ export class FollowUpdateComponent {
       this.scrollAmount = Math.max(this.scrollAmount - this.scrollStep, 0);
       this.scrollContainer.scrollTo({
         left: this.scrollAmount,
-        behavior: 'smooth',
       });
     }
   }
@@ -50,7 +49,6 @@ export class FollowUpdateComponent {
       this.scrollAmount = Math.min(this.scrollAmount + this.scrollStep, maxScroll);
       this.scrollContainer.scrollTo({
         left: this.scrollAmount,
-        behavior: 'smooth',
       });
     }
   }

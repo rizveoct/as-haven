@@ -41,6 +41,8 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
   baseUrl = environment.baseUrl;
 
   private progressInterval?: ReturnType<typeof setInterval>;
+  private observer?: IntersectionObserver;
+  private isVisible = true;
 
   @ViewChildren('navItem') navItems!: QueryList<ElementRef<HTMLButtonElement>>;
 
@@ -48,7 +50,7 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.slides[this.currentIndex];
   }
 
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private el: ElementRef) {}
 
   ngOnInit(): void {
     this.projectService.getActiveProjects().subscribe((projects) => {
@@ -70,7 +72,7 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.slides.length) {
         this.currentIndex = 0;
-        this.startAutoSlide();
+        this.startAutoSlide(true);
       } else {
         this.progress = 0;
       }
@@ -80,10 +82,33 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     // Ensure current item is visible after view loads
     this.scrollCurrentIntoView();
+
+    // Set up IntersectionObserver to pause/resume auto-slide based on visibility
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.isVisible = true;
+            if (this.slides.length > 1 && !this.progressInterval) {
+              this.startAutoSlide(false);
+            }
+          } else {
+            this.isVisible = false;
+            this.clearTimers();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    this.observer.observe(this.el.nativeElement);
   }
 
   ngOnDestroy(): void {
     this.clearTimers();
+    if (this.observer) {
+      this.observer.disconnect();
+    }
   }
 
   next(): void {
@@ -91,7 +116,7 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
     this.scrollCurrentIntoView();
-    this.startAutoSlide();
+    this.startAutoSlide(true);
   }
 
   prev(): void {
@@ -100,7 +125,7 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
     this.currentIndex =
       (this.currentIndex - 1 + this.slides.length) % this.slides.length;
     this.scrollCurrentIntoView();
-    this.startAutoSlide();
+    this.startAutoSlide(true);
   }
 
   goToSlide(index: number): void {
@@ -114,14 +139,14 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.currentIndex = index;
     this.scrollCurrentIntoView();
-    this.startAutoSlide();
+    this.startAutoSlide(true);
   }
 
   trackBySlide(_: number, slide: Slide): number | string {
     return slide.id ?? _;
   }
 
-  private startAutoSlide(): void {
+  private startAutoSlide(resetProgress: boolean = true): void {
     this.clearTimers();
 
     if (this.slides.length <= 1) {
@@ -129,7 +154,10 @@ export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    this.progress = 0;
+    if (resetProgress) {
+      this.progress = 0;
+    }
+
     const intervalDuration = 40;
     const increment = 100 / (this.timeAutoNext / intervalDuration);
 

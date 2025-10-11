@@ -1,4 +1,4 @@
-.glance {
+/* .glance {
   position: relative;
   padding: clamp(4rem, 8vw, 6rem) 0;
   background: radial-gradient(circle at top left, rgba(59, 130, 246, 0.08), transparent 45%),
@@ -237,4 +237,4 @@
   .glance__button {
     transition: none;
   }
-}
+} */

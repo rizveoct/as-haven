@@ -15,7 +15,8 @@
       {
         "ignore": [
           "-webkit-mask-image",
-          "user-select"
+          "user-select",
+          "backdrop-filter"
         ]
       }
     ],

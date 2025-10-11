@@ -1,14 +1,14 @@
-<section class="project-hero" [style.backgroundImage]="heroImage">
-  <div class="project-hero__overlay"></div>
-  <div class="project-hero__glow project-hero__glow--one"></div>
-  <div class="project-hero__glow project-hero__glow--two"></div>
+<section class="relative h-screen flex items-center justify-center py-[clamp(4rem,8vw,9rem)] text-slate-50 bg-no-repeat bg-[size:100%_auto] bg-center overflow-hidden" [style.backgroundImage]="heroImage">
+  <div class="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-slate-900/40 mix-blend-multiply z-10"></div>
+  <div class="absolute -top-[15%] -right-[10%] w-[280px] h-[280px] bg-[radial-gradient(circle,rgba(56,189,248,0.8)_0%,rgba(59,130,246,0)_70%)] blur-[120px] opacity-55 z-10"></div>
+  <div class="absolute -bottom-[15%] -left-[5%] w-[320px] h-[320px] bg-[radial-gradient(circle,rgba(236,72,153,0.7)_0%,rgba(236,72,153,0)_70%)] blur-[120px] opacity-55 z-10"></div>
 
-  <div class="project-hero__content">
-    <div class="project-hero__badge" *ngIf="projectTypeBadge as badge">{{ badge }}</div>
+  <div class="relative z-20 w-[min(1180px,92%)] md:w-[80%] text-left md:items-start items-center flex flex-col gap-6">
+    <div class="self-start px-5 py-1 rounded-full border border-slate-400/45 bg-slate-900/35 backdrop-blur-[18px] text-sm tracking-[0.12em] uppercase" *ngIf="projectTypeBadge as badge">{{ badge }}</div>
 
-    <h1 class="project-hero__title">{{ projectTitle }}</h1>
+    <h1 class="font-serif text-[clamp(2.75rem,5vw,4.5rem)] leading-[1.1] font-bold">{{ projectTitle }}</h1>
 
-    <div class="project-hero__location">
+    <div class="inline-flex items-center gap-[0.65rem] px-5 py-[0.65rem] rounded-full bg-slate-900/55 shadow-[inset_0_0_0_1px_rgba(226,232,240,0.25)] text-sm self-center md:self-start">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M12 2.75C8.27208 2.75 5.25 5.77208 5.25 9.5C5.25 14.0781 11.1188 21.0554 11.3736 21.3547C11.7127 21.7528 12.2872 21.7527 12.6264 21.3547C12.8812 21.0554 18.75 14.0781 18.75 9.5C18.75 5.77208 15.7279 2.75 12 2.75Z"
@@ -28,21 +28,21 @@
       <span>{{ location }}</span>
     </div>
 
-    <p class="project-hero__description">
+    <p class="max-w-[36rem] text-[clamp(1rem,1.3vw,1.15rem)] leading-[1.8] text-slate-50/85">
       Discover a sanctuary of contemporary architecture and bespoke amenities, crafted to elevate everyday moments for residents
       and guests alike. Each detail has been considered to celebrate the skyline and the vibrant neighborhood below.
     </p>
 
-    <div class="project-hero__stats" *ngIf="heroStats.length">
-      <div class="project-hero__stat" *ngFor="let stat of heroStats">
-        <span class="project-hero__stat-label">{{ stat.label }}</span>
-        <span class="project-hero__stat-value">{{ stat.value }}</span>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(130px,1fr))] gap-[0.85rem] w-full" *ngIf="heroStats.length">
+      <div class="p-4 px-5 rounded-xl bg-slate-900/55 border border-slate-400/35 backdrop-blur-[12px] transition-all duration-300 ease-in-out hover:-translate-y-1.5 hover:border-slate-50/55 motion-reduce:transition-none" *ngFor="let stat of heroStats">
+        <span class="block text-xs uppercase tracking-wider text-slate-400 mb-1">{{ stat.label }}</span>
+        <span class="text-[1.35rem] font-semibold">{{ stat.value }}</span>
       </div>
     </div>
 
-    <div class="project-hero__actions">
-      <a class="project-hero__action project-hero__action--primary" href="#contacting">Book a Private Tour</a>
-      <a class="project-hero__action project-hero__action--secondary" href="#featureAndAmenities">Explore Amenities</a>
+    <div class="flex flex-wrap gap-[0.9rem] self-center md:self-start">
+      <a class="inline-flex items-center justify-center gap-2 py-2 px-7 rounded-full font-semibold transition-all duration-300 ease-in-out no-underline bg-gradient-to-br from-sky-400 to-violet-500 text-slate-900 shadow-[0_18px_35px_rgba(59,130,246,0.35)] hover:-translate-y-1 hover:shadow-[0_22px_40px_rgba(59,130,246,0.45)] motion-reduce:transition-none" href="#contacting">Book a Private Tour</a>
+      <a class="inline-flex items-center justify-center gap-2 py-2 px-7 rounded-full font-semibold transition-all duration-300 ease-in-out no-underline bg-slate-900/55 text-slate-50 border border-slate-400/45 hover:-translate-y-1 hover:border-slate-50/65 motion-reduce:transition-none" href="#featureAndAmenities">Explore Amenities</a>
     </div>
   </div>
 </section>

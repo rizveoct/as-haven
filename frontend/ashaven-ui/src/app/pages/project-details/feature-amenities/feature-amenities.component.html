@@ -1,31 +1,43 @@
-<section class="amenities" id="featureAndAmenities">
-  <div class="amenities__container">
-    <div class="amenities__heading">
-      <span class="amenities__eyebrow">Lifestyle Privileges</span>
-      <h2 class="amenities__title">Feature & Amenities</h2>
-      <p class="amenities__intro">
+<section class="relative py-[clamp(4rem,9vw,6.5rem)] bg-slate-900 overflow-hidden" id="featureAndAmenities">
+  <!-- Decorative background elements using before/after pseudo-elements -->
+  <div class="absolute -top-20 right-10 w-[360px] h-[360px] rounded-full bg-gradient-radial from-sky-400/75 to-transparent blur-3xl opacity-35 pointer-events-none"></div>
+  <div class="absolute -bottom-25 left-5 w-[420px] h-[420px] rounded-full bg-gradient-radial from-pink-400/70 to-transparent blur-3xl opacity-35 pointer-events-none"></div>
+  
+  <div class="relative z-10 w-[min(1180px,92%)] md:w-[80%] mx-auto flex flex-col gap-[clamp(2.5rem,4vw,3.5rem)] text-slate-50">
+    <div class="max-w-[680px]">
+      <span class="inline-block text-xs uppercase tracking-[0.35em] text-slate-200/65 mb-3">Lifestyle Privileges</span>
+      <h2 class="font-serif text-[clamp(2.4rem,4.6vw,3.6rem)] mb-4 text-slate-50">Feature & Amenities</h2>
+      <p class="text-[clamp(1rem,1.2vw,1.1rem)] leading-[1.8] text-slate-200/75">
         From wellness sanctuaries to curated social spaces, every amenity is designed to enrich the resident experience and
         welcome guests in style.
       </p>
     </div>
 
-    <div *ngIf="features?.length; else emptyState" class="amenities__grid">
-      <article class="amenities__card" *ngFor="let item of features">
-        <div class="amenities__icon">
+    <div *ngIf="features?.length; else emptyState" class="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-[clamp(1rem,2vw,1.75rem)]">
+      <article 
+        class="relative p-8 md:p-[2rem] md:pr-[1.5rem] md:pl-[1.5rem] rounded-3xl bg-slate-900/60 border border-slate-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-xl flex flex-col items-center gap-5 transition-all duration-350 hover:-translate-y-2 hover:scale-[1.01] hover:border-white/45 hover:shadow-[0_20px_45px_-25px_rgba(15,23,42,0.65)]"
+        *ngFor="let item of features"
+      >
+        <!-- Inner border effect on hover -->
+        <div class="absolute inset-3 rounded-2xl border border-slate-400/18 opacity-0 group-hover:opacity-100 transition-opacity duration-350"></div>
+        
+        <div class="w-[70px] h-[70px] rounded-full bg-gradient-to-br from-blue-500/25 to-purple-500/25 flex items-center justify-center p-4">
           <img
+            class="w-full h-full object-contain"
             [src]="baseUrl + '/api/attachment/get/' + item.icon"
             alt="Feature icon"
             (error)="onImageError($event)"
           />
         </div>
-        <h3 class="amenities__label">{{ item.title }}</h3>
+        <h3 class="text-lg font-semibold text-center text-slate-50">{{ item.title }}</h3>
       </article>
     </div>
 
     <ng-template #emptyState>
-      <div class="amenities__empty">
+      <div class="p-12 rounded-3xl bg-slate-900/60 border-2 border-dashed border-slate-400/40 text-center text-slate-200/75">
         <span>Check back soon—amenity information is being curated for this project.</span>
       </div>
     </ng-template>
   </div>
 </section>
+

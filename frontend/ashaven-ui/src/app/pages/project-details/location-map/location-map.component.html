@@ -1,51 +1,60 @@
-<section class="project-location" id="locationMap">
-  <div class="project-location__container">
-    <div class="project-location__heading">
-      <span class="project-location__eyebrow">Connected Living</span>
-      <h2 class="project-location__title">Where the City Meets Sanctuary</h2>
-      <p class="project-location__intro">
+<section class="relative py-[clamp(4rem,8vw,6rem)] bg-slate-50 overflow-hidden" id="locationMap">
+  <!-- Decorative background elements -->
+  <div class="absolute -top-25 -left-10 w-[360px] h-[360px] rounded-full bg-gradient-radial from-sky-400/55 to-transparent blur-3xl opacity-35 pointer-events-none"></div>
+  <div class="absolute -bottom-20 -right-5 w-[400px] h-[400px] rounded-full bg-gradient-radial from-purple-500/50 to-transparent blur-3xl opacity-35 pointer-events-none"></div>
+
+  <div class="relative z-10 w-[min(1180px,92%)] md:w-[80%] mx-auto flex flex-col gap-[clamp(2.5rem,4vw,3.5rem)]">
+    <div class="max-w-[700px] flex flex-col gap-3">
+      <span class="text-xs uppercase tracking-[0.3em] text-slate-500">Connected Living</span>
+      <h2 class="font-serif text-[clamp(2.4rem,4.5vw,3.6rem)] text-slate-900 m-0">Where the City Meets Sanctuary</h2>
+      <p class="text-[clamp(1rem,1.2vw,1.1rem)] leading-[1.8] text-slate-600">
         Perfectly situated to balance tranquility with urban energy, the address keeps you minutes from gourmet dining,
         boutique retail, and major transit links.
       </p>
     </div>
 
-    <div class="project-location__grid">
-      <div class="project-location__map">
-        <div class="project-location__map-frame">
-          <div [innerHTML]="safeMapIframe" class="project-location__map-embed"></div>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[clamp(1.75rem,3vw,2.5rem)] items-stretch">
+      <div class="relative">
+        <div class="rounded-3xl overflow-hidden shadow-[0_30px_60px_-35px_rgba(15,23,42,0.45)] bg-gradient-to-br from-sky-400/10 to-indigo-600/8 min-h-[320px] md:rounded-3xl">
+          <div class="absolute inset-0 border border-slate-200/60 rounded-3xl pointer-events-none"></div>
+          <div [innerHTML]="safeMapIframe" class="w-full h-full"></div>
         </div>
       </div>
 
-      <aside class="project-location__info">
-        <h3>Neighborhood Highlights</h3>
-        <ul>
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M12 2C8.13401 2 5 5.07443 5 8.97272C5 13.8323 11.0743 20.2749 11.3386 20.5485C11.7158 20.9389 12.2842 20.9388 12.6614 20.5485C12.9257 20.2749 19 13.8323 19 8.97272C19 5.07443 15.866 2 12 2Z"
-              />
+      <aside class="p-[clamp(1.75rem,3vw,2.5rem)] rounded-3xl bg-white/85 border border-slate-200/85 shadow-[0_25px_70px_-40px_rgba(15,23,42,0.4)] backdrop-blur-xl flex flex-col gap-6 md:rounded-3xl">
+        <h3 class="text-2xl font-semibold text-slate-900 m-0">Neighborhood Highlights</h3>
+        <ul class="list-none p-0 m-0 flex flex-col gap-4">
+          <li class="flex gap-4 items-start text-[0.98rem] leading-6 text-slate-600">
+            <svg class="w-6 h-6 flex-shrink-0 stroke-blue-600 stroke-[1.4] stroke-linecap-round stroke-linejoin-round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2C8.13401 2 5 5.07443 5 8.97272C5 13.8323 11.0743 20.2749 11.3386 20.5485C11.7158 20.9389 12.2842 20.9388 12.6614 20.5485C12.9257 20.2749 19 13.8323 19 8.97272C19 5.07443 15.866 2 12 2Z" />
               <path d="M12 11.4782C10.316 11.4782 8.94882 10.089 8.94882 8.37876C8.94882 6.66852 10.316 5.2793 12 5.2793C13.684 5.2793 15.0512 6.66852 15.0512 8.37876C15.0512 10.089 13.684 11.4782 12 11.4782Z" />
             </svg>
             Reside within a walkable enclave surrounded by lush parks and cultural experiences.
           </li>
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+          <li class="flex gap-4 items-start text-[0.98rem] leading-6 text-slate-600">
+            <svg class="w-6 h-6 flex-shrink-0 stroke-purple-500 stroke-[1.4] stroke-linecap-round stroke-linejoin-round" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3 7.5L12 3L21 7.5L12 12L3 7.5Z" />
               <path d="M3 12.5L12 17L21 12.5" />
               <path d="M3 16.5L12 21L21 16.5" />
             </svg>
             Effortless access to business districts, education hubs, and weekend getaways via major roads.
           </li>
-          <li>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
+          <li class="flex gap-4 items-start text-[0.98rem] leading-6 text-slate-600">
+            <svg class="w-6 h-6 flex-shrink-0 stroke-pink-500 stroke-[1.4] stroke-linecap-round stroke-linejoin-round" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 10.5L12 6L19 10.5V18.5C19 19.3284 18.3284 20 17.5 20H6.5C5.67157 20 5 19.3284 5 18.5V10.5Z" />
               <path d="M9 20V12H15V20" />
             </svg>
             A serene retreat after a vibrant day—crafted for those who appreciate balance and design.
           </li>
         </ul>
-        <a class="project-location__cta" href="#contacting">Plan Your Visit</a>
+        <a
+          class="self-start px-7 py-3.5 rounded-full bg-gradient-to-br from-sky-400 to-purple-500 text-slate-900 font-semibold no-underline shadow-[0_12px_30px_rgba(59,130,246,0.3)] hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(59,130,246,0.4)] transition-all duration-300 motion-reduce:transition-none"
+          href="#contacting"
+        >
+          Plan Your Visit
+        </a>
       </aside>
     </div>
   </div>
 </section>
+

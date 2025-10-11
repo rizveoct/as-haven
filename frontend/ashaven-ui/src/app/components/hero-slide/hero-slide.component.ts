@@ -1,4 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  AfterViewInit,
+  ElementRef,
+  QueryList,
+  ViewChildren,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -25,7 +33,7 @@ interface Slide {
   styleUrls: ['./hero-slide.component.css'],
   providers: [ProjectService],
 })
-export class HeroSlideComponent implements OnInit, OnDestroy {
+export class HeroSlideComponent implements OnInit, OnDestroy, AfterViewInit {
   slides: Slide[] = [];
   currentIndex = 0;
   progress = 0;
@@ -33,6 +41,8 @@ export class HeroSlideComponent implements OnInit, OnDestroy {
   baseUrl = environment.baseUrl;
 
   private progressInterval?: ReturnType<typeof setInterval>;
+
+  @ViewChildren('navItem') navItems!: QueryList<ElementRef<HTMLButtonElement>>;
 
   get activeSlide(): Slide | undefined {
     return this.slides[this.currentIndex];
@@ -67,26 +77,29 @@ export class HeroSlideComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    // Ensure current item is visible after view loads
+    this.scrollCurrentIntoView();
+  }
+
   ngOnDestroy(): void {
     this.clearTimers();
   }
 
   next(): void {
-    if (!this.slides.length) {
-      return;
-    }
+    if (!this.slides.length) return;
 
     this.currentIndex = (this.currentIndex + 1) % this.slides.length;
+    this.scrollCurrentIntoView();
     this.startAutoSlide();
   }
 
   prev(): void {
-    if (!this.slides.length) {
-      return;
-    }
+    if (!this.slides.length) return;
 
     this.currentIndex =
       (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+    this.scrollCurrentIntoView();
     this.startAutoSlide();
   }
 
@@ -96,11 +109,11 @@ export class HeroSlideComponent implements OnInit, OnDestroy {
       index === this.currentIndex ||
       index < 0 ||
       index >= this.slides.length
-    ) {
+    )
       return;
-    }
 
     this.currentIndex = index;
+    this.scrollCurrentIntoView();
     this.startAutoSlide();
   }
 
@@ -117,7 +130,6 @@ export class HeroSlideComponent implements OnInit, OnDestroy {
     }
 
     this.progress = 0;
-
     const intervalDuration = 40;
     const increment = 100 / (this.timeAutoNext / intervalDuration);
 
@@ -135,5 +147,17 @@ export class HeroSlideComponent implements OnInit, OnDestroy {
       clearInterval(this.progressInterval);
       this.progressInterval = undefined;
     }
+  }
+
+  /** Smoothly scroll the active slide button into view */
+  private scrollCurrentIntoView(): void {
+    const el = this.navItems?.get(this.currentIndex)?.nativeElement;
+    if (!el) return;
+
+    el.scrollIntoView({
+      block: 'nearest',
+      inline: 'nearest',
+      behavior: 'smooth',
+    });
   }
 }

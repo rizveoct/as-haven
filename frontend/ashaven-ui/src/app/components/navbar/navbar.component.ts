@@ -1,7 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LenisService } from '../../services/lenis.service';
-import { NavbarScrollDirective } from '../../directives/navbar-scroll.directive';
 import { SidePanelComponent } from '../side-panel/side-panel.component';
 import { SidePanelService } from '../../services/sidepanel.service';
 import { RouterLink, Router } from '@angular/router';
@@ -10,13 +9,11 @@ import { RouterLink, Router } from '@angular/router';
   selector: 'app-navbar',
   standalone: true,
   imports: [
-    CommonModule,
-    NavbarScrollDirective,
+    CommonModule,    
     SidePanelComponent,
     RouterLink,
   ],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
   isTop: boolean = true;

@@ -1,8 +1,9 @@
 <section
   *ngIf="slides.length; else heroSkeleton"
-  class="relative isolate overflow-hidden bg-gradient-to-br from-brand via-brand/95 to-emerald-950 py-16 text-pure sm:py-20"
+  class="relative isolate overflow-hidden bg-gradient-to-br from-brand via-brand/95 to-emerald-950 py-16 text-pure sm:py-20 pt-[5rem]"
   aria-live="polite"
 >
+
   <div class="pointer-events-none absolute inset-0">
     <div
       class="absolute -left-40 -top-44 h-[52vw] w-[52vw] rounded-full bg-accent/35 blur-3xl"
@@ -31,7 +32,7 @@
 
   <div
     *ngIf="activeSlide as active"
-    class="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-6 lg:px-0"
+    class="relative mx-auto flex w-[min(1180px,92%)] md:w-[80%] flex-col gap-12 pt-10 "
   >
     <div
       class="grid items-start gap-12 lg:grid-cols-[minmax(0,320px)_1fr_minmax(200px,240px)]"
@@ -115,7 +116,7 @@
           <img
             [src]="active.image"
             [alt]="active.alt || 'Project visual'"
-            class="h-[600px] w-[800px] rounded-3xl"
+            class=" h-[400px] md:h-[600px] w-[500px] rounded-3xl"
             loading="lazy"
           />
           <div
@@ -125,7 +126,7 @@
 
         <!-- Feature Floating Element -->
         <div
-          class="absolute left-[-90px] top-[50px] min-w-[180px] max-w-[220px] rounded-2xl border border-white/20 bg-white/5 p-4 text-left text-sm shadow-lg backdrop-blur z-10 animate-float md:block -translate-y-1/2"
+          class="absolute left-[-5px] top-[50px] min-w-[180px] max-w-[220px] rounded-2xl border border-white/20 bg-white/5 p-4 text-left text-sm shadow-lg backdrop-blur z-10 animate-float hidden md:block -translate-y-1/2"
         >
           <span
             class="block text-[0.6rem] uppercase tracking-[0.32em] text-white/60"
@@ -137,7 +138,7 @@
 
         <!-- Status Floating Element -->
         <div
-          class="absolute bottom-[120px] right-[-90px] min-w-[180px] max-w-[220px] rounded-2xl border border-white/20 bg-white/5 p-4 text-left text-sm shadow-lg backdrop-blur z-10 animate-float md:block translate-y-1/2"
+          class="absolute bottom-[120px] right-[-5px] min-w-[180px] max-w-[220px] rounded-2xl border border-white/20 bg-white/5 p-4 text-left text-sm shadow-lg backdrop-blur z-10 animate-float hidden md:block translate-y-1/2"
         >
           <span
             class="block text-[0.6rem] uppercase tracking-[0.32em] text-white/60"
@@ -167,31 +168,42 @@
         </div>
       </div>
 
-      <nav class="flex flex-col gap-3" aria-label="Project quick navigation">
-        <button
-          type="button"
-          class="flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-white/70 transition hover:border-white/30 hover:text-white"
-          *ngFor="let project of slides; let i = index; trackBy: trackBySlide"
-          [ngClass]="{
-            'border-white/40 bg-white/15 text-white shadow-lg shadow-[0_12px_30px_rgba(0,0,0,0.2)]':
-              i === currentIndex
-          }"
-          (click)="goToSlide(i)"
-          [attr.aria-label]="'Go to ' + project.thumbnailTitle"
-        >
-          <span class="font-mono text-xs font-semibold text-white/60">{{
-            i + 1 | number : "2.0"
-          }}</span>
-          <span class="flex flex-col">
-            <strong class="text-sm font-semibold text-white">{{
-              project.thumbnailTitle
-            }}</strong>
-            <small class="text-xs text-white/70">{{
-              project.thumbnailDescription
-            }}</small>
-          </span>
-        </button>
-      </nav>
+     <nav
+  class="flex flex-row gap-3 overflow-x-auto no-scrollbar
+         md:flex-col md:overflow-y-auto md:overflow-x-hidden
+         md:max-h-[25rem] md:gap-2 md:overscroll-contain"
+  aria-label="Project quick navigation"
+>
+  <button
+    #navItem
+    type="button"
+    class="flex flex-shrink-0 items-center gap-4 rounded-2xl border border-white/10
+           bg-white/5 px-4 py-3 text-left text-sm text-white/70 transition
+           hover:border-white/30 hover:text-white md:h-16"
+    *ngFor="let project of slides; let i = index; trackBy: trackBySlide"
+    [ngClass]="{
+      'border-white/40 bg-white/15 text-white shadow-lg shadow-[0_12px_30px_rgba(0,0,0,0.2)]':
+        i === currentIndex
+    }"
+    (click)="goToSlide(i)"
+    [attr.aria-label]="'Go to ' + project.thumbnailTitle"
+  >
+    <span class="font-mono text-xs font-semibold text-white/60">
+      {{ i + 1 | number : '2.0' }}
+    </span>
+
+    <span class="flex flex-col min-w-0">
+      <strong class="truncate text-sm font-semibold text-white">
+        {{ project.thumbnailTitle }}
+      </strong>
+      <small class="truncate text-xs text-white/70">
+        {{ project.thumbnailDescription }}
+      </small>
+    </span>
+  </button>
+</nav>
+
+
     </div>
   </div>
 </section>

@@ -58,7 +58,6 @@
 .neo-vision__content {
   position: relative;
   z-index: 1;
-  padding: clamp(3rem, 8vw, 5rem) clamp(2rem, 6vw, 4.5rem);
   display: grid;
   gap: clamp(1rem, 3vw, 1.5rem);
   color: var(--neo-text);
@@ -90,6 +89,7 @@
 .neo-vision__cta {
   display: inline-flex;
   align-items: center;
+  width: 180px;
   gap: 0.5rem;
   padding: 0.75rem 1.6rem;
   border-radius: 999px;
@@ -108,20 +108,3 @@
   box-shadow: 0 35px 75px rgba(255, 119, 27, 0.38);
 }
 
-/* ✅ Mobile and tablet responsiveness */
-@media (max-width: 1024px) {
-  .neo-vision__content {
-    width: 90%;
-  }
-}
-
-@media (max-width: 767px) {
-  .neo-vision {
-    width: 100%;
-  }
-
-  .neo-vision__content {
-    width: 92%;
-    padding: 2.5rem 1.5rem;
-  }
-}

@@ -1,7 +1,7 @@
 <div
   class="min-h-screen bg-color-1 py-16 flex items-center justify-center font-[Inter]"
 >
-  <div class="container mx-auto px-4 w-[90%] md:w-[65%]">
+  <div class="container mx-auto  w-[min(1180px,92%)] md:w-[80%]">
     <div
       class="flex flex-col lg:flex-row gap-8 w-full mx-auto bg-white p-12 rounded-3xl shadow-lg"
     >
@@ -112,14 +112,14 @@
             <button
               type="submit"
               [disabled]="isSubmitting"
-              class="w-full md:w-auto px-9 py-5 bg-green-500 text-white font-bold rounded-lg shadow-md hover:bg-green-600 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
+              class="w-full md:w-auto px-9 py-5 bg-accent text-white font-bold rounded-lg shadow-md hover:bg-accent/80 transition-colors duration-300 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {{ isSubmitting ? 'Sending...' : 'Send Message' }}
             </button>
           </div>
 
           <!-- Submission Feedback -->
-          <div *ngIf="submitMessage" class="mt-4 text-sm" [ngClass]="{'text-green-500': !submitMessage.includes('Error'), 'text-red-500': submitMessage.includes('Error')}">
+          <div *ngIf="submitMessage" class="mt-4 text-sm" [ngClass]="{'text-accent': !submitMessage.includes('Error'), 'text-red-500': submitMessage.includes('Error')}">
             {{ submitMessage }}
           </div>
         </form>

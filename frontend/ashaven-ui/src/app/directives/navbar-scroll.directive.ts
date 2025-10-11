@@ -1,52 +1,49 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { LenisService } from '../services/lenis.service';
 
 @Directive({
   selector: '[appNavbarScroll]',
   standalone: true,
 })
-export class NavbarScrollDirective implements OnInit {
-  private lastScroll = 0;
-  private scrollUpDelta = 0;
-  private scrollDownDelta = 0;
-  private hideThreshold = 80;
+export class NavbarScrollDirective {
+  private lastScrollTop = 0;
+  private isHidden = false;
+  
 
-  constructor(private el: ElementRef, private lenisService: LenisService) {}
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  ngOnInit(): void {
-    const nav = this.el.nativeElement;
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    const currentScroll =
+      window.pageYOffset || document.documentElement.scrollTop;
 
-    this.lenisService.onScroll((scroll: number) => {
-      // At the very top → transparent
-      if (scroll <= 20) {
-        nav.classList.remove('hide-navbar', 'scrolled');
-        nav.classList.add('transparent');
-      } else {
-        nav.classList.remove('transparent');
+    // scroll down → hide navbar
+    if (
+      currentScroll > this.lastScrollTop &&
+      currentScroll > 50 &&
+      !this.isHidden
+    ) {
+      this.isHidden = true;
+      this.renderer.setStyle(
+        this.el.nativeElement,
+        'transform',
+        'translateY(-120%)'
+      );
+      this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
+      this.renderer.setStyle(this.el.nativeElement, 'pointerEvents', 'none');
+    }
+    // scroll up → show navbar
+    else if (currentScroll < this.lastScrollTop && this.isHidden) {
+      this.isHidden = false;
+      this.renderer.setStyle(
+        this.el.nativeElement,
+        'transform',
+        'translateY(0)'
+      );
+      this.renderer.setStyle(this.el.nativeElement, 'opacity', '1');
+      this.renderer.setStyle(this.el.nativeElement, 'pointerEvents', 'auto');
+    }
 
-        // Scrolling down → hide navbar
-        if (scroll > this.lastScroll) {
-          this.scrollDownDelta += scroll - this.lastScroll;
-          this.scrollUpDelta = 0;
-          if (this.scrollDownDelta > this.hideThreshold) {
-            nav.classList.add('hide-navbar');
-            nav.classList.remove('scrolled');
-            this.scrollDownDelta = 0;
-          }
-        }
-        // Scrolling up → show with white bg
-        else {
-          this.scrollUpDelta += this.lastScroll - scroll;
-          this.scrollDownDelta = 0;
-          if (this.scrollUpDelta > this.hideThreshold) {
-            nav.classList.remove('hide-navbar');
-            nav.classList.add('scrolled'); // white bg
-            this.scrollUpDelta = 0;
-          }
-        }
-      }
-
-      this.lastScroll = scroll;
-    });
+    this.lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // avoid negative scroll
   }
 }

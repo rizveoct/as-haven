@@ -1,7 +1,8 @@
 <section
   id="connect"
-  class="relative overflow-hidden bg-gradient-to-br from-[#132b18] via-[#0f2c1c] to-[#0c2216] py-16"
+  class="relative overflow-hidden bg-gradient-to-br py-16"
 >
+  <!-- background decoration (unchanged) -->
   <div
     class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,119,27,0.28),transparent_60%),radial-gradient(circle_at_bottom_left,rgba(47,118,68,0.28),transparent_55%)] pointer-events-none"
   ></div>
@@ -15,57 +16,187 @@
     class="absolute inset-0 opacity-20 bg-[linear-gradient(rgba(241,251,236,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(241,251,236,0.12)_1px,transparent_1px)] bg-[size:160px_160px] [mask-image:radial-gradient(circle_at_center,rgba(0,0,0,0.8)_40%,transparent_90%)] pointer-events-none"
   ></div>
 
-  <div class="relative w-[min(1180px,92%)] md:w-[80%] mx-auto  py-16 md:py-24">
-    <div class="flex flex-col lg:flex-row items-start gap-12 lg:gap-16">
-      <div class="space-y-6 lg:w-2/5 text-white/95">
+  <div class="relative w-[min(1180px,92%)] md:w-[80%] mx-auto py-16 md:py-24">
+    <!-- Top intro block (unchanged) -->
+    <div class="flex flex-col items-start gap-12 lg:gap-16">
+      <div class="space-y-6 lg:w-2/3">
         <span
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/25 bg-white/12 text-xs uppercase tracking-wider"
-          >Tell us about your vision</span
-        >
+              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ff771b]/20 border border-[#ff9952]/35 text-xs uppercase tracking-wider"
+              >TELL US ABOUT YOUR VISION</span
+            >
         <h2 class="text-3xl md:text-4xl font-semibold leading-snug">
           We orchestrate every detail—simply share your aspirations.
         </h2>
-        <p class="text-white/80 text-base md:text-lg">
+        <p class="text-base md:text-lg">
           Complete the form and our concierge will design a bespoke plan with
           curated residences, floor plans, and financial guidance tailored to
           you.
         </p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6">
           <div>
-            <p class="text-3xl font-bold text-white">450+</p>
-            <p class="text-sm text-white/75 uppercase tracking-wide">
-              Families guided home
-            </p>
+            <p class="text-3xl font-bold">450+</p>
+            <p class="text-sm uppercase tracking-wide">Families guided home</p>
           </div>
           <div>
-            <p class="text-3xl font-bold text-white">98%</p>
-            <p class="text-sm text-white/75 uppercase tracking-wide">
-              Client satisfaction
-            </p>
+            <p class="text-3xl font-bold">98%</p>
+            <p class="text-sm uppercase tracking-wide">Client satisfaction</p>
           </div>
           <div>
-            <p class="text-3xl font-bold text-white">24h</p>
-            <p class="text-sm text-white/75 uppercase tracking-wide">
-              Average response time
-            </p>
+            <p class="text-3xl font-bold">24h</p>
+            <p class="text-sm uppercase tracking-wide">Average response time</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="flex-1 grid gap-10 w-full">
+    <!-- SIDE-BY-SIDE LAYOUT -->
+    <div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 w-full">
+      <!-- LEFT: FORM CARD -->
+      <div
+        class="relative rounded-3xl p-6 border border-white/16 shadow-2xl backdrop-blur-md"
+      >
+        <div class="mb-6">
+          <h3 class="text-xl font-semibold text-accent">Your details</h3>
+          <p class="mt-2 text-black">
+            We keep your information private and only use it to coordinate your
+            experience.
+          </p>
+        </div>
+
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+          <!-- MESSAGE SECTION MOVED TO TOP -->
+          <div class="space-y-2">
+            <label
+              for="message"
+              class="block text-xs font-semibold uppercase tracking-wider text-black"
+              >Project Details</label
+            >
+            <textarea
+              id="message"
+              formControlName="message"
+              rows="4"
+              class="w-full rounded-2xl border border-white/18 bg-[rgba(142,187,163,0.7)] text-black p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18 resize-y min-h-[160px]"
+              placeholder="Share location preferences, budget, timelines, or inspirations."
+            ></textarea>
+            <p *ngIf="isFieldInvalid('message')" class="text-xs text-accent">
+              Message is required and must be at least 10 characters.
+            </p>
+          </div>
+
+          <!-- OTHER FIELDS -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="space-y-2">
+              <label
+                for="name"
+                class="block text-xs font-semibold uppercase tracking-wider text-black"
+                >Full Name</label
+              >
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                class="w-full rounded-2xl border border-white/18 bg-[rgba(142,187,163,0.7)] text-black p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
+                placeholder="Enter your full name"
+              />
+              <p *ngIf="isFieldInvalid('name')" class="text-xs text-accent">
+                Name is required and must be at least 2 characters.
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <label
+                for="phone"
+                class="block text-xs font-semibold uppercase tracking-wider text-black"
+                >Phone Number</label
+              >
+              <input
+                id="phone"
+                type="tel"
+                formControlName="phone"
+                class="w-full rounded-2xl border border-white/18 bg-[rgba(142,187,163,0.7)] text-black p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
+                placeholder="e.g. +8801X-XXXXXXX"
+              />
+            </div>
+
+            <div class="space-y-2">
+              <label
+                for="email"
+                class="block text-xs font-semibold uppercase tracking-wider text-black"
+                >Email Address</label
+              >
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                class="w-full rounded-2xl border border-white/18 bg-[rgba(142,187,163,0.7)] text-black p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
+                placeholder="you@example.com"
+              />
+              <p *ngIf="isFieldInvalid('email')" class="text-xs text-accent">
+                Valid email is required.
+              </p>
+            </div>
+
+            <div class="space-y-2">
+              <label
+                for="subject"
+                class="block text-xs font-semibold uppercase tracking-wider text-black"
+                >Subject</label
+              >
+              <input
+                id="subject"
+                type="text"
+                formControlName="subject"
+                class="w-full rounded-2xl border border-white/18 bg-[rgba(142,187,163,0.7)] text-black p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
+                placeholder="How can we help?"
+              />
+              <p *ngIf="isFieldInvalid('subject')" class="text-xs text-accent">
+                Subject is required and must be at least 3 characters.
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <button
+              type="submit"
+              [disabled]="isSubmitting"
+              class="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff771b] to-[#d65f13] text-white font-semibold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {{ isSubmitting ? "Sending..." : "Submit enquiry" }}
+            </button>
+            <p class="text-xs text-accent">
+              By submitting, you agree to our friendly privacy policy.
+            </p>
+          </div>
+
+          <div
+            *ngIf="submitMessage"
+            class="p-3 rounded-xl text-sm font-semibold text-center"
+            [ngClass]="{
+              'bg-[#ff771b]/16 text-accent': !submitMessage.includes('Error'),
+              'bg-red-600/16 text-accent': submitMessage.includes('Error')
+            }"
+          >
+            {{ submitMessage }}
+          </div>
+        </form>
+      </div>
+
+      <!-- RIGHT: LOCATION / MAP CARD -->
+      <div class="flex-1">
         <div
-          class="relative rounded-3xl p-6 bg-[rgba(12,35,22,0.82)] border border-white/18 shadow-2xl backdrop-blur-md flex flex-col gap-6"
+          class="relative rounded-3xl p-6 border border-white/18 shadow-2xl backdrop-blur-md flex flex-col gap-6"
         >
           <div>
             <span
               class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ff771b]/20 border border-[#ff9952]/35 text-xs uppercase tracking-wider"
               >Showroom & Experience Centre</span
             >
-            <p class="mt-2 text-white/75">
+            <p class="mt-2">
               Tour our model residences, material library, and immersive
               planning studio.
             </p>
           </div>
+
           <div
             class="relative rounded-2xl border border-[#ff9952]/25 min-h-[320px] overflow-hidden"
           >
@@ -83,167 +214,38 @@
               (load)="onMapLoad()"
             ></iframe>
           </div>
+
           <ul class="grid gap-4 list-none p-0">
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-white/70"
                 >Parking</span
               >
-              <span class="block text-white/88"
-                >Complimentary valet on arrival</span
-              >
+              <span class="block text-white/88">Complimentary valet on arrival</span>
             </li>
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-white/70"
                 >Weekend Hours</span
               >
-              <span class="block text-white/88"
-                >Friday visits by appointment only</span
-              >
+              <span class="block text-white/88">Friday visits by appointment only</span>
             </li>
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-white/70"
                 >Virtual Access</span
               >
-              <span class="block text-white/88"
-                >Live video tours available globally</span
-              >
+              <span class="block text-white/88">Live video tours available globally</span>
             </li>
           </ul>
         </div>
       </div>
+      <!-- /RIGHT -->
     </div>
-
-    <div
-      class="relative rounded-3xl p-6 bg-[rgba(15,46,29,0.78)] border border-white/16 shadow-2xl backdrop-blur-md"
-    >
-      <div class="mb-6">
-        <h3 class="text-xl font-semibold text-white">Your details</h3>
-        <p class="mt-2 text-white/75">
-          We keep your information private and only use it to coordinate your
-          experience.
-        </p>
-      </div>
-
-      <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div class="space-y-2">
-            <label
-              for="name"
-              class="block text-xs font-semibold uppercase tracking-wider text-white/65"
-              >Full Name</label
-            >
-            <input
-              id="name"
-              type="text"
-              formControlName="name"
-              class="w-full rounded-2xl border border-white/18 bg-[rgba(10,32,20,0.7)] text-white p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
-              placeholder="Enter your full name"
-            />
-            <p *ngIf="isFieldInvalid('name')" class="text-xs text-[#fcbdb0]">
-              Name is required and must be at least 2 characters.
-            </p>
-          </div>
-
-          <div class="space-y-2">
-            <label
-              for="phone"
-              class="block text-xs font-semibold uppercase tracking-wider text-white/65"
-              >Phone Number</label
-            >
-            <input
-              id="phone"
-              type="tel"
-              formControlName="phone"
-              class="w-full rounded-2xl border border-white/18 bg-[rgba(10,32,20,0.7)] text-white p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
-              placeholder="e.g. +8801X-XXXXXXX"
-            />
-          </div>
-
-          <div class="space-y-2">
-            <label
-              for="email"
-              class="block text-xs font-semibold uppercase tracking-wider text-white/65"
-              >Email Address</label
-            >
-            <input
-              id="email"
-              type="email"
-              formControlName="email"
-              class="w-full rounded-2xl border border-white/18 bg-[rgba(10,32,20,0.7)] text-white p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
-              placeholder="you@example.com"
-            />
-            <p *ngIf="isFieldInvalid('email')" class="text-xs text-[#fcbdb0]">
-              Valid email is required.
-            </p>
-          </div>
-
-          <div class="space-y-2">
-            <label
-              for="subject"
-              class="block text-xs font-semibold uppercase tracking-wider text-white/65"
-              >Subject</label
-            >
-            <input
-              id="subject"
-              type="text"
-              formControlName="subject"
-              class="w-full rounded-2xl border border-white/18 bg-[rgba(10,32,20,0.7)] text-white p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18"
-              placeholder="How can we help?"
-            />
-            <p *ngIf="isFieldInvalid('subject')" class="text-xs text-[#fcbdb0]">
-              Subject is required and must be at least 3 characters.
-            </p>
-          </div>
-        </div>
-
-        <div class="space-y-2">
-          <label
-            for="message"
-            class="block text-xs font-semibold uppercase tracking-wider text-white/65"
-            >Project Details</label
-          >
-          <textarea
-            id="message"
-            formControlName="message"
-            rows="4"
-            class="w-full rounded-2xl border border-white/18 bg-[rgba(10,32,20,0.7)] text-white p-3 text-sm placeholder-white/40 focus:outline-none focus:border-[#ff771b]/65 focus:ring-4 focus:ring-[#ff771b]/18 resize-y min-h-[160px]"
-            placeholder="Share location preferences, budget, timelines, or inspirations."
-          ></textarea>
-          <p *ngIf="isFieldInvalid('message')" class="text-xs text-[#fcbdb0]">
-            Message is required and must be at least 10 characters.
-          </p>
-        </div>
-
-        <div class="space-y-3">
-          <button
-            type="submit"
-            [disabled]="isSubmitting"
-            class="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#ff771b] to-[#d65f13] text-white font-semibold text-sm shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition disabled:opacity-60 disabled:cursor-not-allowed"
-          >
-            {{ isSubmitting ? "Sending..." : "Submit enquiry" }}
-          </button>
-          <p class="text-xs text-white/68">
-            By submitting, you agree to our friendly privacy policy.
-          </p>
-        </div>
-
-        <div
-          *ngIf="submitMessage"
-          class="p-3 rounded-xl text-sm font-semibold text-center"
-          [ngClass]="{
-            'bg-[#ff771b]/16 text-[#ffe0c9]': !submitMessage.includes('Error'),
-            'bg-red-600/16 text-red-200': submitMessage.includes('Error')
-          }"
-        >
-          {{ submitMessage }}
-        </div>
-      </form>
-    </div>
+    <!-- /SIDE-BY-SIDE LAYOUT -->
   </div>
 
+  <!-- Success Popup (unchanged) -->
   <div
     *ngIf="showPopup"
-    class="fixed inset-0 bg-[rgba(7,24,15,0.7)] flex items-center justify-center z-50 p-6"
+    class="fixed inset-0 flex items-center justify-center z-50 p-6"
   >
     <div
       class="relative w-full max-w-sm rounded-3xl p-8 bg-gradient-to-br from-[rgba(11,40,24,0.95)] to-[rgba(14,48,28,0.92)] border border-[#ff9952]/30 shadow-2xl text-center text-white/95"

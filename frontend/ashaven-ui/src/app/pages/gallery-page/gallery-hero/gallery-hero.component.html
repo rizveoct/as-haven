@@ -1,14 +1,17 @@
 <section
-  class="gallery-hero relative w-full min-h-[70vh] overflow-hidden md:min-h-[80vh]"
+  class="relative flex min-h-[26rem] items-center justify-center overflow-hidden py-20 sm:py-24"
   aria-labelledby="galleryHeroTitle"
 >
-  <div
-    class="gallery-hero__bg absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
-    style="background-image: url('/images/banner/banner-3.png')"
-    [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
-  ></div>
+  <div class="absolute inset-0">
+      <div
+        class="absolute -top-16 left-0 h-[120%] w-full bg-cover bg-center transition-transform duration-500"
+        style="background-image: url('/images/banner/banner-3.png')"
+        [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
+    </div>
 
-  <div class="gallery-hero__overlay absolute inset-0 bg-gradient-to-r from-[#030712]/90 via-[#030712]/75 to-[#030712]/40"></div>
+  <!-- <div class="gallery-hero__overlay absolute inset-0 bg-gradient-to-b "></div> -->
 
   <div class="gallery-hero__accent gallery-hero__accent--one"></div>
   <div class="gallery-hero__accent gallery-hero__accent--two"></div>

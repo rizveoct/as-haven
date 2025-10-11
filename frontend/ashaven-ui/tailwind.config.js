@@ -4,14 +4,21 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        brand: "#204726", // Deep forest green
+        brand: "#3c75ba", // Deep forest green
         mist: "#f1fbec", // Soft mint accent background
         accent: "#ff771b", // Vibrant orange for calls to action
         ink: "#000000", // Rich black for text and contrast
         pure: "#ffffff", // Clean white surfaces
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        sans: [
+          "Inter",
+          "system-ui",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "sans-serif",
+        ],
         serif: ["Playfair Display", "serif"],
       },
       boxShadow: {

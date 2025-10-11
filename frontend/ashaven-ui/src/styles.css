@@ -6,39 +6,37 @@
 @tailwind utilities;
 
 :root {
-  --luxe-forest: #204726;
-  --luxe-forest-800: #1b3b21;
-  --luxe-forest-900: #132b18;
-  --luxe-forest-soft: #2f5c36;
+  --luxe-forest: #3c75ba;
+  --luxe-forest-800: #3366a3;
+  --luxe-forest-900: #294f80;
+  --luxe-forest-soft: #4a86cc;
   --luxe-ink: #000000;
   --luxe-cream: #ffffff;
-  --luxe-mist: #f1fbec;
+  --luxe-mist: #ecf4fb;
   --luxe-amber: #ff771b;
   --luxe-amber-soft: #ff9351;
-  --luxe-sage: #d8e7d3;
-  --luxe-shadow: 0 40px 90px rgba(19, 53, 31, 0.25);
-  --luxe-soft-shadow: 0 24px 55px rgba(19, 53, 31, 0.2);
+  --luxe-sage: #d3e0f0;
+  --luxe-shadow: 0 40px 90px rgba(44, 92, 148, 0.25);
+  --luxe-soft-shadow: 0 24px 55px rgba(44, 92, 148, 0.2);
   --luxe-radius: clamp(1.5rem, 4vw, 2.75rem);
   --luxe-radius-sm: clamp(1rem, 3vw, 1.65rem);
 
   --neo-bg: var(--luxe-forest-900);
-  --neo-bg-soft: rgba(19, 53, 31, 0.92);
-  --neo-surface: rgba(22, 58, 34, 0.88);
-  --neo-surface-strong: rgba(18, 45, 27, 0.96);
-  --neo-stroke: rgba(241, 251, 236, 0.14);
+  --neo-bg-soft: rgba(41, 79, 128, 0.92);
+  --neo-surface: rgba(50, 97, 155, 0.88);
+  --neo-surface-strong: rgba(44, 85, 136, 0.96);
+  --neo-stroke: rgba(236, 244, 251, 0.14);
   --neo-glow-primary: rgba(255, 119, 27, 0.35);
-  --neo-glow-secondary: rgba(47, 118, 68, 0.55);
+  --neo-glow-secondary: rgba(60, 117, 186, 0.55);
   --neo-text: rgba(255, 255, 255, 0.95);
-  --neo-text-soft: rgba(241, 251, 236, 0.75);
+  --neo-text-soft: rgba(236, 244, 251, 0.75);
   --neo-tag: rgba(255, 255, 255, 0.55);
   --neo-accent: var(--luxe-amber);
   --neo-accent-strong: #d65f13;
   --neo-radius-lg: clamp(1.75rem, 4.5vw, 3.25rem);
   --neo-blur: blur(22px);
-
-  scroll-behavior: smooth;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
+
 
 * {
   margin: 0;

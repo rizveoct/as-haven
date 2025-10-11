@@ -12,7 +12,6 @@ import { ProjectEditComponent } from './features/projects/project-edit/project-e
 import { ProjectFeaturesComponent } from './features/projects/project-features/project-features.component';
 import { ProjectGalleryComponent } from './features/projects/project-gallery/project-gallery.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { LandownerComponent } from './pages/landowner/landowner.component';
 import { TeamsIndexComponent } from './features/teams/teams-index/teams-index.component';
 import { TestimonialsIndexComponent } from './features/testimonials/testimonials-index/testimonials-index.component';
 import { OffersIndexComponent } from './features/offers/offers-index/offers-index.component';
@@ -32,7 +31,6 @@ export const routes: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'projectdetails/:id', component: ProjectDetailsComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'primeConsultant', component: LandownerComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',
@@ -41,7 +39,6 @@ export const routes: Routes = [
     children: [
       { path: '', component: DashboardHomeComponent },
       { path: 'teams', component: TeamsIndexComponent },
-      { path: 'consultant', component: ConsultantsIndexComponent },
       { path: 'clients', component: ClientComponent },
       { path: 'testimonials', component: TestimonialsIndexComponent },
       { path: 'offers', component: OffersIndexComponent },

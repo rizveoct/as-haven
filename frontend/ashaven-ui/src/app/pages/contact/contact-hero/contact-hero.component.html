@@ -1,82 +1,54 @@
-<div class="hero-shell relative overflow-hidden text-[var(--light)]">
-  <div class="hero-media absolute inset-0">
-    <div
-      class="hero-backdrop"
-      style="background-image: url('/images/banner/page-title.jpg');"
-      [ngStyle]="{'transform': 'translateY(' + (scrollY * 0.3 - 80) + 'px)'}"
-    ></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-grid"></div>
-    <div class="hero-orb hero-orb--one"></div>
-    <div class="hero-orb hero-orb--two"></div>
-  </div>
+<section
+  class="relative flex min-h-[26rem] items-center justify-center overflow-hidden py-20 sm:py-24"
+  aria-labelledby="galleryHeroTitle"
+>
+  <div class="absolute inset-0">
+      <div
+        class="absolute -top-16 left-0 h-[120%] w-full bg-cover bg-center transition-transform duration-500"
+        style="background-image: url('/images/banner/banner-3.png')"
+        [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+      ></div>
+      <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
+    </div>
 
-  <div class="relative z-10 w-[min(1180px,92%)] md:w-[80%] mx-auto py-24 md:py-32">
-    <div class="flex flex-col md:flex-row gap-14 md:gap-20 items-start">
-      <div class="md:w-3/5 space-y-8 fade-up">
-        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs md:text-sm uppercase tracking-[0.25em] bg-white/10 border border-white/20">
-          <span class="block h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          Let's create a connection
-        </span>
-        <h1 class="text-4xl text-white sm:text-5xl lg:text-6xl font-semibold leading-tight">
-          Meet the team that turns architectural dreams into a reality.
-        </h1>
-        <p class="text-base md:text-lg text-white/80 max-w-xl">
-          From first conversation to handing over the keys, we design every step of your experience with meticulous care. Reach out today and discover how effortless finding your next sanctuary can be.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a
-            href="#connect"
-            class="hero-btn hero-btn--primary"
-          >
-            Plan a discovery call
-          </a>
-          <a
-            href="tel:+8801714049470"
-            class="hero-btn hero-btn--ghost"
-          >
-            Call +880 1714-049-470
-          </a>
-        </div>
-      </div>
+  <!-- <div class="gallery-hero__overlay absolute inset-0 bg-gradient-to-b "></div> -->
 
-      <div class="md:w-2/5 w-full space-y-5 fade-up">
-        <div class="info-panel">
-          <div class="flex items-center justify-between">
-            <span class="badge">Rajshahi Studio</span>
-            <span class="text-sm font-medium text-white/70">Open • 10:00am – 7:00pm</span>
-          </div>
-          <p class="text-lg md:text-xl font-semibold mt-4 text-white">
-            Proshanti House #28, Ground Floor, Shirusarpara, Boalia, Rajshahi
+  <div class="gallery-hero__accent gallery-hero__accent--one"></div>
+  <div class="gallery-hero__accent gallery-hero__accent--two"></div>
+
+  <div class="relative z-10 flex h-full w-full items-center">
+    <div class="mx-auto flex h-full w-[min(1180px,92%)] md:w-[80%] flex-col justify-center py-16 md:py-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+        <div class="space-y-6 text-center lg:text-left">
+          <span class="inline-flex items-center justify-center gap-2 text-[0.7rem] uppercase tracking-[0.6em] text-white/70 lg:justify-start">
+            <span class="h-2 w-2 rounded-full bg-accent"></span>
+            Let's create a connection
+          </span>
+          <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl" id="galleryHeroTitle">
+            Contact
+          </h1>
+          <p class="mx-auto max-w-2xl text-base text-white/80 sm:text-lg lg:mx-0">
+            From first conversation to handing over the keys, we design every step of your experience with meticulous care. Reach out today and discover how effortless finding your next sanctuary can be.
           </p>
-          <div class="mt-6 grid-cols-1 sm:grid-cols-2 gap-3">
+          
+          
+          <nav class="flex items-center justify-center gap-3 text-sm text-white/60 lg:justify-start" aria-label="Breadcrumb">
+            <a routerLink="/" class="relative text-white/70 transition-colors duration-300 hover:text-white focus-visible:text-white">
+              Home
+            </a>
+            <span aria-hidden="true" class="text-white/40">/</span>
+            <span class="text-white">Contact</span>
+          </nav>
+          <div class="flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
             
-            <div class="info-chip">
-              <span class="label">Customer Care</span>
-              <span class="value">support&#64;ashaven.com</span>
-            </div>
-            <div class="info-chip">
-              <span class="label">WhatsApp</span>
-              <span class="value">+880 1400-111-888</span>
+            <div class="inline-flex items-center gap-3 rounded-full bg-white/5 px-5 py-3 text-white/80 backdrop-blur-xl ring-1 ring-white/10">
+              <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_15px_rgba(255,119,27,0.6)] animate-pulse"></span>
+              <span class="text-xs uppercase tracking-[0.3em]">Stills • Motion • Atmospheres</span>
             </div>
           </div>
         </div>
-
-        <div class="promise-panel">
-          <div class="flex items-center gap-3">
-            <span class="promise-icon">✨</span>
-            <div>
-              <p class="text-sm uppercase tracking-[0.3em] text-white/60">Our Promise</p>
-              <p class="text-lg font-semibold">24-hour response guarantee for every enquiry.</p>
-            </div>
-          </div>
-          <div class="mt-4 flex flex-wrap gap-4 text-sm text-white/70">
-            <span class="pill">Personalised walkthroughs</span>
-            <span class="pill">Curated floor plans</span>
-            <span class="pill">Financing guidance</span>
-          </div>
-        </div>
+        
       </div>
     </div>
   </div>
-</div>
+</section>

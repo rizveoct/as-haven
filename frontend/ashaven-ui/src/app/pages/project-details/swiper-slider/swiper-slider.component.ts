@@ -12,6 +12,7 @@ import { RouterModule, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/model';
+import { LenisService } from '../../../services/lenis.service';
 
 interface Slide {
   id: string;
@@ -64,7 +65,8 @@ export class SwiperSliderComponent
   constructor(
     private projectService: ProjectService,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private lenisService: LenisService
   ) {}
 
   ngOnInit() {
@@ -214,7 +216,7 @@ export class SwiperSliderComponent
         onSameUrlNavigation: 'reload',
       })
       .then(() => {
-        window.scrollTo({ top: 0 });
+        this.lenisService.scrollTo(0, { duration: 0.8 });
       })
       .catch((err) => console.error('Navigation error:', err));
   }

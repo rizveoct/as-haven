@@ -3,6 +3,7 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../../../services/scroll.service';
+import { LenisService } from '../../../services/lenis.service';
 
 @Component({
   selector: 'app-tab-bar',
@@ -28,7 +29,11 @@ export class TabBarComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private scrollService: ScrollService, private zone: NgZone) {}
+  constructor(
+    private scrollService: ScrollService,
+    private lenisService: LenisService,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
     this.scrollService.scrollY$
@@ -78,10 +83,7 @@ export class TabBarComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ block: 'start' });
-      this.activeTab = sectionId;
-    }
+    this.lenisService.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    this.activeTab = sectionId;
   }
 }

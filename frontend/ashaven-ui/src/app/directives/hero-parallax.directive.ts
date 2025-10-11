@@ -1,11 +1,14 @@
-import { Directive, ElementRef, OnInit } from '@angular/core';
+import { Directive, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { LenisService } from '../services/lenis.service';
+import { Subscription } from 'rxjs';
 
 @Directive({
   selector: '[appHeroParallax]',
   standalone: true,
 })
-export class HeroParallaxDirective implements OnInit {
+export class HeroParallaxDirective implements OnInit, OnDestroy {
+  private scrollSubscription?: Subscription;
+
   constructor(private el: ElementRef, private lenisService: LenisService) {}
 
   private updateParallax(scroll: number) {
@@ -21,8 +24,12 @@ export class HeroParallaxDirective implements OnInit {
     this.updateParallax(0);
 
     // Subscribe to scroll events
-    this.lenisService.onScroll((scroll: number) => {
+    this.scrollSubscription = this.lenisService.onScroll((scroll: number) => {
       this.updateParallax(scroll);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.scrollSubscription?.unsubscribe();
   }
 }

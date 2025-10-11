@@ -8,6 +8,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
+import { LenisService } from '../../../services/lenis.service';
 
 interface ProjectCard {
   id: number;
@@ -31,7 +32,7 @@ export class RelatedProjectsComponent implements OnChanges {
 
   cards: ProjectCard[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private lenisService: LenisService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['projects'] && this.projects) {
@@ -60,7 +61,7 @@ export class RelatedProjectsComponent implements OnChanges {
         onSameUrlNavigation: 'reload',
       })
       .then(() => {
-        window.scrollTo({ top: 0 });
+        this.lenisService.scrollTo(0, { duration: 0.8 });
       })
       .catch((err) => console.error('Navigation error:', err));
   }

@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, fromEvent, of } from 'rxjs';
+import { BehaviorSubject, Observable, fromEvent, of } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
 import Lenis from '@studio-freight/lenis';
 
@@ -77,47 +77,42 @@ export class LenisService {
       return;
     }
 
-    this.stopLenis();
-
     const root = document.documentElement;
     const body = document.body;
-
     root.style.scrollBehavior = 'auto';
     body.style.scrollBehavior = 'auto';
 
-    this.ngZone.runOutsideAngular(() => {
-      this.lenis = new Lenis({
-        duration: 1.05,
-        easing: (t: number) => 1 - Math.pow(1 - t, 3),
-        smoothWheel: true,
-        touchMultiplier: 1.1,
-        lerp: 0.075,
-      });
+    this.stopLenis();
 
-      root.classList.add('has-lenis');
-      body.classList.add('has-lenis');
-
-      this.lenisScrollCallback = (event: ScrollEvent) => {
-        this.scrollSubject.next(event.scroll);
-      };
-
-      this.lenis.on('scroll', this.lenisScrollCallback);
-
-      const runRaf = (time: number) => {
-        this.lenis?.raf(time);
-        this.scheduleRaf(runRaf);
-      };
-
-      this.scheduleRaf(runRaf);
+    this.lenis = new Lenis({
+      duration: 1.05,
+      easing: (t: number) => 1 - Math.pow(1 - t, 3),
+      smoothWheel: true,
+      touchMultiplier: 1.1,
+      lerp: 0.075,
     });
+
+    root.classList.add('has-lenis');
+    body.classList.add('has-lenis');
+
+    this.lenisScrollCallback = (event: ScrollEvent) => {
+      this.scrollSubject.next(event.scroll);
+    };
+
+    this.lenis.on('scroll', this.lenisScrollCallback);
+
+    const runRaf = (time: number) => {
+      this.lenis?.raf(time);
+      this.scheduleRaf(runRaf);
+    };
+
+    this.scheduleRaf(runRaf);
   }
 
-  onScroll(callback: (scroll: number) => void): Subscription {
-    return this.scroll$
-      .pipe(distinctUntilChanged())
-      .subscribe((value) => {
-        this.ngZone.runOutsideAngular(() => callback(value));
-      });
+  onScroll(callback: (scroll: number) => void): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.scroll$.pipe(distinctUntilChanged()).subscribe(callback);
+    });
   }
 
   scrollTo(target: ScrollTarget, options?: LenisScrollToOptions): void {
@@ -126,9 +121,7 @@ export class LenisService {
     }
 
     if (this.lenis) {
-      this.ngZone.runOutsideAngular(() => {
-        this.lenis?.scrollTo(target, options);
-      });
+      this.lenis.scrollTo(target, options);
       return;
     }
 
@@ -178,8 +171,6 @@ export class LenisService {
 
     document.documentElement.classList.remove('has-lenis');
     document.body.classList.remove('has-lenis');
-    document.documentElement.style.scrollBehavior = '';
-    document.body.style.scrollBehavior = '';
 
     if (this.lenisScrollCallback && this.lenis) {
       this.lenis.off('scroll', this.lenisScrollCallback);

@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ScrollService } from '../../../services/scroll.service';
 
 @Component({
   selector: 'app-gallery-hero',
@@ -9,11 +12,25 @@ import { RouterModule } from '@angular/router';
   templateUrl: './gallery-hero.component.html',
   styleUrl: './gallery-hero.component.css',
 })
-export class GalleryHeroComponent {
-  scrollY = 0;
+export class GalleryHeroComponent implements OnDestroy {
+  scrollTransform = 'translateY(-60px)';
+  private destroy$ = new Subject<void>();
 
-  @HostListener('window:scroll', ['$event'])
-  onWindowScroll() {
-    this.scrollY = window.scrollY;
+  constructor(private scrollService: ScrollService, private zone: NgZone) {
+    this.scrollService.scrollY$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((scrollY) => {
+        const transform = `translateY(${scrollY * 0.3 - 60}px)`;
+        if (transform !== this.scrollTransform) {
+          this.zone.run(() => {
+            this.scrollTransform = transform;
+          });
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   trigger,
@@ -7,6 +7,9 @@ import {
   transition,
   animate,
 } from '@angular/animations';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ScrollService } from '../../services/scroll.service';
 
 @Component({
   selector: 'app-scroll-to-top',
@@ -37,12 +40,28 @@ import {
     ]),
   ],
 })
-export class ScrollToTopComponent {
+export class ScrollToTopComponent implements OnInit, OnDestroy {
   isVisible = false;
+  private destroy$ = new Subject<void>();
 
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    this.isVisible = window.scrollY > 200;
+  constructor(private scrollService: ScrollService, private zone: NgZone) {}
+
+  ngOnInit(): void {
+    this.scrollService.scrollY$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((scrollY) => {
+        const shouldBeVisible = scrollY > 200;
+        if (shouldBeVisible !== this.isVisible) {
+          this.zone.run(() => {
+            this.isVisible = shouldBeVisible;
+          });
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   scrollToTop() {

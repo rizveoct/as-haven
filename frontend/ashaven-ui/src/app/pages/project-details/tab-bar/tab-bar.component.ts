@@ -1,5 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ScrollService } from '../../../services/scroll.service';
 
 @Component({
   selector: 'app-tab-bar',
@@ -8,7 +11,7 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.css'],
 })
-export class TabBarComponent {
+export class TabBarComponent implements OnInit, OnDestroy {
   activeTab: string = '';
   lastScrollTop = 0;
   showRight = false;
@@ -23,17 +26,28 @@ export class TabBarComponent {
     { id: 'relatedProjects', label: 'More Projects' },
   ];
 
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  private destroy$ = new Subject<void>();
 
-    // Show only if scroll > 50px
-    this.showRight = scrollTop > 50;
+  constructor(private scrollService: ScrollService, private zone: NgZone) {}
 
-    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  ngOnInit(): void {
+    this.scrollService.scrollY$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((scrollTop) => {
+        this.updateForScroll(scrollTop);
+      });
+  }
 
-    // Highlight active tab
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  private updateForScroll(scrollTop: number) {
+    const shouldShow = scrollTop > 50;
+
     const offset = scrollTop + window.innerHeight / 3;
+    let nextActive = this.activeTab;
     for (const section of this.sections) {
       const el = document.getElementById(section.id);
       if (
@@ -41,10 +55,26 @@ export class TabBarComponent {
         el.offsetTop <= offset &&
         el.offsetTop + el.offsetHeight > offset
       ) {
-        this.activeTab = section.id;
+        nextActive = section.id;
         break;
       }
     }
+
+    const shouldUpdateActive = nextActive !== this.activeTab;
+    const shouldUpdateVisibility = shouldShow !== this.showRight;
+
+    if (shouldUpdateActive || shouldUpdateVisibility) {
+      this.zone.run(() => {
+        if (shouldUpdateVisibility) {
+          this.showRight = shouldShow;
+        }
+        if (shouldUpdateActive) {
+          this.activeTab = nextActive;
+        }
+      });
+    }
+
+    this.lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   }
 
   scrollToSection(sectionId: string) {

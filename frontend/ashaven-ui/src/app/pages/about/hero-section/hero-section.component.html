@@ -3,7 +3,7 @@
       <div
         class="absolute -top-16 left-0 h-[120%] w-full bg-cover bg-center transition-transform duration-500"
         style="background-image: url('/images/banner/banner-3.png')"
-        [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+        [style.transform]="scrollTransform"
       ></div>
       <div class="absolute inset-0 bg-gradient-to-br from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
     </div>

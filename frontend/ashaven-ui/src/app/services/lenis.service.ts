@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, NgZone, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import Lenis from '@studio-freight/lenis';
@@ -9,6 +9,7 @@ type ScrollEvent = { scroll: number };
 export class LenisService {
   public lenis?: Lenis;
   private router = inject(Router);
+  private ngZone = inject(NgZone);
   private rafId?: number;
   private motionQuery?: MediaQueryList;
   private viewportQuery?: MediaQueryList;
@@ -92,10 +93,10 @@ export class LenisService {
 
     const runRaf = (time: number) => {
       this.lenis?.raf(time);
-      this.rafId = requestAnimationFrame(runRaf);
+      this.scheduleRaf(runRaf);
     };
 
-    this.rafId = requestAnimationFrame(runRaf);
+    this.scheduleRaf(runRaf);
   }
 
   private stopLenis(): void {
@@ -109,6 +110,12 @@ export class LenisService {
 
     this.lenis?.destroy();
     this.lenis = undefined;
+  }
+
+  private scheduleRaf(callback: FrameRequestCallback): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.rafId = requestAnimationFrame(callback);
+    });
   }
 
   private handleRouteChange(): void {

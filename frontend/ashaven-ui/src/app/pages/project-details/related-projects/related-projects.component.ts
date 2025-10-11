@@ -60,7 +60,7 @@ export class RelatedProjectsComponent implements OnChanges {
         onSameUrlNavigation: 'reload',
       })
       .then(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0 });
       })
       .catch((err) => console.error('Navigation error:', err));
   }

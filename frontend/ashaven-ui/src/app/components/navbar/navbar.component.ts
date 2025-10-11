@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     // if (this.lenisService.lenis) {
     //   this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
     // } else {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById(sectionId)?.scrollIntoView({ block: 'start' });
     // }
 
     this.sidePanel.close();

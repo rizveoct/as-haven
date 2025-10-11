@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
-import { LenisService } from '../../services/lenis.service';
+// import { LenisService } from '../../services/lenis.service';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +20,14 @@ export class LoginComponent implements AfterViewInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private lenisService: LenisService
+    // private lenisService: LenisService
   ) {}
 
   ngAfterViewInit() {
-    this.lenisService.init();
-    this.lenisService.onScroll((scroll) => {
-      //console.log('Scroll position:', scroll);
-    });
+    // this.lenisService.init();
+    // this.lenisService.onScroll((scroll) => {
+    //   //console.log('Scroll position:', scroll);
+    // });
   }
 
   onSubmit() {

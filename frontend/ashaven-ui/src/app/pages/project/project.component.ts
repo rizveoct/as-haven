@@ -10,7 +10,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { LenisService } from '../../services/lenis.service';
+// import { LenisService } from '../../services/lenis.service';
 
 interface ProjectItem {
   id: number | string;
@@ -43,7 +43,7 @@ export class ProjectsComponent implements AfterViewInit {
 
   constructor(
     private http: HttpClient,
-    private lenisService: LenisService,
+    // private lenisService: LenisService,
     private toastr: ToastrService,
     private route: ActivatedRoute
   ) {}

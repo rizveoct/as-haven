@@ -1,3 +1,101 @@
 :host {
   display: block;
 }
+
+
+/* ===== Exact project-card styling (from your projects grid) ===== */
+.project-card {
+  border-radius: 1.75rem;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 24px 48px rgba(19, 53, 31, 0.16);
+  border: 1px solid rgba(32, 71, 38, 0.12);
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  height: 100%;
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 32px 64px rgba(19, 53, 31, 0.22);
+}
+.project-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Media block */
+.project-card__image {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.project-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 260ms ease;
+}
+.project-card:hover .project-card__image img {
+  transform: scale(1.06);
+}
+.project-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(19, 53, 31, 0.05) 0%, rgba(19, 53, 31, 0.6) 100%);
+  opacity: 0.85;
+}
+
+/* Chips */
+.project-card__meta {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  z-index: 2;
+}
+.project-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(241, 251, 236, 0.92);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--luxe-forest-800);
+  box-shadow: 0 12px 24px rgba(32, 71, 38, 0.15);
+}
+
+/* Body */
+.project-card__body {
+  padding: 1.5rem 1.5rem 1.4rem; /* slightly tighter for slider */
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  flex-grow: 1;
+}
+.project-card__body h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--luxe-forest-900);
+}
+.project-card__body p {
+  color: rgba(32, 71, 38, 0.65);
+  line-height: 1.5;
+}
+.project-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--luxe-amber);
+  transition: transform 200ms ease;
+}
+.project-card:hover .project-card__cta {
+  transform: translateX(4px);
+}

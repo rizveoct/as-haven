@@ -1,29 +1,25 @@
+
+
 <section
-  class="relative flex min-h-[26rem] items-center justify-center overflow-hidden py-20 sm:py-24"
-  aria-labelledby="galleryHeroTitle"
+  class="relative flex min-h-[20rem] items-center justify-center overflow-hidden py-16 sm:py-20"
+  aria-labelledby="aboutHeroTitle"
 >
   <div class="absolute inset-0">
     <div
-      class="absolute -top-16 left-0 h-[120%] w-full bg-cover bg-center transition-transform duration-500"
+      class="absolute -top-16 left-0 h-[130%] w-full bg-cover bg-center transition-transform duration-500 parallax-bg"
       style="background-image: url('/images/banner/banner-3.png')"
       [style.transform]="scrollTransform"
     ></div>
-    <div
-      class="absolute inset-0  from-emerald-950/85 via-emerald-900/70 to-brand/70"
-    ></div>
+    <div class="absolute inset-0 from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
   </div>
 
-  <!-- <div class="gallery-hero__overlay absolute inset-0 bg-gradient-to-b "></div> -->
-
-  <div class="gallery-hero__accent gallery-hero__accent--one"></div>
-  <div class="gallery-hero__accent gallery-hero__accent--two"></div>
+  <div class="hero__accent hero__accent--one"></div>
+  <div class="hero__accent hero__accent--two"></div>
 
   <div class="relative z-10 flex h-full w-full items-center">
-    <div
-      class="mx-auto flex h-full w-[min(1180px,92%)] md:w-[80%] flex-col justify-center py-16 md:py-24"
-    >
+    <div class="mx-auto flex h-full w-[80%] flex-col justify-center py-12 md:py-16">
       <div
-        class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]"
+        class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] h-full"
       >
         <div class="space-y-6 text-center lg:text-left">
           <span
@@ -34,17 +30,10 @@
           </span>
           <h1
             class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl"
-            id="galleryHeroTitle"
+            id="contactHeroTitle"
           >
             Contact
           </h1>
-          <!-- <p
-            class="mx-auto max-w-2xl text-base text-white/80 sm:text-lg lg:mx-0"
-          >
-            From first conversation to handing over the keys, we design every
-            step of your experience with meticulous care. Reach out today and
-            discover how effortless finding your next sanctuary can be.
-          </p> -->
           <nav
             class="flex items-center justify-center gap-3 text-sm text-white/60 lg:justify-start"
             aria-label="Breadcrumb"

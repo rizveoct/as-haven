@@ -27,11 +27,7 @@
   filter: saturate(0.85);
 }
 
-.neo-vision__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(130deg, rgba(19, 53, 31, 0.88) 25%, rgba(19, 53, 31, 0.35) 70%);
-}
+
 
 .neo-vision__glow {
   position: absolute;

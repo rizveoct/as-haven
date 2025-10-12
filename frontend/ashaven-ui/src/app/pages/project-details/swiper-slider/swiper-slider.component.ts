@@ -15,6 +15,7 @@ import { environment } from '../../../environments/environment';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/model';
 import { LenisService } from '../../../services/lenis.service';
+import { Subject, takeUntil } from 'rxjs';
 
 interface Slide {
   id: string;
@@ -33,9 +34,7 @@ interface Slide {
   styleUrls: ['./swiper-slider.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SwiperSliderComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+export class SwiperSliderComponent implements OnInit, OnDestroy, AfterViewInit {
   slides: Slide[] = [];
   baseUrl = environment.baseUrl;
   currentTranslate = 0;
@@ -72,7 +71,8 @@ export class SwiperSliderComponent
     private projectService: ProjectService,
     private router: Router,
     private ngZone: NgZone,
-    private lenisService: LenisService
+    private lenisService: LenisService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {

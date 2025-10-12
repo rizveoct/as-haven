@@ -7,8 +7,6 @@ import { ToastrService } from 'ngx-toastr';
 import { LenisService } from '../../services/lenis.service';
 import { ProjectHeaderComponent } from './project-header/project-header.component';
 import { OfferTimerComponent } from './offer-timer/offer-timer.component';
-import { MarqueeComponent } from './marquee/marquee.component';
-import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { AtGlanceComponent } from './at-glance/at-glance.component';
 import { FeatureAmenitiesComponent } from './feature-amenities/feature-amenities.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
@@ -17,7 +15,6 @@ import { LocationMapComponent } from './location-map/location-map.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { environment } from '../../environments/environment';
 import { SwiperSliderComponent } from './swiper-slider/swiper-slider.component';
-import { ScrollToTopComponent } from "../../components/scroll-to-top/scroll-to-top.component";
 import { Project } from '../../models/model';
 
 

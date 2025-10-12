@@ -1,106 +1,86 @@
-<section class="luxe-dashboard-home">
-  <header class="luxe-dashboard-home__hero">
-    <div>
-      <span class="luxe-eyebrow">Portfolio Intelligence</span>
-      <h1 class="luxe-dashboard-home__title">Your luxury real estate command centre</h1>
-      <p>
-        Monitor listing momentum, guest inquiries, and operational health in real time. Use these insights to fine-tune
-        launch timelines, investment strategies, and concierge responses.
-      </p>
-    </div>
-    <div class="luxe-dashboard-home__hero-cta">
-      <a routerLink="/dashboard/projects/create" class="luxe-button">Add new residence</a>
-      <a routerLink="/dashboard/projects" class="luxe-button luxe-button--ghost">Manage inventory</a>
+<section class="grid gap-8 md:gap-10">
+  <!-- HERO -->
+  <header
+    class="flex flex-wrap items-center justify-between gap-6 md:gap-10 rounded-xl border border-emerald-50/10 bg-brand p-6 md:p-8 shadow-xl"
+  >
+    <div class="max-w-2xl">
+      <span class="uppercase tracking-wider text-xs text-emerald-100/70">Portfolio Intelligence</span>
+      <h1 class="font-serif text-[1.8rem] md:text-4xl leading-tight mt-2 mb-4">
+        Your luxury real estate command centre
+      </h1>
     </div>
   </header>
 
-  <div class="luxe-dashboard-home__metrics">
-    <article class="luxe-dashboard-home__metric-card">
-      <span class="luxe-dashboard-home__metric-label">Managed listings</span>
-      <strong>{{ projects.length }}</strong>
-      <small *ngIf="projectsError" class="luxe-dashboard-home__error">{{ projectsError }}</small>
-      <div class="luxe-dashboard-home__spark">
-        <span
-          class="luxe-dashboard-home__spark-line"
-          [style.--fill]="(projects.length % 12) / 12"
-        ></span>
-        <span>{{ projects.length >= 12 ? 'Collection at capacity' : 'Room for expansion' }}</span>
-      </div>
-    </article>
-
-    <article class="luxe-dashboard-home__metric-card">
-      <span class="luxe-dashboard-home__metric-label">Client inquiries</span>
-      <strong>{{ totalInquiries }}</strong>
-      <small *ngIf="inquiriesError" class="luxe-dashboard-home__error">{{ inquiriesError }}</small>
-      <div class="luxe-dashboard-home__spark">
-        <span class="luxe-dashboard-home__spark-progress">
-          <span [style.width.%]="Math.min(totalInquiries, 100)"></span>
-        </span>
-        <span>{{ totalInquiries | number }} touchpoints this quarter</span>
-      </div>
-    </article>
-
-    <article class="luxe-dashboard-home__metric-card luxe-dashboard-home__metric-card--accent">
-      <span class="luxe-dashboard-home__metric-label">Conversion health</span>
-      <strong>{{ (projects.length && totalInquiries) ? (totalInquiries / projects.length | number:'1.0-0') : 0 }}%</strong>
-      <p>Average inquiry-to-listing ratio. Maintain white-glove response times to keep momentum.</p>
-    </article>
-  </div>
-
-  <div class="luxe-dashboard-home__grid">
-    <section class="luxe-dashboard-home__panel">
-      <header>
-        <h2>Active portfolio</h2>
-        <a routerLink="/dashboard/projects" class="luxe-link">View all listings</a>
+  <!-- MAIN GRID: Left = Active portfolio, Right = Metrics stacked -->
+  <div class="grid gap-6 lg:grid-cols-2">
+    <!-- Left: Active portfolio -->
+    <section class="grid gap-5 rounded-xl border border-emerald-50/10 bg-brand p-6 md:p-8 shadow-xl">
+      <header class="flex items-start justify-between gap-4">
+        <h2 class="font-serif text-xl">Active portfolio</h2>
+        <a routerLink="/dashboard/projects" class="text-emerald-300 hover:text-emerald-200 underline underline-offset-4">
+          View all listings
+        </a>
       </header>
-      <div class="luxe-dashboard-home__table">
-        <table>
-          <thead>
+
+      <div class="overflow-x-auto rounded-lg border border-emerald-50/10">
+        <table class="w-full min-w-[520px] border-collapse text-left">
+          <thead class="bg-emerald-50/10 uppercase tracking-wider text-[0.72rem]">
             <tr>
-              <th>Residence</th>
-              <th>Location</th>
-              <th>Status</th>
-              <th>Published</th>
+              <th class="py-3 px-4">Residence</th>
+              <th class="py-3 px-4">Location</th>
+              <th class="py-3 px-4">Status</th>
+              <th class="py-3 px-4">Published</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="[&_tr:nth-child(even)]:bg-emerald-50/5">
             <tr *ngFor="let project of projects | slice:0:6">
-              <td>{{ project.name }}</td>
-              <td>{{ project.address || '—' }}</td>
-              <td>{{ project.category || '—' }}</td>
-              <td>{{ project.createDate | date: 'yyyy-MM-dd' }}</td>
+              <td class="py-3 px-4">{{ project.name }}</td>
+              <td class="py-3 px-4">{{ project.address || '—' }}</td>
+              <td class="py-3 px-4">{{ project.category || '—' }}</td>
+              <td class="py-3 px-4">{{ project.createDate | date: 'yyyy-MM-dd' }}</td>
             </tr>
             <tr *ngIf="projects.length === 0 && !projectsError">
-              <td colspan="4">No listings available yet. Add your first residence.</td>
+              <td colspan="4" class="py-3 px-4">No listings available yet. Add your first residence.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section class="luxe-dashboard-home__panel luxe-dashboard-home__panel--accent">
-      <header>
-        <h2>Inquiry queue</h2>
-        <p>{{ totalInquiries | number }} conversations awaiting curated responses.</p>
-      </header>
-      <div class="luxe-dashboard-home__progress">
-        <div class="luxe-dashboard-home__progress-row">
-          <span>Hot leads</span>
-          <div class="luxe-dashboard-home__progress-bar"><span [style.width.%]="Math.min(totalInquiries * 0.35, 100)"></span></div>
-          <span>{{ (totalInquiries * 0.35) | number:'1.0-0' }}</span>
+    <!-- Right: Metrics stacked (top/bottom) -->
+    <div class="grid gap-6">
+      <!-- Managed listings (TOP) -->
+      <article class="grid gap-2 rounded-lg border border-emerald-50/10 bg-brand p-7 shadow-lg">
+        <span class="uppercase tracking-[0.2em] text-[0.72rem] text-emerald-50/55">Managed listings</span>
+        <strong class="font-serif text-4xl md:text-[2.6rem]">{{ projects.length }}</strong>
+        <small *ngIf="projectsError" class="text-rose-300">{{ projectsError }}</small>
+
+        <div class="grid gap-2 text-emerald-50/60 text-sm">
+          <span class="relative block h-10 rounded-xl overflow-hidden">
+            <span
+              class="absolute inset-y-0 left-0 rounded-xl opacity-80 bg-gradient-to-r from-amber-400 to-amber-500/50"
+              [style.width.%]="(projects.length % 12) / 12 * 100"
+            ></span>
+          </span>
         </div>
-        <div class="luxe-dashboard-home__progress-row">
-          <span>Private tours</span>
-          <div class="luxe-dashboard-home__progress-bar"><span [style.width.%]="Math.min(totalInquiries * 0.2, 100)"></span></div>
-          <span>{{ (totalInquiries * 0.2) | number:'1.0-0' }}</span>
+      </article>
+
+      <!-- Client inquiries (BOTTOM) -->
+      <article class="grid gap-2 rounded-lg border border-emerald-50/10 bg-brand p-7 shadow-lg">
+        <span class="uppercase tracking-[0.2em] text-[0.72rem] text-emerald-50/55">Client inquiries</span>
+        <strong class="font-serif text-4xl md:text-[2.6rem]">{{ totalInquiries }}</strong>
+        <small *ngIf="inquiriesError" class="text-rose-300">{{ inquiriesError }}</small>
+
+        <div class="grid gap-2 text-emerald-50/60 text-sm">
+          <span class="relative block h-2.5 rounded-full overflow-hidden bg-emerald-50/10">
+            <span
+              class="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-400 to-amber-500/50"
+              [style.width.%]="Math.min(totalInquiries, 100)"
+            ></span>
+          </span>
+          <span>{{ totalInquiries | number }} touch points this quarter</span>
         </div>
-        <div class="luxe-dashboard-home__progress-row">
-          <span>New enquiries</span>
-          <div class="luxe-dashboard-home__progress-bar"><span [style.width.%]="Math.min(totalInquiries * 0.45, 100)"></span></div>
-          <span>{{ (totalInquiries * 0.45) | number:'1.0-0' }}</span>
-        </div>
-      </div>
-      <a routerLink="/dashboard/clients" class="luxe-button luxe-button--ghost">Review inquiry log</a>
-    </section>
+      </article>
+    </div>
   </div>
 </section>

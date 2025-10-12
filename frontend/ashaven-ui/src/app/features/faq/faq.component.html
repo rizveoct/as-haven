@@ -1,11 +1,11 @@
 <div class="faq_section py-16">
   <div class="max-w-4xl mx-auto px-4">
     <h2
-      class="section-title text-2xl md:text-3xl font-bold text-center text-[var(--primary)] mb-4"
+      class="section-title text-2xl md:text-3xl font-bold text-center text-accent mb-4"
     >
       Frequently Asked Questions
     </h2>
-    <p class="text-center text-[var(--gray)] mb-10">
+    <p class="text-center text-black mb-10">
       Find answers to common questions about our properties and services.
     </p>
 
@@ -24,7 +24,7 @@
       <!-- Add FAQ Form -->
       <div
         *ngIf="newFaq"
-        class="bg-brand rounded-xl shadow-lg p-5 mb-4"
+        class="bg-brand rounded-xl shadow-lg p-5 mb-4 "
       >
         <ng-container *ngIf="newFaq">
           <input
@@ -61,10 +61,10 @@
     </div>
 
     <!-- FAQ List -->
-    <div class="space-y-4">
+    <div class="space-y-4 ">
       <div
         *ngFor="let faq of faqs"
-        class="faq-item bg-[var(--white)] rounded-xl shadow-lg p-5"
+        class="faq-item bg-[var(--white)] rounded-xl shadow-lg p-5 border-emerald-50/10 bg-brand"
       >
         <!-- Edit FAQ Form -->
         <div *ngIf="editingFaq && editingFaq.id === faq.id">
@@ -99,7 +99,7 @@
         </div>
 
         <!-- FAQ Display -->
-        <div *ngIf="!editingFaq || editingFaq?.id !== faq.id">
+        <div *ngIf="!editingFaq || editingFaq?.id !== faq.id" >
           <h3 class="font-semibold text-[var(--primary)] text-lg mb-2">
             {{ faq.question }}
           </h3>

@@ -15,8 +15,6 @@ import { environment } from '../../../environments/environment';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/model';
 import { LenisService } from '../../../services/lenis.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 interface Slide {
   id: string;
@@ -74,8 +72,7 @@ export class SwiperSliderComponent
     private projectService: ProjectService,
     private router: Router,
     private ngZone: NgZone,
-    private lenisService: LenisService,
-    private cdr: ChangeDetectorRef
+    private lenisService: LenisService
   ) {}
 
   ngOnInit() {

@@ -95,8 +95,4 @@ export class TabBarComponent implements OnInit, OnDestroy {
     this.lenisService.scrollTo(`#${sectionId}`, { duration: 0.8 });
     this.activeTab = sectionId;
   }
-
-  trackSection(_: number, section: { id: string }): string {
-    return section.id;
-  }
 }

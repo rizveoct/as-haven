@@ -21,7 +21,6 @@ import { ProjectCreateComponent } from './features/projects/project-create/proje
 import { GalleryComponent } from './features/gallery/gallery.component';
 import { GalleryPageComponent } from './pages/gallery-page/gallery-page.component';
 import { ClientComponent } from './features/client/client.component';
-import { ConsultantsIndexComponent } from './features/consultant/consultant-index/consultant-index.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },

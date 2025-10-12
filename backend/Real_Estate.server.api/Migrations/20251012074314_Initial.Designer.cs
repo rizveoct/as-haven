@@ -12,8 +12,8 @@ using Real_Estate.server.api.Data;
 namespace Real_Estate.server.api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251004043725_initial")]
-    partial class initial
+    [Migration("20251012074314_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

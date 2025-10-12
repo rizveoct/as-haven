@@ -20,25 +20,14 @@
     <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[clamp(1.5rem,3vw,2.5rem)] items-start">
       <div class="relative rounded-3xl overflow-hidden shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] min-h-[320px] bg-gradient-to-br from-sky-400/15 to-blue-500/5">
         <div class="absolute inset-0 border border-white/50 rounded-3xl pointer-events-none opacity-35"></div>
-        <ng-container [ngSwitch]="project?.contentType">
-          <img
-            *ngSwitchCase="'Image'"
+        
+          <img            
             class="w-full h-full object-cover"
-            [src]="baseUrl + '/api/attachment/get/' + project?.content"
+            [src]="baseUrl + '/api/attachment/get/' + project?.thumbnail"
             alt="Project image"
             (error)="onImageError($event)"
           />
-          <video *ngSwitchCase="'Video'" class="w-full h-full object-cover block" controls>
-            <source
-              [src]="baseUrl + '/api/attachment/get/' + project?.content"
-              type="video/mp4"
-            />
-            Your browser does not support the video tag.
-          </video>
-          <div *ngSwitchDefault class="absolute inset-0 flex items-center justify-center text-slate-200 font-medium">
-            <span>No gallery available</span>
-          </div>
-        </ng-container>
+          
       </div>
 
       <div class="p-[clamp(1.75rem,3vw,2.5rem)] rounded-3xl bg-white/85 border border-slate-200/80 shadow-[0_25px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl flex flex-col gap-6">

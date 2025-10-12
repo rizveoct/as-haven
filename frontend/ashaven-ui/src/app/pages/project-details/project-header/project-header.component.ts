@@ -16,7 +16,7 @@ export class ProjectHeaderComponent {
   @Input() baseUrl: string = '';
 
   get heroImage(): string {
-    if (this.project?.thumbnail && this.project?.content) {
+    if (this.project?.thumbnail) {
       return `url(${this.baseUrl}/api/attachment/get/${this.project.thumbnail})`;
     }
     return 'url(/images/fallback.png)';

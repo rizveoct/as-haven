@@ -1,7 +1,7 @@
-<div class="p-6 bg-light min-h-screen">
+<div class="p-6  min-h-screen">
   <!-- Header -->
   <div class="flex items-center mb-6">
-    <h6 class="text-2xl font-bold text-dark flex-grow">Project Gallery</h6>
+    <h6 class="text-2xl font-bold text-accent flex-grow">Project Gallery</h6>
     <div class="flex-shrink-0 space-x-2">
       <button (click)="showCreateModal = true"
               class="relative group px-6 py-2 text-white bg-accent rounded-lg text-sm font-medium overflow-hidden transition-all duration-200">
@@ -20,7 +20,7 @@
   <!-- Create Modal -->
   <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black/30">
     <div class="relative w-full max-w-3xl mx-auto">
-      <div class="relative p-6 bg-light rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
+      <div class="relative p-6 bg-brand/95 rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
         
         <!-- Modal Header -->
         <div class="flex justify-between items-center pb-4 mb-6 border-b border-lightDark">
@@ -41,7 +41,7 @@
             <div class="sm:col-span-2">
               <label for="contentType" class="block mb-2 text-sm font-semibold text-dark">Content Type</label>
               <select id="contentType" [(ngModel)]="newGalleryItem.contentType" name="contentType"
-                      class="block w-full p-3 text-sm text-dark bg-light rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200">
+                      class="block w-full p-3 text-sm text-dark bg-brand/95 rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200">
                 <option value="">Select content type</option>
                 <option value="Image">Image</option>
                 <option value="Video">Video</option>
@@ -51,14 +51,14 @@
             <div class="sm:col-span-2">
               <label for="content"
                      class="block mb-2 text-sm font-semibold text-dark">{{ newGalleryItem.contentType === 'Video' ? 'Content (Video max 15MB)' : 'Content' }}</label>
-              <input class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-light focus:outline-none transition-all duration-200"
+              <input class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-brand/95 focus:outline-none transition-all duration-200"
                      id="content" name="content" type="file" (change)="onContentChange($event)" />
             </div>
 
             <div class="sm:col-span-2">
               <label for="order" class="block mb-2 text-sm font-semibold text-dark">Order</label>
               <input id="order" [(ngModel)]="newGalleryItem.order" name="order" type="number"
-                     class="block w-full p-3 text-sm text-dark bg-light rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     class="block w-full p-3 text-sm text-dark bg-brand/95 rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
                      placeholder="Enter order" />
             </div>
           </div>
@@ -76,7 +76,7 @@
   </div>
 
   <!-- Gallery Table -->
-  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-light mt-6">
+  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-brand/95 mt-6">
     <table class="w-full text-sm text-left text-dark">
       <thead class="text-xs text-dark uppercase bg-accentLight">
         <tr>
@@ -90,7 +90,7 @@
       <tbody>
         <tr *ngFor="let item of galleryItems; let i = index"
             class="border-b border-lightDark hover:bg-accentLight transition-colors duration-200"
-            [ngClass]="{'bg-light': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+            [ngClass]="{'bg-brand/95': i % 2 === 0, 'bg-white': i % 2 !== 0}">
           <td class="px-6 py-4">{{ item.contentType }}</td>
           <td class="px-6 py-4">
             <ng-container *ngIf="item.contentType === 'Image'">

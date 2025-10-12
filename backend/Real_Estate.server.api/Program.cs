@@ -18,10 +18,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontendApp", policy =>
         policy.WithOrigins(
             "http://localhost:4200",
-            "http://primehousingraj.com",
-            "https://primehousingraj.com",
-            "http://www.primehousingraj.com",
-            "https://www.primehousingraj.com"
+            "http://ashavendevelopersltd.com",
+            "https://ashavendevelopersltd.com",
+            "http://www.ashavendevelopersltd.com",
+            "https://ashavendevelopersltd.com"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()

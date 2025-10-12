@@ -1,4 +1,4 @@
-<div class="p-6 bg-light min-h-screen">
+<div class="p-6 min-h-screen">
   <!-- Header -->
   <div class="flex items-center mb-6">
     <h6 class="text-2xl font-bold text-accent flex-grow">Project Features</h6>
@@ -19,9 +19,9 @@
   </div>
 
   <!-- Create Modal -->
-  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-dark/70 transition-opacity duration-300">
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 transition-opacity duration-300 fade-up animate">
     <div class="relative p-6 w-full max-w-3xl mx-auto">
-      <div class="relative p-6 bg-white dark:bg-dark rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
+      <div class="relative p-6 bg-brand dark:bg-dark rounded-xl shadow-2xl transition-all duration-300 transform animate-slideIn">
         <!-- Modal Header -->
         <div class="flex justify-between items-center pb-4 mb-6 border-b border-lightDark">
           <h3 class="text-2xl font-bold text-accent">Add Feature</h3>
@@ -36,35 +36,35 @@
 
         <!-- Modal Form -->
         <form (ngSubmit)="saveFeature()" enctype="multipart/form-data">
-          <div class="grid gap-6 sm:grid-cols-2">
+          <div class="grid gap-6 sm:grid-cols-2 ">
             <!-- Title -->
             <div class="sm:col-span-2">
               <label for="title" class="block mb-2 text-sm font-semibold text-dark">Title</label>
               <input id="title" [(ngModel)]="newFeature.title" name="title" type="text"
-                     class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     class="block w-full p-3 text-sm text-dark bg-brand/95 rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
                      placeholder="Enter Title" required />
             </div>
 
             <!-- Description -->
-            <div class="sm:col-span-2">
+            <!-- <div class="sm:col-span-2">
               <label for="description" class="block mb-2 text-sm font-semibold text-dark">Description</label>
               <textarea id="description" [(ngModel)]="newFeature.description" name="description" rows="3"
-                        class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                        class="block w-full p-3 text-sm text-dark bg-brand/95 rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
                         placeholder="Write description here"></textarea>
-            </div>
+            </div> -->
 
             <!-- Icon -->
-            <div class="sm:col-span-2">
+            <!-- <div class="sm:col-span-2">
               <label for="icon" class="block mb-2 text-sm font-semibold text-dark">Icon</label>
               <input id="icon" name="icon" type="file" (change)="onIconChange($event)"
-                     class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-white focus:outline-none transition-all duration-200" />
-            </div>
+                     class="block w-full text-sm text-dark border border-lightDark rounded-lg cursor-pointer bg-brand/95 focus:outline-none transition-all duration-200" />
+            </div> -->
 
             <!-- Order -->
             <div class="sm:col-span-2">
               <label for="order" class="block mb-2 text-sm font-semibold text-dark">Order</label>
               <input id="order" [(ngModel)]="newFeature.order" name="order" type="number"
-                     class="block w-full p-3 text-sm text-dark bg-white rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
+                     class="block w-full p-3 text-sm text-dark bg-brand/95 rounded-lg border border-lightDark focus:ring-accent focus:border-accent transition-all duration-200"
                      placeholder="Enter order" />
             </div>
           </div>
@@ -87,13 +87,13 @@
   </div>
 
   <!-- Table -->
-  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-white mt-6">
+  <div class="relative overflow-x-auto rounded-xl shadow-lg bg-brand mt-6">
     <table class="w-full text-sm text-left text-dark">
       <thead class="text-xs text-dark uppercase bg-light">
         <tr>
           <th class="px-6 py-4">Title</th>
-          <th class="px-6 py-4">Description</th>
-          <th class="px-6 py-4">Icon</th>
+          <!-- <th class="px-6 py-4">Description</th>
+          <th class="px-6 py-4">Icon</th> -->
           <th class="px-6 py-4">Order</th>
           <th class="px-6 py-4">Actions</th>
         </tr>
@@ -101,13 +101,13 @@
       <tbody>
         <tr *ngFor="let item of features; let i = index"
             class="border-b border-lightDark hover:bg-accentLight transition-colors duration-200"
-            [ngClass]="{'bg-light': i % 2 === 0, 'bg-white': i % 2 !== 0}">
+            [ngClass]="{'bg-light': i % 2 === 0, 'bg-brand/95': i % 2 !== 0}">
           <td class="px-6 py-4 max-w-xs truncate">{{ item.title }}</td>
-          <td class="px-6 py-4 max-w-xs truncate">{{ item.description }}</td>
+          <!-- <td class="px-6 py-4 max-w-xs truncate">{{ item.description }}</td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 object-cover rounded-full shadow-sm"
                  [src]="apiBaseUrl + '/api/attachment/get/' + item.icon" alt="Icon" />
-          </td>
+          </td> -->
           <td class="px-6 py-4">{{ item.order }}</td>
           <td class="px-6 py-4 text-right space-x-2">
             <button *ngIf="item.isActive" (click)="toggleFeatureActive(item.id, false)"

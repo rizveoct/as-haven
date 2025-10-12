@@ -30,8 +30,13 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const fallbackScroll$ = this.createFallbackScroll$();
+    const scroll$ = fallbackScroll$
+      ? merge(this.scrollService.scrollY$, fallbackScroll$)
+      : this.scrollService.scrollY$;
+
     this.zone.runOutsideAngular(() => {
-      this.scrollService.scrollY$
+      scroll$
         .pipe(takeUntil(this.destroy$))
         .subscribe((scrollY) => {
           const shouldBeVisible = scrollY > 200;
@@ -51,5 +56,18 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
 
   scrollToTop() {
     this.lenisService.scrollTo(0, { duration: 0.8 });
+  }
+
+  private createFallbackScroll$(): Observable<number> | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    return fromEvent(window, 'scroll', { passive: true }).pipe(
+      startWith(window.scrollY || window.pageYOffset || 0),
+      map(() => window.scrollY || window.pageYOffset || 0),
+      throttleTime(50, undefined, { leading: true, trailing: true }),
+      distinctUntilChanged()
+    );
   }
 }

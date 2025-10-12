@@ -5,6 +5,8 @@ import {
   Output,
   AfterViewInit,
   ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  NgZone,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GalleryItem, GalleryService } from '../../services/gallery.service';
@@ -18,6 +20,7 @@ import { AnimationService } from '../../services/animation.service';
   imports: [CommonModule, GalleryHeroComponent],
   templateUrl: './gallery-page.component.html',
   styleUrls: ['./gallery-page.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GalleryPageComponent implements OnInit, AfterViewInit {
   galleryItems: GalleryItem[] = [];
@@ -37,7 +40,8 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   constructor(
     private galleryService: GalleryService,
     private anim: AnimationService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   ngAfterViewInit(): void {
@@ -209,9 +213,11 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
   }
 
   private registerScrollAnimations(): void {
-    this.anim.animateOnScroll('.fade-up', {
-      threshold: 0.15,
-      rootMargin: '0px 0px -80px',
+    this.ngZone.runOutsideAngular(() => {
+      this.anim.animateOnScroll('.fade-up', {
+        threshold: 0.15,
+        rootMargin: '0px 0px -80px',
+      });
     });
   }
 
@@ -220,6 +226,12 @@ export class GalleryPageComponent implements OnInit, AfterViewInit {
       this.registerScrollAnimations();
       return;
     }
-    window.requestAnimationFrame(() => this.registerScrollAnimations());
+    this.ngZone.runOutsideAngular(() => {
+      window.requestAnimationFrame(() => this.registerScrollAnimations());
+    });
+  }
+
+  trackSkeleton(index: number): number {
+    return index;
   }
 }

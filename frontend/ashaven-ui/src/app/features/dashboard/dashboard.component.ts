@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import {
   AuthService,
@@ -11,7 +18,8 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { tap } from 'rxjs/operators';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil, tap, throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +28,7 @@ import { tap } from 'rxjs/operators';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit, OnDestroy {
   @ViewChild('mainContent') mainContent!: ElementRef;
 
   showProfileDropdown = false;
@@ -29,10 +37,13 @@ export class DashboardComponent {
 
   profileForm!: FormGroup;
 
+  private readonly destroy$ = new Subject<void>();
+
   constructor(
     private authService: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private ngZone: NgZone
   ) {}
 
   ngOnInit() {
@@ -110,8 +121,23 @@ export class DashboardComponent {
     this.router.navigate(['/']);
   }
 
-  onWheel(event: WheelEvent): void {
-    const element = this.mainContent.nativeElement;
-    element.scrollTop += event.deltaY;
+  ngAfterViewInit(): void {
+    this.ngZone.runOutsideAngular(() => {
+      fromEvent<WheelEvent>(this.mainContent.nativeElement, 'wheel', {
+        passive: true,
+      })
+        .pipe(
+          throttleTime(16, undefined, { leading: true, trailing: true }),
+          takeUntil(this.destroy$)
+        )
+        .subscribe((event) => {
+          this.mainContent.nativeElement.scrollTop += event.deltaY;
+        });
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

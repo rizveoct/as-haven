@@ -32,7 +32,10 @@
         (mouseenter)="onMouseEnter()"
         (mouseleave)="onMouseLeave()"
       >
-        <div *ngFor="let slide of slides" class="slide group relative flex flex-col max-w-[400px] w-full">
+        <div
+          *ngFor="let slide of slides; trackBy: trackSlide"
+          class="slide group relative flex flex-col max-w-[400px] w-full"
+        >
           <a
             (click)="onProjectSelect(slide.id, $event)"
             (touchend)="onProjectSelect(slide.id, $event)"

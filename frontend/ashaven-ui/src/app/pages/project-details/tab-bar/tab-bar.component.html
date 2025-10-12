@@ -5,7 +5,7 @@
   [class.translate-x-full]="!showRight"
 >
   <button
-    *ngFor="let section of sections"
+    *ngFor="let section of sections; trackBy: trackSection"
     (click)="scrollToSection(section.id)"
     [class.active-tab]="activeTab === section.id"
     class="tab-button flex items-center gap-2 px-4 py-2 rounded-lg font-medium

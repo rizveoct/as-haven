@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable, of, fromEvent } from 'rxjs';
-import { map, startWith, throttleTime, distinctUntilChanged, shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { distinctUntilChanged, shareReplay, throttleTime } from 'rxjs/operators';
+import { LenisService } from './lenis.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,17 +9,15 @@ import { map, startWith, throttleTime, distinctUntilChanged, shareReplay } from 
 export class ScrollService {
   readonly scrollY$: Observable<number>;
 
-  constructor(private zone: NgZone) {
+  constructor(private zone: NgZone, private lenisService: LenisService) {
     if (typeof window === 'undefined') {
       this.scrollY$ = of(0);
       return;
     }
 
     this.scrollY$ = this.zone.runOutsideAngular(() =>
-      fromEvent(window, 'scroll', { passive: true }).pipe(
+      this.lenisService.scroll$.pipe(
         throttleTime(50, undefined, { leading: true, trailing: true }),
-        map(() => window.scrollY || window.pageYOffset || 0),
-        startWith(window.scrollY || window.pageYOffset || 0),
         distinctUntilChanged(),
         shareReplay({ bufferSize: 1, refCount: true })
       )

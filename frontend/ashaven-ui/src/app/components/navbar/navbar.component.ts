@@ -1,6 +1,13 @@
-import { Component, HostListener, OnDestroy, OnInit, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  NgZone,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-// import { LenisService } from '../../services/lenis.service';
+import { LenisService } from '../../services/lenis.service';
 import { SidePanelComponent } from '../side-panel/side-panel.component';
 import { SidePanelService } from '../../services/sidepanel.service';
 import { RouterLink, Router } from '@angular/router';
@@ -13,6 +20,7 @@ import { ScrollService } from '../../services/scroll.service';
   standalone: true,
   imports: [CommonModule, SidePanelComponent, RouterLink],
   templateUrl: './navbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   isTop: boolean = true;
@@ -21,23 +29,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     public sidePanel: SidePanelService,
-    // private lenisService: LenisService,
+    private lenisService: LenisService,
     public router: Router,
     private scrollService: ScrollService,
     private zone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollY) => {
-        const isTop = scrollY <= 20;
-        if (isTop !== this.isTop) {
-          this.zone.run(() => {
-            this.isTop = isTop;
-          });
-        }
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollY) => {
+          const isTop = scrollY <= 20;
+          if (isTop !== this.isTop) {
+            this.zone.run(() => {
+              this.isTop = isTop;
+            });
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {
@@ -63,11 +73,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(sectionId: string) {
-    // if (this.lenisService.lenis) {
-    //   this.lenisService.lenis.scrollTo(`#${sectionId}`, { duration: 0.8 });
-    // } else {
-      document.getElementById(sectionId)?.scrollIntoView({ block: 'start' });
-    // }
+    this.lenisService.scrollTo(`#${sectionId}`, { duration: 0.8 });
 
     this.sidePanel.close();
   }

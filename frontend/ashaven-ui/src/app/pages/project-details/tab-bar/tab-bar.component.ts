@@ -1,8 +1,15 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  NgZone,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../../../services/scroll.service';
+import { LenisService } from '../../../services/lenis.service';
 
 @Component({
   selector: 'app-tab-bar',
@@ -10,6 +17,7 @@ import { ScrollService } from '../../../services/scroll.service';
   imports: [CommonModule, TitleCasePipe],
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabBarComponent implements OnInit, OnDestroy {
   activeTab: string = '';
@@ -28,14 +36,20 @@ export class TabBarComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private scrollService: ScrollService, private zone: NgZone) {}
+  constructor(
+    private scrollService: ScrollService,
+    private lenisService: LenisService,
+    private zone: NgZone
+  ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollTop) => {
-        this.updateForScroll(scrollTop);
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollTop) => {
+          this.updateForScroll(scrollTop);
+        });
+    });
   }
 
   ngOnDestroy(): void {
@@ -78,10 +92,11 @@ export class TabBarComponent implements OnInit, OnDestroy {
   }
 
   scrollToSection(sectionId: string) {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ block: 'start' });
-      this.activeTab = sectionId;
-    }
+    this.lenisService.scrollTo(`#${sectionId}`, { duration: 0.8 });
+    this.activeTab = sectionId;
+  }
+
+  trackSection(_: number, section: { id: string }): string {
+    return section.id;
   }
 }

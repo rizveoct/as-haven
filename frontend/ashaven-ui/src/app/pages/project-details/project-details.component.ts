@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-// import { LenisService } from '../../services/lenis.service';
+import { LenisService } from '../../services/lenis.service';
 import { ProjectHeaderComponent } from './project-header/project-header.component';
 import { OfferTimerComponent } from './offer-timer/offer-timer.component';
 import { MarqueeComponent } from './marquee/marquee.component';
@@ -82,7 +82,7 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private route: ActivatedRoute,
     private toastr: ToastrService,
-    // private lenisService: LenisService
+    private lenisService: LenisService
   ) {}
 
   ngOnInit(): void {
@@ -275,9 +275,6 @@ export class ProjectDetailsComponent implements OnInit, OnDestroy {
   }
 
   scrollToContactForm() {
-    const contactForm = document.getElementById('contacting');
-    if (contactForm) {
-      contactForm.scrollIntoView({ block: 'start' });
-    }
+    this.lenisService.scrollTo('#contacting', { duration: 0.8 });
   }
 }

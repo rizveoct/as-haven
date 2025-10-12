@@ -5,11 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LenisService } from '../../services/lenis.service';
-import { ProjectHeaderComponent } from './project-header/project-header.component';
-import { OfferTimerComponent } from './offer-timer/offer-timer.component';
 import { AtGlanceComponent } from './at-glance/at-glance.component';
 import { FeatureAmenitiesComponent } from './feature-amenities/feature-amenities.component';
-import { VideoPlayerComponent } from './video-player/video-player.component';
 import { ProjectGalleryComponent } from './project-gallery/project-gallery.component';
 import { LocationMapComponent } from './location-map/location-map.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
@@ -43,11 +40,8 @@ interface RelatedProject {
   imports: [
     CommonModule,
     RouterModule,
-    ProjectHeaderComponent,
-    OfferTimerComponent,
     AtGlanceComponent,
     FeatureAmenitiesComponent,
-    VideoPlayerComponent,
     ProjectGalleryComponent,
     LocationMapComponent,
     ContactFormComponent,

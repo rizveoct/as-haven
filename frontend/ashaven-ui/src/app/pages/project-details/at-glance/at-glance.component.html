@@ -1,41 +1,74 @@
-<section class="relative py-[clamp(4rem,8vw,6rem)] bg-gradient-to-br from-blue-500/5 to-transparent via-pink-500/5 from-45% to-40% bg-slate-50 overflow-hidden" id="atGlance">
-  <div class="absolute inset-0 pointer-events-none bg-gradient-to-br from-slate-900/7 to-transparent z-0"></div>
-  <div class="relative z-1 w-[min(1180px,92%)] md:w-[80%] mx-auto flex flex-col gap-[clamp(2rem,4vw,3.5rem)]">
+<section
+  class="relative py-[clamp(4rem,8vw,6rem)] bg-gradient-to-br from-blue-500/5 to-transparent via-pink-500/5 from-45% to-40% bg-slate-50 overflow-hidden"
+  id="atGlance"
+>
+  <div
+    class="absolute inset-0 pointer-events-none bg-gradient-to-br from-slate-900/7 to-transparent z-0"
+  ></div>
+  <div
+    class="relative z-1 w-[min(1180px,92%)] md:w-[80%] mx-auto flex flex-col gap-[clamp(2rem,4vw,3.5rem)]"
+  >
     <div class="max-w-[680px] flex flex-col gap-3">
-      <span class="text-xs uppercase tracking-[0.3em] text-slate-500">Project Summary</span>
-      <h2 class="font-serif text-[clamp(2.25rem,4vw,3.5rem)] text-slate-900 m-0">At a Glance</h2>
-      <p class="text-[clamp(1rem,1.2vw,1.1rem)] leading-7 text-slate-600">
-        A curated overview of the residence, from generous floor plans to thoughtful services that elevate daily living.
-        Explore key information, specifications, and inspiration in one beautifully organized space.
-      </p>
+      <span class="text-xs uppercase tracking-[0.3em] text-slate-500"
+        >Project Summary</span
+      >
+      <h2
+        class="font-serif text-[clamp(2.25rem,4vw,3.5rem)] text-slate-900 m-0"
+      >
+        At a Glance
+      </h2>      
+
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4" *ngIf="quickFacts.length">
-      <div class="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-sky-400/5 border border-slate-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] backdrop-blur-lg transition-transform duration-300 hover:-translate-y-1.5" *ngFor="let fact of quickFacts">
-        <span class="block text-xs uppercase tracking-[0.18em] text-slate-500 mb-1.5">{{ fact.label }}</span>
-        <span class="text-lg font-semibold text-slate-900">{{ fact.value }}</span>
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4"
+      *ngIf="quickFacts.length"
+    >
+      <div
+        class="p-5 rounded-2xl bg-gradient-to-br from-blue-500/10 to-sky-400/5 border border-slate-400/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.4)] backdrop-blur-lg transition-transform duration-300 hover:-translate-y-1.5"
+        *ngFor="let fact of quickFacts"
+      >
+        <span
+          class="block text-xs uppercase tracking-[0.18em] text-slate-500 mb-1.5"
+          >{{ fact.label }}</span
+        >
+        <span class="text-lg font-semibold text-slate-900">{{
+          fact.value
+        }}</span>
       </div>
     </div>
 
-    <div class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[clamp(1.5rem,3vw,2.5rem)] items-start">
-      <div class="relative rounded-3xl overflow-hidden shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] min-h-[320px] bg-gradient-to-br from-sky-400/15 to-blue-500/5">
-        <div class="absolute inset-0 border border-white/50 rounded-3xl pointer-events-none opacity-35"></div>
-        
-          <img            
-            class="w-full h-full object-cover"
-            [src]="baseUrl + '/api/attachment/get/' + project?.thumbnail"
-            alt="Project image"
-            (error)="onImageError($event)"
-          />
-          
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[clamp(1.5rem,3vw,2.5rem)] items-start"
+    >
+      <div
+        class="relative rounded-3xl overflow-hidden shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] min-h-[320px] bg-gradient-to-br from-sky-400/15 to-blue-500/5"
+      >
+        <div
+          class="absolute inset-0 border border-white/50 rounded-3xl pointer-events-none opacity-35"
+        ></div>
+
+        <img
+          class="w-full h-full object-cover"
+          [src]="baseUrl + '/api/attachment/get/' + project?.thumbnail"
+          alt="Project image"
+          (error)="onImageError($event)"
+        />
       </div>
 
-      <div class="p-[clamp(1.75rem,3vw,2.5rem)] rounded-3xl bg-white/85 border border-slate-200/80 shadow-[0_25px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl flex flex-col gap-6">
+      <div
+        class="p-[clamp(1.75rem,3vw,2.5rem)] rounded-3xl bg-white/85 border border-slate-200/80 shadow-[0_25px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl flex flex-col gap-6"
+      >
         <h3 class="text-2xl font-semibold text-slate-900">Key Details</h3>
         <table class="w-full border-collapse">
           <tbody>
-            <tr *ngFor="let row of detailRows" class="border-t border-slate-200/70 first:border-t-0">
-              <td class="py-3.5 text-sm font-semibold text-slate-600 w-[45%]">{{ row.label }}</td>
+            <tr
+              *ngFor="let row of detailRows"
+              class="border-t border-slate-200/70 first:border-t-0"
+            >
+              <td class="py-3.5 text-sm font-semibold text-slate-600 w-[45%]">
+                {{ row.label }}
+              </td>
               <td class="py-3.5 text-sm text-slate-900">{{ row.value }}</td>
             </tr>
           </tbody>

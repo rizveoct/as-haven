@@ -1,15 +1,14 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-at-glance',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule],
-  templateUrl: './at-glance.component.html',
-  styleUrls: ['./at-glance.component.css'],
+  imports: [CommonModule, RouterModule],
+  templateUrl: './at-glance.component.html'
 })
 export class AtGlanceComponent {
   @Input() project: any = null;

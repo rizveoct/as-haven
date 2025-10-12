@@ -55,16 +55,18 @@ export class ProjectsComponent implements AfterViewInit, OnDestroy {
     private scrollService: ScrollService,
     private zone: NgZone
   ) {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollY) => {
-        const transform = `translateY(${scrollY * 0.3 - 60}px)`;
-        if (transform !== this.scrollTransform) {
-          this.zone.run(() => {
-            this.scrollTransform = transform;
-          });
-        }
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollY) => {
+          const transform = `translateY(${scrollY * 0.3 - 60}px)`;
+          if (transform !== this.scrollTransform) {
+            this.zone.run(() => {
+              this.scrollTransform = transform;
+            });
+          }
+        });
+    });
   }
 
   ngAfterViewInit(): void {

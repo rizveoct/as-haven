@@ -1,4 +1,11 @@
-import { Component, HostListener, OnDestroy, OnInit, NgZone } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  NgZone,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LenisService } from '../../services/lenis.service';
 import { SidePanelComponent } from '../side-panel/side-panel.component';
@@ -13,6 +20,7 @@ import { ScrollService } from '../../services/scroll.service';
   standalone: true,
   imports: [CommonModule, SidePanelComponent, RouterLink],
   templateUrl: './navbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   isTop: boolean = true;
@@ -28,16 +36,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollY) => {
-        const isTop = scrollY <= 20;
-        if (isTop !== this.isTop) {
-          this.zone.run(() => {
-            this.isTop = isTop;
-          });
-        }
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollY) => {
+          const isTop = scrollY <= 20;
+          if (isTop !== this.isTop) {
+            this.zone.run(() => {
+              this.isTop = isTop;
+            });
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {

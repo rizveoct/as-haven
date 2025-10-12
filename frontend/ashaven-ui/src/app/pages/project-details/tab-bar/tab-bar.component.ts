@@ -1,4 +1,10 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  NgZone,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,6 +17,7 @@ import { LenisService } from '../../../services/lenis.service';
   imports: [CommonModule, TitleCasePipe],
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabBarComponent implements OnInit, OnDestroy {
   activeTab: string = '';
@@ -36,11 +43,13 @@ export class TabBarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollTop) => {
-        this.updateForScroll(scrollTop);
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollTop) => {
+          this.updateForScroll(scrollTop);
+        });
+    });
   }
 
   ngOnDestroy(): void {

@@ -7,6 +7,8 @@ import {
   ElementRef,
   ViewChild,
   NgZone,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
@@ -29,6 +31,7 @@ interface Slide {
   imports: [CommonModule, RouterModule],
   templateUrl: './swiper-slider.component.html',
   styleUrls: ['./swiper-slider.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SwiperSliderComponent
   implements OnInit, OnDestroy, AfterViewInit
@@ -38,7 +41,8 @@ export class SwiperSliderComponent
   currentTranslate = 0;
   slideWidth = 400 + 16;
   speed = 0.5;
-  animationFrameId!: number;
+  private animationFrameId?: number;
+  private pointerMoveFrame?: number;
   isDragging = false;
   startX = 0;
   startTranslate = 0;
@@ -62,6 +66,8 @@ export class SwiperSliderComponent
   @ViewChild('sliderWrapper', { static: true })
   private sliderWrapper?: ElementRef<HTMLElement>;
 
+  private readonly destroy$ = new Subject<void>();
+
   constructor(
     private projectService: ProjectService,
     private router: Router,
@@ -78,45 +84,61 @@ export class SwiperSliderComponent
     this.updateTransform();
     this.ngZone.runOutsideAngular(() => {
       this.isAnimationActive = true;
-      this.animateSlide();
+      this.scheduleNextFrame();
     });
   }
 
   ngOnDestroy() {
     this.isAnimationActive = false;
-    cancelAnimationFrame(this.animationFrameId);
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = undefined;
+    }
+    if (this.pointerMoveFrame) {
+      cancelAnimationFrame(this.pointerMoveFrame);
+      this.pointerMoveFrame = undefined;
+    }
     document.removeEventListener('mousemove', this.documentMouseMoveListener);
     document.removeEventListener('touchmove', this.documentTouchMoveListener);
     document.removeEventListener('mouseup', this.documentMouseUpListener);
     document.removeEventListener('touchend', this.documentTouchEndListener);
     this.intersectionObserver?.disconnect();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadProjects() {
-    this.projectService.getProjects().subscribe({
-      next: (projects: Project[]) => {
-        this.slides = projects.map((project) => ({
-          id: project.id,
-          image: project.thumbnail
-            ? `${this.baseUrl}/api/attachment/get/${project.thumbnail}`
-            : 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg',
-          name: project.name || 'Untitled Project',
-          category: project.category || 'Unknown',
-          address: project.address,
-          type: project.type || '—',
-        }));
-        this.slides = [...this.slides, ...this.slides];
+    this.projectService
+      .getProjects()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (projects: Project[]) => {
+          const slides = projects.map((project) => ({
+            id: project.id,
+            image: project.thumbnail
+              ? `${this.baseUrl}/api/attachment/get/${project.thumbnail}`
+              : 'https://img.freepik.com/free-vector/illustration-gallery-icon_53876-27002.jpg',
+            name: project.name || 'Untitled Project',
+            category: project.category || 'Unknown',
+            address: project.address,
+            type: project.type || '—',
+          }));
 
-        this.updateTransform();
-      },
-      error: (err) => {
-        console.error('Error loading projects:', err);
-        this.projectService.showError('Failed to load projects');
-      },
-    });
+          this.ngZone.run(() => {
+            this.slides = [...slides, ...slides];
+            this.cdr.markForCheck();
+          });
+
+          this.ngZone.runOutsideAngular(() => this.updateTransform());
+        },
+        error: (err) => {
+          console.error('Error loading projects:', err);
+          this.projectService.showError('Failed to load projects');
+        },
+      });
   }
 
-  animateSlide() {
+  private animateSlide = () => {
     if (!this.isAnimationActive) {
       return;
     }
@@ -129,7 +151,14 @@ export class SwiperSliderComponent
       }
       this.updateTransform();
     }
-    this.animationFrameId = requestAnimationFrame(() => this.animateSlide());
+
+    this.scheduleNextFrame();
+  };
+
+  private scheduleNextFrame(): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.animationFrameId = requestAnimationFrame(this.animateSlide);
+    });
   }
 
   onImageError(event: Event) {
@@ -162,29 +191,39 @@ export class SwiperSliderComponent
     this.startX = 'touches' in event ? event.touches[0].clientX : event.clientX;
     this.startTranslate = this.currentTranslate;
     this.swipeDistance = 0; // Reset swipe distance
-    document.addEventListener('mousemove', this.documentMouseMoveListener);
-    document.addEventListener('touchmove', this.documentTouchMoveListener);
-    document.addEventListener('mouseup', this.documentMouseUpListener, {
-      once: true,
-    });
-    document.addEventListener('touchend', this.documentTouchEndListener, {
-      once: true,
+    this.ngZone.runOutsideAngular(() => {
+      document.addEventListener('mousemove', this.documentMouseMoveListener);
+      document.addEventListener('touchmove', this.documentTouchMoveListener);
+      document.addEventListener('mouseup', this.documentMouseUpListener, {
+        once: true,
+      });
+      document.addEventListener('touchend', this.documentTouchEndListener, {
+        once: true,
+      });
     });
   }
 
   onMouseMove(event: MouseEvent | TouchEvent) {
     if (!this.isDragging) return;
-    const currentX =
-      'touches' in event ? event.touches[0].clientX : event.clientX;
-    this.swipeDistance = Math.abs(currentX - this.startX);
-    this.currentTranslate = this.startTranslate + (currentX - this.startX);
-    const totalWidth = this.slideWidth * this.slides.length;
-    if (Math.abs(this.currentTranslate) >= totalWidth / 2) {
-      this.currentTranslate = 0;
-    } else if (this.currentTranslate > 0) {
-      this.currentTranslate = -(totalWidth / 2);
+    if (this.pointerMoveFrame) {
+      return;
     }
-    this.updateTransform();
+
+    const pointerX =
+      'touches' in event ? event.touches[0].clientX : event.clientX;
+
+    this.pointerMoveFrame = requestAnimationFrame(() => {
+      this.pointerMoveFrame = undefined;
+      this.swipeDistance = Math.abs(pointerX - this.startX);
+      this.currentTranslate = this.startTranslate + (pointerX - this.startX);
+      const totalWidth = this.slideWidth * this.slides.length;
+      if (Math.abs(this.currentTranslate) >= totalWidth / 2) {
+        this.currentTranslate = 0;
+      } else if (this.currentTranslate > 0) {
+        this.currentTranslate = -(totalWidth / 2);
+      }
+      this.updateTransform();
+    });
   }
 
   onMouseUp() {
@@ -195,6 +234,10 @@ export class SwiperSliderComponent
     document.removeEventListener('touchmove', this.documentTouchMoveListener);
     document.removeEventListener('mouseup', this.documentMouseUpListener);
     document.removeEventListener('touchend', this.documentTouchEndListener);
+    if (this.pointerMoveFrame) {
+      cancelAnimationFrame(this.pointerMoveFrame);
+      this.pointerMoveFrame = undefined;
+    }
     this.updateTransform();
   }
 
@@ -245,5 +288,9 @@ export class SwiperSliderComponent
     }
 
     element.style.transform = `translateX(${this.currentTranslate}px)`;
+  }
+
+  trackSlide(_: number, slide: Slide): string {
+    return slide.id;
   }
 }

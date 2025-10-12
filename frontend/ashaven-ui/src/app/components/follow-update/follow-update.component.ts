@@ -1,5 +1,14 @@
-import { Component, HostListener } from '@angular/core';
-import { BlogSlideComponent } from "../blog-slide/blog-slide.component";
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { BlogSlideComponent } from '../blog-slide/blog-slide.component';
+import { fromEvent, Subject } from 'rxjs';
+import { takeUntil, throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-follow-update',
@@ -7,49 +16,63 @@ import { BlogSlideComponent } from "../blog-slide/blog-slide.component";
   imports: [BlogSlideComponent],
   templateUrl: './follow-update.component.html',
   styleUrl: './follow-update.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FollowUpdateComponent {
+export class FollowUpdateComponent implements AfterViewInit, OnDestroy {
   scrollAmount = 0;
   scrollStep = 300; // Adjust based on card width
-  private scrollTimeout: any;
   scrollContainer: HTMLElement | null = null;
-  private isDragging = false;
-  private startX = 0;
-  private initialScroll = 0;
+  private destroy$ = new Subject<void>();
 
-  @HostListener('wheel', ['$event'])
-  onWheel(event: WheelEvent) {
-    if (this.scrollTimeout) return;
+  constructor(
+    private elementRef: ElementRef<HTMLElement>,
+    private ngZone: NgZone
+  ) {}
 
-    this.scrollTimeout = setTimeout(() => {
-      this.scrollTimeout = null;
-    }, 500);
-
-    if (event.deltaY > 0) {
-      this.next();
-    } else if (event.deltaY < 0) {
-      this.prev();
-    }
+  ngAfterViewInit(): void {
+    this.ngZone.runOutsideAngular(() => {
+      fromEvent<WheelEvent>(this.elementRef.nativeElement, 'wheel', {
+        passive: true,
+      })
+        .pipe(throttleTime(150), takeUntil(this.destroy$))
+        .subscribe((event) => {
+          if (event.deltaY > 0) {
+            this.next();
+          } else if (event.deltaY < 0) {
+            this.prev();
+          }
+        });
+    });
   }
 
-  
-
   prev() {
-    if (this.scrollContainer) {
-      this.scrollAmount = Math.max(this.scrollAmount - this.scrollStep, 0);
-      this.scrollContainer.scrollTo({
-        left: this.scrollAmount,
-      });
+    if (!this.scrollContainer) {
+      return;
     }
+
+    this.scrollAmount = Math.max(this.scrollAmount - this.scrollStep, 0);
+    this.scrollContainer.scrollTo({
+      left: this.scrollAmount,
+      behavior: 'smooth',
+    });
   }
 
   next() {
-    if (this.scrollContainer) {
-      const maxScroll = this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
-      this.scrollAmount = Math.min(this.scrollAmount + this.scrollStep, maxScroll);
-      this.scrollContainer.scrollTo({
-        left: this.scrollAmount,
-      });
+    if (!this.scrollContainer) {
+      return;
     }
+
+    const maxScroll =
+      this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth;
+    this.scrollAmount = Math.min(this.scrollAmount + this.scrollStep, maxScroll);
+    this.scrollContainer.scrollTo({
+      left: this.scrollAmount,
+      behavior: 'smooth',
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

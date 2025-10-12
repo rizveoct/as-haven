@@ -1,4 +1,11 @@
-import { Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../services/scroll.service';
@@ -15,15 +22,18 @@ export class NavbarScrollDirective implements OnInit, OnDestroy {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollTop) => {
-        this.handleScroll(scrollTop);
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollTop) => {
+          this.handleScroll(scrollTop);
+        });
+    });
   }
 
   ngOnDestroy(): void {

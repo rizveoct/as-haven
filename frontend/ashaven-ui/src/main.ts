@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
@@ -13,6 +14,7 @@ register();
 bootstrapApplication(AppComponent, {
   ...appConfig,
   providers: [
+    provideZoneChangeDetection({ eventCoalescing: true, runCoalescing: true }),
     ...(appConfig?.providers ?? []),
     provideAnimations(),
     provideHttpClient(),

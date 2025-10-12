@@ -1,4 +1,10 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  NgZone,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   trigger,
@@ -40,6 +46,7 @@ import { LenisService } from '../../services/lenis.service';
       transition('visible => hidden', [animate('300ms ease-in')]),
     ]),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrollToTopComponent implements OnInit, OnDestroy {
   isVisible = false;
@@ -52,16 +59,18 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.scrollService.scrollY$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((scrollY) => {
-        const shouldBeVisible = scrollY > 200;
-        if (shouldBeVisible !== this.isVisible) {
-          this.zone.run(() => {
-            this.isVisible = shouldBeVisible;
-          });
-        }
-      });
+    this.zone.runOutsideAngular(() => {
+      this.scrollService.scrollY$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((scrollY) => {
+          const shouldBeVisible = scrollY > 200;
+          if (shouldBeVisible !== this.isVisible) {
+            this.zone.run(() => {
+              this.isVisible = shouldBeVisible;
+            });
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {

@@ -16,6 +16,7 @@ export class LenisService {
   private readonly scrollSubject = new BehaviorSubject<number>(0);
   private readonly windowScroll$?: Observable<number>;
   private motionQuery?: MediaQueryList;
+  private viewportQuery?: MediaQueryList;
   private rafId?: number;
   private lenisScrollCallback?: (event: ScrollEvent) => void;
 
@@ -28,6 +29,7 @@ export class LenisService {
     }
 
     this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    this.viewportQuery = window.matchMedia('(max-width: 768px)');
     this.windowScroll$ = fromEvent(window, 'scroll', { passive: true }).pipe(
       startWith(window.scrollY || window.pageYOffset || 0),
       map(() => window.scrollY || window.pageYOffset || 0),
@@ -49,6 +51,22 @@ export class LenisService {
       this.motionQuery.addEventListener('change', handleMotionPreference);
     } else if (typeof this.motionQuery.addListener === 'function') {
       this.motionQuery.addListener(handleMotionPreference);
+    }
+
+    const handleViewportPreference = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        this.stopLenis();
+      } else {
+        this.init();
+      }
+    };
+
+    if (this.viewportQuery) {
+      if (typeof this.viewportQuery.addEventListener === 'function') {
+        this.viewportQuery.addEventListener('change', handleViewportPreference);
+      } else if (typeof this.viewportQuery.addListener === 'function') {
+        this.viewportQuery.addListener(handleViewportPreference);
+      }
     }
 
     this.router.events
@@ -157,6 +175,10 @@ export class LenisService {
 
     const prefersReducedMotion = this.motionQuery ?? window.matchMedia('(prefers-reduced-motion: reduce)');
     if (prefersReducedMotion.matches) {
+      return false;
+    }
+
+    if (this.viewportQuery?.matches) {
       return false;
     }
 

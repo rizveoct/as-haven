@@ -6,15 +6,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Observable, Subject, fromEvent, merge } from 'rxjs';
 import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-} from '@angular/animations';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+  distinctUntilChanged,
+  map,
+  startWith,
+  takeUntil,
+  throttleTime,
+} from 'rxjs/operators';
 import { ScrollService } from '../../services/scroll.service';
 import { LenisService } from '../../services/lenis.service';
 
@@ -24,28 +23,6 @@ import { LenisService } from '../../services/lenis.service';
   imports: [CommonModule],
   templateUrl: './scroll-to-top.component.html',
   styleUrls: ['./scroll-to-top.component.css'],
-  animations: [
-    trigger('buttonState', [
-      state(
-        'hidden',
-        style({
-          opacity: 0,
-          transform: 'translateY(-1000px)',
-          pointerEvents: 'none',
-        })
-      ),
-      state(
-        'visible',
-        style({
-          opacity: 1,
-          transform: 'translateY(0)',
-          pointerEvents: 'auto',
-        })
-      ),
-      transition('hidden => visible', [animate('300ms ease-out')]),
-      transition('visible => hidden', [animate('300ms ease-in')]),
-    ]),
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScrollToTopComponent implements OnInit, OnDestroy {
@@ -59,8 +36,13 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const fallbackScroll$ = this.createFallbackScroll$();
+    const scroll$ = fallbackScroll$
+      ? merge(this.scrollService.scrollY$, fallbackScroll$)
+      : this.scrollService.scrollY$;
+
     this.zone.runOutsideAngular(() => {
-      this.scrollService.scrollY$
+      scroll$
         .pipe(takeUntil(this.destroy$))
         .subscribe((scrollY) => {
           const shouldBeVisible = scrollY > 200;
@@ -80,5 +62,18 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
 
   scrollToTop() {
     this.lenisService.scrollTo(0, { duration: 0.8 });
+  }
+
+  private createFallbackScroll$(): Observable<number> | null {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    return fromEvent(window, 'scroll', { passive: true }).pipe(
+      startWith(window.scrollY || window.pageYOffset || 0),
+      map(() => window.scrollY || window.pageYOffset || 0),
+      throttleTime(50, undefined, { leading: true, trailing: true }),
+      distinctUntilChanged()
+    );
   }
 }

@@ -1,74 +1,77 @@
-<div>
+<div class="space-y-6">
   <!-- Header & Create Button -->
-  <div class="flex items-center mb-4">
-    <h6 class="text-lg font-bold flex-grow text-accent">About Us List</h6>
-    <div class="flex-shrink-0">
-      <button
-        (click)="openCreateModal()"
-        class="px-5 py-2 text-white bg-accent border border-accent rounded-lg hover:bg-accent-dark hover:border-accent-dark focus:ring focus:ring-accent/30 transition-all duration-200"
-      >
-        Create About Us
-      </button>
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <h6 class="text-xl font-semibold text-slate-900">About us entries</h6>
+      <p class="text-sm text-slate-500">Manage the story and leadership shown on your site.</p>
     </div>
+    <button
+      (click)="openCreateModal()"
+      class="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
+    >
+      Create entry
+    </button>
   </div>
 
   <!-- Create Modal -->
-  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
     <app-about-us-form [aboutUs]="null" mode="create" (close)="closeModal()" (saved)="onAboutUsSaved()"></app-about-us-form>
   </div>
 
   <!-- Edit Modal -->
-  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 overflow-y-auto">
+  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
     <app-about-us-form [aboutUs]="selectedAboutUs" mode="edit" (close)="closeModal()" (saved)="onAboutUsSaved()"></app-about-us-form>
   </div>
 
   <!-- About Us Table -->
-  <div class="relative overflow-x-auto shadow-lg rounded-lg border-emerald-50/10 bg-brand">
-    <table class="w-full text-sm text-left text-dark">
-      <thead class="text-xs text-dark uppercase border-b">
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <table class="w-full table-auto text-left text-sm">
+      <thead class="bg-slate-100/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
         <tr>
           <th class="px-6 py-3">History</th>
           <th class="px-6 py-3">Vision</th>
-          <th class="px-6 py-3">Vision Image</th>
+          <th class="px-6 py-3">Vision image</th>
           <th class="px-6 py-3">Mission</th>
-          <th class="px-6 py-3">Mission Image</th>
+          <th class="px-6 py-3">Mission image</th>
           <th class="px-6 py-3">Owner</th>
           <th class="px-6 py-3">Designation</th>
           <th class="px-6 py-3">Speech</th>
-          <th class="px-6 py-3">Owner Image</th>
+          <th class="px-6 py-3">Owner image</th>
           <th class="px-6 py-3 text-right">Actions</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let item of aboutUsList" class="bg-white border-b hover:bg-gray-50 transition-colors duration-150">
-          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.history }}">{{ item.history }}</td>
-          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.vision }}">{{ item.vision }}</td>
+      <tbody class="divide-y divide-slate-100 text-slate-600">
+        <tr *ngFor="let item of aboutUsList" class="transition-colors duration-150 hover:bg-slate-50">
+          <td class="px-6 py-4 text-slate-900" title="{{ item.history }}">{{ item.history }}</td>
+          <td class="px-6 py-4" title="{{ item.vision }}">{{ item.vision }}</td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.visionImage" alt="Vision Image" />
           </td>
-          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.mission }}">{{ item.mission }}</td>
+          <td class="px-6 py-4" title="{{ item.mission }}">{{ item.mission }}</td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.missionImage" alt="Mission Image" />
           </td>
-          <td class="px-6 py-4">{{ item.ownerName }}</td>
+          <td class="px-6 py-4 text-slate-900">{{ item.ownerName }}</td>
           <td class="px-6 py-4">{{ item.ownerDesignation }}</td>
-          <td class="px-6 py-4 truncate max-w-[150px]" title="{{ item.ownerSpeech }}">{{ item.ownerSpeech }}</td>
+          <td class="px-6 py-4" title="{{ item.ownerSpeech }}">{{ item.ownerSpeech }}</td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.ownerImage" alt="Owner Image" />
           </td>
-          <td class="px-6 py-4 text-right space-x-2">
-            <button
-              (click)="openEditModal(item)"
-              class="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
-            >
-              Edit
-            </button>
-            <button
-              (click)="deleteAboutUs(item.id)"
-              class="text-red-700 border border-red-700 hover:bg-red-700 hover:text-white rounded-lg px-3 py-1 text-sm transition-all duration-200"
-            >
-              Delete
-            </button>
+          <td class="px-6 py-4 text-right">
+            <div class="flex justify-end gap-2">
+              <button
+                (click)="openEditModal(item)"
+                class="rounded-full border border-brand/20 px-4 py-2 text-sm font-medium text-brand transition hover:bg-brand hover:text-white"
+              >
+                Edit
+              </button>
+              <button
+                (click)="deleteAboutUs(item.id)"
+                class="rounded-full border border-rose-200 px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50"
+              >
+                Delete
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>

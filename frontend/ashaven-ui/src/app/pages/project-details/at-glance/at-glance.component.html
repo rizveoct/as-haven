@@ -2,9 +2,8 @@
   class="relative py-[clamp(4rem,8vw,6rem)] bg-gradient-to-br from-blue-500/5 to-transparent via-pink-500/5 from-45% to-40% bg-slate-50 overflow-hidden"
   id="atGlance"
 >
-  <div
-    class="absolute inset-0 pointer-events-none bg-gradient-to-br from-slate-900/7 to-transparent z-0"
-  ></div>
+  <div class="absolute inset-0 pointer-events-none bg-gradient-to-br from-slate-900/7 to-transparent z-0"></div>
+
   <div
     class="relative z-1 w-[min(1180px,92%)] md:w-[80%] mx-auto flex flex-col gap-[clamp(2rem,4vw,3.5rem)]"
   >
@@ -12,12 +11,9 @@
       <span class="text-xs uppercase tracking-[0.3em] text-slate-500"
         >Project Summary</span
       >
-      <h2
-        class="font-serif text-[clamp(2.25rem,4vw,3.5rem)] text-slate-900 m-0"
-      >
+      <h2 class="font-serif text-[clamp(2.25rem,4vw,3.5rem)] text-slate-900 m-0">
         At a Glance
-      </h2>      
-
+      </h2>
     </div>
 
     <div
@@ -32,30 +28,31 @@
           class="block text-xs uppercase tracking-[0.18em] text-slate-500 mb-1.5"
           >{{ fact.label }}</span
         >
-        <span class="text-lg font-semibold text-slate-900">{{
-          fact.value
-        }}</span>
+        <span class="text-lg font-semibold text-slate-900">{{ fact.value }}</span>
       </div>
     </div>
 
+    <!-- ✅ FIXED LAYOUT -->
     <div
       class="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-[clamp(1.5rem,3vw,2.5rem)] items-start"
     >
+      <!-- image wraps to natural details height -->
       <div
-        class="relative rounded-3xl overflow-hidden shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] min-h-[320px] bg-gradient-to-br from-sky-400/15 to-blue-500/5"
+        class="relative rounded-3xl overflow-hidden shadow-[0_25px_50px_-25px_rgba(15,23,42,0.35)] bg-gradient-to-br from-sky-400/15 to-blue-500/5 flex"
       >
         <div
           class="absolute inset-0 border border-white/50 rounded-3xl pointer-events-none opacity-35"
         ></div>
 
         <img
-          class="w-full h-full object-cover"
+          class="h-[400px] md:h-[650px] w-[500px] rounded-3xl"
           [src]="baseUrl + '/api/attachment/get/' + project?.thumbnail"
           alt="Project image"
           (error)="onImageError($event)"
         />
       </div>
 
+      <!-- details section stays natural height -->
       <div
         class="p-[clamp(1.75rem,3vw,2.5rem)] rounded-3xl bg-white/85 border border-slate-200/80 shadow-[0_25px_70px_-40px_rgba(15,23,42,0.45)] backdrop-blur-xl flex flex-col gap-6"
       >
@@ -73,6 +70,7 @@
             </tr>
           </tbody>
         </table>
+
         <div class="flex flex-wrap gap-3">
           <button
             (click)="downloadPdf(project?.pdfFile)"
@@ -81,6 +79,7 @@
           >
             Project Brochure
           </button>
+
           <button
             type="button"
             class="px-6 py-3.5 rounded-full font-semibold bg-transparent text-slate-900 border border-slate-400/55 hover:-translate-y-1 hover:border-blue-500/55 hover:text-blue-600 transition-all duration-300"

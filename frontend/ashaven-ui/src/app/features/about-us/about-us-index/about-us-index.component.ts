@@ -4,11 +4,12 @@ import { AboutUsFormComponent } from '../about-us-form/about-us-form.component';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { AboutUs } from '../../../models/model';
+import { TruncateWordsPipe } from '../../../pipes/truncate-words.pipe';
 
 @Component({
   selector: 'app-about-us-index',
   standalone: true,
-  imports: [AboutUsFormComponent, CommonModule],
+  imports: [AboutUsFormComponent, CommonModule, TruncateWordsPipe],
   templateUrl: './about-us-index.component.html',
   styleUrls: ['./about-us-index.component.css'],
 })

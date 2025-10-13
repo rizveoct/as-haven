@@ -23,19 +23,14 @@
           <th class="px-6 py-3">Address</th>
           <th class="px-6 py-3">Thumbnail</th>
           <th class="px-6 py-3">Category</th>
-          <th class="px-6 py-3">Type</th>
-          <!-- <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Content
-          </th> -->
+          <th class="px-6 py-3">Type</th>          
           <th class="px-6 py-3">Offer title</th>
           <th class="px-6 py-3">Offer date</th>
           <th class="px-6 py-3">Status</th>
           <th class="px-6 py-3">Actions</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-slate-100">
+      <tbody class="divide-y divide-slate-400">
         <tr *ngFor="let item of projects" class="transition duration-150 hover:bg-slate-50">
           <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900">
             {{ item.name }}
@@ -57,23 +52,7 @@
           </td>
           <td class="px-6 py-4">{{ item.category }}</td>
           <td class="px-6 py-4">{{ item.type }}</td>
-          <!-- <td class="px-6 py-4">
-            <ng-container *ngIf="item.contentType === 'Image'">
-              <img
-                class="w-10 h-10 object-cover rounded"
-                [src]="apiBaseUrl + '/api/attachment/get/' + item.content"
-                alt="Content"
-              />
-            </ng-container>
-            <ng-container *ngIf="item.contentType === 'Video'">
-              <video class="w-10 h-10 object-cover rounded" controls>
-                <source
-                  [src]="apiBaseUrl + '/api/attachment/get/' + item.content"
-                  type="video/mp4"
-                />
-              </video>
-            </ng-container>
-          </td> -->
+          
           <td class="px-6 py-4">{{ item.offerTitle }}</td>
           <td class="px-6 py-4">
             {{ item.offerDateTime | date : "short" }}
@@ -138,35 +117,9 @@
                 class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
               >
                 Features
-              </a>
+              </a>             
 
-              <a
-                [routerLink]="[item.id, 'units']"
-                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-              >
-                Units
-              </a>
-
-              <a
-                [routerLink]="[item.id, 'floor-plan']"
-                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-              >
-                Floor plan
-              </a>
-
-              <a
-                [routerLink]="[item.id, 'brochure']"
-                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-              >
-                Brochure
-              </a>
-
-              <a
-                [routerLink]="[item.id, 'offers']"
-                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-              >
-                Offers
-              </a>
+              
             </div>
           </td>
         </tr>

@@ -6,14 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, Subject, fromEvent, merge } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  startWith,
-  takeUntil,
-  throttleTime,
-} from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../../services/scroll.service';
 import { LenisService } from '../../services/lenis.service';
 

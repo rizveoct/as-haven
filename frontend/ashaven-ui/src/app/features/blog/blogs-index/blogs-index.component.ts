@@ -18,7 +18,7 @@ import { BlogFormComponent } from '../blog-form/blog-form.component';
   standalone: true,
   imports: [CommonModule, BlogFormComponent],
   templateUrl: './blogs-index.component.html',
-  styleUrls: ['./blogs-index.component.css'],
+  styleUrl: './blogs-index.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlogsIndexComponent implements OnInit, OnDestroy {

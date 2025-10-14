@@ -1,97 +1,176 @@
 import {
-  ChangeDetectionStrategy,
   Component,
-  OnDestroy,
   OnInit,
+  ElementRef,
+  Renderer2,
+  signal,
 } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { BehaviorSubject, Subject, combineLatest } from 'rxjs';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { BlogService } from '../../services/blog.service';
-import { BlogSummary } from '../../models/model';
 import { environment } from '../../environments/environment';
+import { AnimationService } from '../../services/animation.service';
+
+
 
 @Component({
   selector: 'app-blog-details',
   standalone: true,
-  imports: [CommonModule, RouterModule, DatePipe],
+  imports: [CommonModule, RouterModule],
   templateUrl: './blog-details.component.html',
   styleUrls: ['./blog-details.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogDetailsComponent implements OnInit, OnDestroy {
-  readonly blog$ = new BehaviorSubject<BlogSummary | null>(null);
-  readonly relatedBlogs$ = new BehaviorSubject<BlogSummary[]>([]);
-  readonly isLoading$ = new BehaviorSubject<boolean>(false);
-  readonly loadError$ = new BehaviorSubject<boolean>(false);
-  readonly baseUrl = environment.baseUrl;
+export class BlogDetailsComponent implements OnInit {
+  baseURL = environment.baseUrl;
+  blogId!: string;
 
-  private readonly destroy$ = new Subject<void>();
+  data = signal<any>(null);
+  list = signal<any[]>([]);
+  countdowns = signal<string[]>([]);
+  countdown = signal<any>(null);
+  offerActive = signal<boolean>(true);
 
   constructor(
-    private readonly route: ActivatedRoute,
-    private readonly blogService: BlogService
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private anim: AnimationService
   ) {}
 
-  ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        takeUntil(this.destroy$),
-        tap(() => {
-          this.isLoading$.next(true);
-          this.loadError$.next(false);
-        }),
-        map((params) => params.get('id')),
-        filter((id): id is string => !!id),
-        switchMap((id) =>
-          combineLatest([
-            this.blogService.getBlogDetails(id),
-            this.blogService.getActiveBlogs(),
-          ])
-        )
-      )
-      .subscribe({
-        next: ([detail, all]) => {
-          if (!detail) {
-            this.blog$.next(null);
-            this.relatedBlogs$.next([]);
-            this.isLoading$.next(false);
-            this.loadError$.next(true);
-            return;
-          }
+  ngOnInit() {
+    this.blogId = this.route.snapshot.paramMap.get('id') || '';
+    this.getBlog();
+    this.getBlogs();
+  }
 
-          this.blog$.next(detail);
-          this.relatedBlogs$.next(
-            (all || []).filter((item) => item.id !== detail.id).slice(0, 3)
-          );
-          this.isLoading$.next(false);
+
+  ngAfterViewInit() {
+    //this.animateOnScroll();
+
+    this.anim.animateOnScroll('.fade-up');
+    this.anim.animateOnScroll('.zoom-in');
+    const blogRow = this.el.nativeElement.querySelector('#blogRow');
+    const image = this.el.nativeElement.querySelector('#blogImage');
+
+    if (blogRow && image) {
+      const updateHeight = () => {
+        blogRow.style.minHeight = image.offsetHeight + 'px';
+      };
+
+      // Initial set
+      updateHeight();
+
+      // Watch for image resize (responsive)
+      const observer = new ResizeObserver(() => updateHeight());
+      observer.observe(image);
+
+      // Also adjust on window resize
+      window.addEventListener('resize', updateHeight);
+    }
+  }
+
+  getBlog() {
+    this.http
+      .get(`${this.baseURL}/api/website/getsingleblog?blogId=${this.blogId}`)
+      .subscribe({
+        next: (res: any) => {
+          console.log('Blog API Response:', res); // Debug response
+          this.data.set({
+            ...res,
+            image: res.image
+              ? `${this.baseURL}/api/attachment/get/${res.image}`
+              : '/images/fallback.png',
+          });
+          this.startCountdown();
         },
-        error: () => {
-          this.isLoading$.next(false);
-          this.loadError$.next(true);
+        error: (error) => {
+          console.error('Error fetching blog:', error);
         },
       });
   }
 
-  imageUrl(image?: string | null): string {
-    if (!image) {
-      return '/images/banner/banner-3.png';
+  getBlogs() {
+    this.http.get(`${this.baseURL}/api/website/getblogs`).subscribe({
+      next: (res: any) => {
+        this.list.set(
+          res.map((item: any) => ({
+            ...item,
+            image: item.image
+              ? `${this.baseURL}/api/attachment/get/${item.image}`
+              : '/images/fallback.png',
+            picture: item.picture
+              ? `${this.baseURL}/api/attachment/get/${item.picture}`
+              : '/images/fallback.png',
+          }))
+        );
+        this.startCountdown();
+      },
+      error: (error) => {
+        console.error('Error fetching blogs:', error);
+      },
+    });
+  }
+
+  startCountdown() {
+    this.updateCountdowns();
+    setInterval(() => this.updateCountdowns(), 1000);
+  }
+
+  updateCountdowns() {
+    const now = new Date();
+
+    const blog = this.data();
+    if (!blog || !blog.offerDate) {
+      this.offerActive.set(false);
+      this.countdown.set(null);
+    } else {
+      const diff = new Date(blog.offerDate).getTime() - now.getTime();
+      if (diff > 0) {
+        this.countdown.set(this.calcTime(diff));
+        this.offerActive.set(true);
+      } else {
+        this.countdown.set(this.zeroTime());
+        this.offerActive.set(false);
+      }
     }
 
-    return `${this.baseUrl}/api/attachment/get/${image}`;
+    this.countdowns.set(
+      this.list().map((item) => {
+        if (!item.offerDate) return 'No Offer';
+        const diff = new Date(item.offerDate).getTime() - now.getTime();
+        return diff > 0
+          ? `${this.pad(Math.floor(diff / 86400000))} Days ${this.pad(
+              Math.floor((diff / 3600000) % 24)
+            )}:${this.pad(Math.floor((diff / 60000) % 60))}:${this.pad(
+              Math.floor((diff / 1000) % 60)
+            )}`
+          : 'Offer Expired';
+      })
+    );
   }
 
-  backgroundImage(image?: string | null): string {
-    return `url(${this.imageUrl(image)})`;
+  calcTime(diff: number) {
+    return {
+      days: this.pad(Math.floor(diff / 86400000)),
+      hours: this.pad(Math.floor((diff / 3600000) % 24)),
+      minutes: this.pad(Math.floor((diff / 60000) % 60)),
+      seconds: this.pad(Math.floor((diff / 1000) % 60)),
+    };
   }
 
-  trackById(_: number, item: BlogSummary): string {
-    return item.id;
+  zeroTime() {
+    return { days: '00', hours: '00', minutes: '00', seconds: '00' };
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  pad(n: number) {
+    return String(n).padStart(2, '0');
+  }
+
+  onImageError(event: Event, fallback = '/images/fallback.png') {
+    const img = event.target as HTMLImageElement;
+    if (img && img.src !== fallback) {
+      img.src = fallback;
+    }
   }
 }

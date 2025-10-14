@@ -1,55 +1,63 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { BlogSummary } from '../../../models/model';
 import { BlogCardComponent } from '../../../components/blog-card/blog-card.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-blog-list',
   standalone: true,
   imports: [CommonModule, RouterModule, BlogCardComponent],
   templateUrl: './blog-list.component.html',
-  styleUrls: ['./blog-list.component.css'],
 })
-export class BlogListComponent {
-  @Input() blogs: BlogSummary[] | null | undefined;
-  @Input() isLoading = false;
-  @Input() loadError = false;
-  @Input() baseUrl = '';
-  @Output() retry = new EventEmitter<void>();
+export class BlogListComponent implements OnInit {
+  baseURL = environment.baseUrl;
+  list = signal<any[]>([]);
+  countdowns = signal<string[]>([]);
 
-  get hasBlogs(): boolean {
-    return !!(this.blogs && this.blogs.length);
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.getBlogs();
   }
 
-  get featuredBlog(): BlogSummary | null {
-    if (!this.blogs || this.blogs.length === 0) {
-      return null;
-    }
-    return this.blogs[0];
+  getBlogs() {
+    this.http
+      .get(`${this.baseURL}/api/website/getblogs`)
+      .subscribe((res: any) => {
+        this.list.set(res);
+        this.startCountdown();
+      });
   }
 
-  get highlightBlogs(): BlogSummary[] {
-    if (!this.blogs || this.blogs.length <= 1) {
-      return [];
-    }
-    return this.blogs.slice(1, Math.min(this.blogs.length, 4));
+  startCountdown() {
+    this.updateCountdowns();
+    setInterval(() => this.updateCountdowns(), 1000);
   }
 
-  get gridBlogs(): BlogSummary[] {
-    if (!this.blogs || this.blogs.length <= 1) {
-      return [];
-    }
-
-    const highlightCount = this.highlightBlogs.length;
-    return this.blogs.slice(1 + highlightCount);
+  updateCountdowns() {
+    const now = new Date();
+    this.countdowns.set(
+      this.list().map((item) => {
+        if (!item.offerDate) return 'No Offer';
+        const diff = new Date(item.offerDate).getTime() - now.getTime();
+        if (diff > 0) {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+          const minutes = Math.floor((diff / (1000 * 60)) % 60);
+          const seconds = Math.floor((diff / 1000) % 60);
+          return `${this.pad(days)} Days ${this.pad(hours)}:${this.pad(
+            minutes
+          )}:${this.pad(seconds)}`;
+        } else {
+          return 'Offer Expired';
+        }
+      })
+    );
   }
 
-  trackById(_: number, blog: BlogSummary): string {
-    return blog.id;
-  }
-
-  onRetry(): void {
-    this.retry.emit();
+  pad(n: number) {
+    return String(n).padStart(2, '0');
   }
 }

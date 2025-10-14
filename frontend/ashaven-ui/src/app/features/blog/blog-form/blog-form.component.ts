@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './blog-form.component.html',
-  styleUrls: ['./blog-form.component.css'],
+  styleUrl: './blog-form.component.css',
 })
 export class BlogFormComponent {
   @Input() mode: 'create' | 'edit' = 'create';

@@ -1,27 +1,68 @@
-  <div class="relative w-full h-[60vh] md:h-[80vh] overflow-hidden">
-    <!-- Background Image -->
+
+
+<section
+  class="relative flex min-h-[20rem] items-center justify-center overflow-hidden py-16 sm:py-20"
+  aria-labelledby="aboutHeroTitle"
+>
+  <div class="absolute inset-0">
     <div
-      class="absolute top-0 left-0 w-full h-[120%] bg-cover bg-center transform-gpu will-change-transform"
+      class="absolute -top-16 left-0 h-[130%] w-full bg-cover bg-center transition-transform duration-500 parallax-bg"
       style="background-image: url('/images/banner/banner-3.png')"
-      [ngStyle]="{ transform: 'translateY(' + (scrollY * 0.3 - 60) + 'px)' }"
+      
     ></div>
+    <div class="absolute inset-0 from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
+  </div>
 
-    <!-- Optional overlay -->
-    <div class="absolute inset-0 bg-black/40"></div>
+  <div class="hero__accent hero__accent--one"></div>
+  <div class="hero__accent hero__accent--two"></div>
 
-    <!-- Centered content -->
-    <div
-      class="relative z-10 flex flex-col items-center justify-center h-full px-5 gap-2"
-    >
+  <div class="relative z-10 flex h-full w-full items-center">
+    <div class="mx-auto flex h-full w-[80%] flex-col justify-center py-12 md:py-16">
       <div
-        class="inline-flex items-baseline gap-2 backdrop-blur-md rounded-2xl px-6 py-4 shadow-lg max-w-[85%]"
+        class="grid items-center gap-12 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] h-full"
       >
-        <h1
-          class="text-4xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[var(--light)]"
-        >
-          Blogs
-        </h1>
+        <div class="space-y-6 text-center lg:text-left">
+          <span
+            class="inline-flex items-center justify-center gap-2 text-[0.7rem] uppercase tracking-[0.6em] text-white/70 lg:justify-start"
+          >
+            <span class="h-2 w-2 rounded-full bg-accent"></span>
+            Let's See some of our new activities
+          </span>
+          <h1
+            class="text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl"
+            id="contactHeroTitle"
+          >
+            Blogs
+          </h1>
+          <nav
+            class="flex items-center justify-center gap-3 text-sm text-white/60 lg:justify-start"
+            aria-label="Breadcrumb"
+          >
+            <a
+              routerLink="/"
+              class="relative text-white/70 transition-colors duration-300 hover:text-white focus-visible:text-white"
+            >
+              Home
+            </a>
+            <span aria-hidden="true" class="text-white/40">/</span>
+            <span class="text-white">Blogs</span>
+          </nav>
+          <div
+            class="flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+          >
+            <div
+              class="inline-flex items-center gap-3 rounded-full bg-white/5 px-5 py-3 text-white/80 backdrop-blur-xl ring-1 ring-white/10"
+            >
+              <span
+                class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_15px_rgba(255,119,27,0.6)] animate-pulse"
+              ></span>
+              <span class="text-xs uppercase tracking-[0.3em]"
+                >Stills • Motion • Atmospheres</span
+              >
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="text-lg sm:text-xl text-[var(--light)]">Home > Blogs</p>
     </div>
   </div>
+</section>  

@@ -23,6 +23,7 @@ import { GalleryPageComponent } from './pages/gallery-page/gallery-page.componen
 import { ClientComponent } from './features/client/client.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
+import { BlogsIndexComponent } from './features/blogs/blogs-index/blogs-index.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },

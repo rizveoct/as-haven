@@ -21,12 +21,17 @@ import { ProjectCreateComponent } from './features/projects/project-create/proje
 import { GalleryComponent } from './features/gallery/gallery.component';
 import { GalleryPageComponent } from './pages/gallery-page/gallery-page.component';
 import { ClientComponent } from './features/client/client.component';
+import { BlogComponent } from './pages/blog/blog.component';
+import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
+import { BlogsIndexComponent } from './features/blog/blogs-index/blogs-index.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'gallery', component: GalleryPageComponent },
+  { path: 'blogs', component: BlogComponent },
+  { path: 'blogs/:id', component: BlogDetailsComponent },
   { path: 'projects', component: ProjectsComponent },
   { path: 'projectdetails/:id', component: ProjectDetailsComponent },
   { path: 'contact', component: ContactComponent },
@@ -40,6 +45,7 @@ export const routes: Routes = [
       { path: 'teams', component: TeamsIndexComponent },
       { path: 'clients', component: ClientComponent },
       { path: 'testimonials', component: TestimonialsIndexComponent },
+      { path: 'blogs', component: BlogsIndexComponent },
       { path: 'offers', component: OffersIndexComponent },
       { path: 'about-us', component: AboutUsIndexComponent },
       { path: 'faq', component: FaqComponent },

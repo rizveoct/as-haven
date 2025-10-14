@@ -1,20 +1,20 @@
 <div
-  class="relative min-h-screen bg-brand text-pure md:grid md:grid-cols-[280px_1fr]"
+  class="relative min-h-screen bg-slate-50 text-slate-900 md:grid md:grid-cols-[280px_1fr]"
   (click)="closeSidebar($event)"
 >
   <aside
-    class="hidden h-full flex-col gap-10 border-r border-white/10 p-8 backdrop-blur xl:flex"
+    class="hidden h-full flex-col gap-10 border-r border-slate-200 bg-white p-8 xl:flex"
   >
     <div class="flex items-center gap-4">
       <span
-        class="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-sm font-semibold tracking-[0.18em]"
+        class="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-slate-100 text-sm font-semibold tracking-[0.18em] text-slate-600"
         >AE</span
       >
       <div class="space-y-1">
         <strong class="block font-serif text-lg uppercase tracking-[0.18em]"
           >Ashaven Estates</strong
         >
-        <span class="block text-xs uppercase tracking-[0.28em] text-white/60"
+        <span class="block text-xs uppercase tracking-[0.28em] text-slate-500"
           >Control Centre</span
         >
       </div>
@@ -29,8 +29,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           overviewRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-chart-line"></i>
@@ -43,8 +43,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           projectsRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-city"></i>
@@ -57,8 +57,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           clientsRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-user-tie"></i>
@@ -71,8 +71,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           teamsRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-users"></i>
@@ -86,8 +86,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           aboutRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-circle-info text-lg"></i>
@@ -101,12 +101,26 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           testimonialsRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-comment-dots"></i>
         <span>Testimonials</span>
+      </a>
+      <a
+        routerLink="/dashboard/blogs"
+        routerLinkActive
+        #blogsRla="routerLinkActive"
+        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
+        [ngClass]="
+          blogsRla.isActive
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+        "
+      >
+        <i class="fas fa-newspaper"></i>
+        <span>Journal</span>
       </a>
       <a
         routerLink="/dashboard/gallery"
@@ -115,8 +129,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           galleryRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-images"></i>
@@ -129,8 +143,8 @@
         class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
         [ngClass]="
           faqRla.isActive
-            ? 'bg-accent text-pure shadow-[0_18px_45px_rgba(32,71,38,0.35)]'
-            : 'text-white/70 hover:bg-white/10 hover:text-white'
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
         "
       >
         <i class="fas fa-question-circle"></i>
@@ -139,7 +153,7 @@
 
       <button
         type="button"
-        class="mt-auto flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 text-sm font-medium text-white/70 transition hover:-translate-y-0.5 hover:border-white hover:text-white"
+        class="mt-auto flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-600 transition hover:-translate-y-0.5 hover:bg-slate-100 hover:text-slate-900"
         (click)="logout()"
       >
         <i class="fas fa-sign-out-alt"></i>
@@ -150,20 +164,20 @@
 
   <aside
     *ngIf="showSidebar"
-    class="fixed inset-0 z-50 flex bg-brand backdrop-blur-lg xl:hidden"
+    class="fixed inset-0 z-50 flex bg-slate-900/30 backdrop-blur-sm xl:hidden"
   >
     <div
-      class="flex w-full max-w-xs flex-col gap-6 border-r border-white/10 bg-brand p-6"
+      class="flex w-full max-w-xs flex-col gap-6 border-r border-slate-200 bg-white p-6"
     >
       <div
-        class="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-white/60"
+        class="flex items-center justify-between text-xs uppercase tracking-[0.28em] text-slate-500"
       >
         <span>Navigate</span>
         <button
           type="button"
           (click)="toggleSidebar()"
           aria-label="Close navigation"
-          class="text-2xl text-white/70 transition hover:text-white"
+          class="text-2xl text-slate-500 transition hover:text-slate-900"
         >
           &times;
         </button>
@@ -178,8 +192,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileOverview.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-chart-line"></i>
@@ -193,8 +207,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileProjects.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-city"></i>
@@ -208,8 +222,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileClients.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-user-tie"></i>
@@ -223,8 +237,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileTeams.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-users"></i>
@@ -238,12 +252,27 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileTestimonials.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-comment-dots"></i>
           <span>Testimonials</span>
+        </a>
+        <a
+          routerLink="/dashboard/blogs"
+          routerLinkActive
+          #mobileBlogs="routerLinkActive"
+          (click)="closeSidebar()"
+          class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
+          [ngClass]="
+            mobileBlogs.isActive
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+          "
+        >
+          <i class="fas fa-newspaper"></i>
+          <span>Journal</span>
         </a>
         <a
           routerLink="/dashboard/gallery"
@@ -253,8 +282,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileGallery.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-images"></i>
@@ -268,8 +297,8 @@
           class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
           [ngClass]="
             mobileFaq.isActive
-              ? 'bg-accent text-pure'
-              : 'text-white/70 hover:bg-white/10 hover:text-white'
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
           "
         >
           <i class="fas fa-question-circle"></i>
@@ -277,7 +306,7 @@
         </a>
         <button
           type="button"
-          class="mt-4 flex items-center gap-3 rounded-2xl border border-white/10 px-4 py-3 text-sm font-medium text-white/70 transition hover:-translate-y-0.5 hover:border-white hover:text-white"
+          class="mt-4 flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm font-medium text-slate-600 transition hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-900"
           (click)="logout()"
         >
           <i class="fas fa-sign-out-alt"></i>
@@ -289,11 +318,11 @@
 
   <div class="relative flex min-h-screen flex-col bg-white">
     <header
-      class="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-white/10 bg-brand px-6 py-4 backdrop-blur"
+      class="sticky top-0 z-20 flex items-center justify-between gap-4 border-b border-slate-200 bg-white px-6 py-4"
     >
       <button
         type="button"
-        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-lg text-white transition hover:bg-white/20 xl:hidden"
+        class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-600 transition hover:bg-slate-200 xl:hidden"
         (click)="toggleSidebar()"
         aria-label="Toggle navigation"
       >
@@ -301,7 +330,7 @@
       </button>
 
       <div class="flex flex-col text-left">
-        <span class="text-xs uppercase tracking-[0.28em] text-white/60"
+        <span class="text-xs uppercase tracking-[0.28em] text-slate-500"
           >Welcome back, Agent</span
         >
         <strong class="font-serif text-xl">Performance dashboard</strong>
@@ -309,17 +338,17 @@
 
       <div class="flex items-center gap-4">
         <div
-          class="hidden items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/70 lg:flex"
+          class="hidden items-center gap-2 rounded-full border border-slate-200 bg-slate-100 px-4 py-2 text-sm text-slate-600 lg:flex"
         >
           <i class="fas fa-search"></i>
           <input
             type="text"
             placeholder="Search the portfolio"
-            class="w-40 bg-transparent text-sm text-white/80 placeholder:text-white/50 focus:outline-none"
+            class="w-40 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
           />
         </div>
         <button
-          class="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-lg text-white transition hover:bg-white/20"
+          class="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-slate-100 text-lg text-slate-600 transition hover:bg-slate-200"
           type="button"
           aria-label="Notifications"
         >
@@ -330,26 +359,26 @@
         </button>
         <div class="relative" (clickOutside)="closeProfileModal()">
           <button
-            class="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-accent text-sm font-semibold"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 bg-accent text-sm font-semibold text-white"
             (click)="toggleProfileDropdown()"
           >
             AE
           </button>
           <div
             *ngIf="showProfileDropdown"
-            class="absolute right-0 mt-2 w-44 rounded-2xl border border-white/10 bg-emerald-950/95 p-2 text-sm shadow-lg"
+            class="absolute right-0 mt-2 w-44 rounded-2xl border border-slate-200 bg-white p-2 text-sm shadow-lg"
           >
             <button
               type="button"
               (click)="openProfileModal()"
-              class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-white/80 transition hover:bg-white/10 hover:text-white"
+              class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Profile
             </button>
             <button
               type="button"
               (click)="logout()"
-              class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-white/80 transition hover:bg-white/10 hover:text-white"
+              class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
             >
               Logout
             </button>
@@ -368,10 +397,10 @@
 
 <div
   *ngIf="showProfileModal"
-  class="fixed inset-0 z-50 flex items-center justify-center backdrop-blur"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/30 backdrop-blur"
 >
   <div
-    class="w-[min(90%,26rem)] rounded-3xl border border-white/10 bg-emerald-950/95 p-8 text-white shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
+    class="w-[min(90%,26rem)] rounded-3xl border border-slate-200 bg-white p-8 text-slate-900 shadow-xl"
   >
     <h2 class="font-serif text-2xl">Profile</h2>
     <form
@@ -380,38 +409,38 @@
       class="mt-6 flex flex-col gap-4"
     >
       <label
-        class="text-sm font-semibold uppercase tracking-[0.18em] text-white/70"
+        class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-600"
         >Username</label
       >
       <input
         formControlName="username"
-        class="rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-sm text-white focus:border-accent focus:outline-none"
+        class="rounded-2xl border border-slate-300 bg-slate-100 px-4 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none"
       />
 
       <label
-        class="text-sm font-semibold uppercase tracking-[0.18em] text-white/70"
+        class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-600"
         >New Password</label
       >
       <input
         type="password"
         formControlName="password"
-        class="rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-sm text-white focus:border-accent focus:outline-none"
+        class="rounded-2xl border border-slate-300 bg-slate-100 px-4 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none"
       />
 
       <label
-        class="text-sm font-semibold uppercase tracking-[0.18em] text-white/70"
+        class="text-sm font-semibold uppercase tracking-[0.18em] text-slate-600"
         >Confirm Password</label
       >
       <input
         type="password"
         formControlName="confirmPassword"
-        class="rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-sm text-white focus:border-accent focus:outline-none"
+        class="rounded-2xl border border-slate-300 bg-slate-100 px-4 py-2 text-sm text-slate-900 focus:border-accent focus:outline-none"
       />
 
       <div class="mt-4 flex justify-end gap-3">
         <button
           type="button"
-          class="rounded-full border border-white/20 px-5 py-2 text-sm font-semibold text-white/80 transition hover:border-white hover:text-white"
+          class="rounded-full border border-slate-300 px-5 py-2 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
           (click)="closeProfileModal()"
         >
           Cancel

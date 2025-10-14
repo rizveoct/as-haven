@@ -8,6 +8,7 @@ import { AnimationService } from '../../services/animation.service';
 import { Offer } from '../../models/model';
 import { OfferService } from '../../services/offer.service';
 import { CommonModule } from '@angular/common';
+import { FollowUpdateComponent } from '../../components/follow-update/follow-update.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,8 @@ import { CommonModule } from '@angular/common';
     VisionBannerComponent,
     TestimonialCarouselComponent,
     SliderComponent,
-    HeroSlideComponent
+    HeroSlideComponent,
+    FollowUpdateComponent
 ],
   templateUrl: './home.component.html',
 })

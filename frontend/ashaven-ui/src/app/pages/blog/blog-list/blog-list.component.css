@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+section {
+  position: relative;
+}
+
+@media (max-width: 1023px) {
+  .grid > app-blog-card + app-blog-card {
+    margin-top: 1rem;
+  }
+}

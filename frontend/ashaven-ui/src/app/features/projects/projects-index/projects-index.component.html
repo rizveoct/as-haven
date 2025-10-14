@@ -1,95 +1,53 @@
-<div class="container mx-auto p-6">
+<div class="space-y-6">
   <!-- Header -->
-  <div class="flex items-center mb-6 fade-up animate">
-    <h6 class="text-lg font-bold text-accent grow">List of Projects</h6>
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <h6 class="text-xl font-semibold text-slate-900">Property listings</h6>
+      <p class="text-sm text-slate-500">Oversee every project showcased on the public site.</p>
+    </div>
     <a
       [routerLink]="['create']"
-      class="px-5 py-2 text-white bg-accent border border-accent/80 hover:bg-accent/80 focus:ring-2 focus:ring-accent/50 rounded-lg transition duration-300"
+      class="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
     >
-      <span class="align-middle">Create Project</span>
+      Create project
     </a>
   </div>
 
   <!-- Projects Table -->
-  <div
-    class="relative overflow-x-auto rounded-lg shadow-md fade-up animate border-emerald-50/10 bg-brand"
-  >
-    <table class="min-w-full divide-y divide-lightDark">
-      <thead class="bg-accentLight">
+  <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    <table class="min-w-full table-auto divide-y divide-slate-100 text-left text-sm text-slate-600">
+      <thead class="bg-slate-100/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
         <tr>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Name
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Description
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Address
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Thumbnail
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Category
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Type
-          </th>
+          <th class="px-6 py-3">Name</th>
+          <th class="px-6 py-3">Description</th>
+          <th class="px-6 py-3">Address</th>
+          <th class="px-6 py-3">Thumbnail</th>
+          <th class="px-6 py-3">Category</th>
+          <th class="px-6 py-3">Type</th>
           <!-- <th
             class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
           >
             Content
           </th> -->
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Offer Title
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Offer Date
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Status
-          </th>
-          <th
-            class="px-6 py-3 text-left text-xs font-medium text-dark uppercase tracking-wider"
-          >
-            Actions
-          </th>
+          <th class="px-6 py-3">Offer title</th>
+          <th class="px-6 py-3">Offer date</th>
+          <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3">Actions</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-lightDark">
-        <tr
-          *ngFor="let item of projects"
-          class="hover:bg-light transition duration-200 fade-up animate"
-        >
-          <td class="px-6 py-4 font-medium text-dark whitespace-nowrap">
+      <tbody class="divide-y divide-slate-100">
+        <tr *ngFor="let item of projects" class="transition duration-150 hover:bg-slate-50">
+          <td class="px-6 py-4 whitespace-nowrap font-medium text-slate-900">
             {{ item.name }}
           </td>
-          <td class="px-6 py-4 text-sm text-dark">
+          <td class="px-6 py-4">
             <ng-container *ngIf="item.description; else noDescription">
               {{ item.description | slice : 0 : 100
               }}{{ item.description.length > 100 ? "..." : "" }}
             </ng-container>
             <ng-template #noDescription>-</ng-template>
           </td>
-          <td class="px-6 py-4 text-sm text-dark">{{ item.address }}</td>
+          <td class="px-6 py-4">{{ item.address }}</td>
           <td class="px-6 py-4">
             <img
               class="w-10 h-10 object-cover rounded"
@@ -97,8 +55,8 @@
               alt="Thumbnail"
             />
           </td>
-          <td class="px-6 py-4 text-sm text-dark">{{ item.category }}</td>
-          <td class="px-6 py-4 text-sm text-dark">{{ item.type }}</td>
+          <td class="px-6 py-4">{{ item.category }}</td>
+          <td class="px-6 py-4">{{ item.type }}</td>
           <!-- <td class="px-6 py-4">
             <ng-container *ngIf="item.contentType === 'Image'">
               <img
@@ -116,92 +74,100 @@
               </video>
             </ng-container>
           </td> -->
-          <td class="px-6 py-4 text-sm text-dark">{{ item.offerTitle }}</td>
-          <td class="px-6 py-4 text-sm text-dark">
+          <td class="px-6 py-4">{{ item.offerTitle }}</td>
+          <td class="px-6 py-4">
             {{ item.offerDateTime | date : "short" }}
           </td>
           <td class="px-6 py-4">
             <span
               *ngIf="item.isActive"
-              class="px-2.5 py-0.5 text-xs font-medium rounded bg-accent/20 text-accent inline-flex items-center"
+              class="inline-flex items-center gap-1 rounded-full bg-brand/10 px-3 py-1 text-xs font-medium text-brand"
             >
-              <i class="fas fa-check-circle mr-1.5"></i> Active
+              <i class="fas fa-check-circle"></i>
+              Active
             </span>
             <span
               *ngIf="!item.isActive"
-              class="px-2.5 py-0.5 text-xs font-medium rounded bg-red-500/20 text-red-500 inline-flex items-center"
+              class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-500"
             >
-              <i class="fas fa-times-circle mr-1.5"></i> Inactive
+              <i class="fas fa-times-circle"></i>
+              Inactive
             </span>
           </td>
-          <td class="px-6 py-4 text-right space-x-2">
-            <!-- Edit -->
-            <a
-              [routerLink]="[item.id, 'edit']"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Edit</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </a>
+          <td class="px-6 py-4 text-right">
+            <div class="flex flex-wrap justify-end gap-2">
+              <a
+                [routerLink]="[item.id, 'edit']"
+                class="rounded-full border border-brand/20 px-4 py-2 text-sm font-medium text-brand transition hover:bg-brand hover:text-white"
+              >
+                Edit
+              </a>
 
-            <!-- Deactivate -->
-            <button
-              *ngIf="item.isActive"
-              (click)="toggleProjectActive(item.id, false)"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Deactivate</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </button>
+              <button
+                *ngIf="item.isActive"
+                (click)="toggleProjectActive(item.id, false)"
+                class="rounded-full border border-amber-200 px-4 py-2 text-sm font-medium text-amber-600 transition hover:bg-amber-50"
+              >
+                Deactivate
+              </button>
 
-            <!-- Activate -->
-            <button
-              *ngIf="!item.isActive"
-              (click)="toggleProjectActive(item.id, true)"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Activate</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </button>
+              <button
+                *ngIf="!item.isActive"
+                (click)="toggleProjectActive(item.id, true)"
+                class="rounded-full border border-brand/20 px-4 py-2 text-sm font-medium text-brand transition hover:bg-brand hover:text-white"
+              >
+                Activate
+              </button>
 
-            <!-- Delete -->
-            <button
-              (click)="deleteProject(item.id)"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-red-500 rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Delete</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </button>
+              <button
+                (click)="deleteProject(item.id)"
+                class="rounded-full border border-rose-200 px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50"
+              >
+                Delete
+              </button>
 
-            <!-- Gallery -->
-            <a
-              [routerLink]="[item.id, 'gallery']"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Gallery</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </a>
+              <a
+                [routerLink]="[item.id, 'gallery']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Gallery
+              </a>
 
-            <!-- Features -->
-            <a
-              [routerLink]="[item.id, 'features']"
-              class="relative inline-flex items-center px-3 py-1 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
-            >
-              <span class="relative z-10">Features</span>
-              <span
-                class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-              ></span>
-            </a>
+              <a
+                [routerLink]="[item.id, 'features']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Features
+              </a>
+
+              <a
+                [routerLink]="[item.id, 'units']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Units
+              </a>
+
+              <a
+                [routerLink]="[item.id, 'floor-plan']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Floor plan
+              </a>
+
+              <a
+                [routerLink]="[item.id, 'brochure']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Brochure
+              </a>
+
+              <a
+                [routerLink]="[item.id, 'offers']"
+                class="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+              >
+                Offers
+              </a>
+            </div>
           </td>
         </tr>
       </tbody>

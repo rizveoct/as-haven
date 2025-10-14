@@ -1,0 +1,45 @@
+<section
+  class="relative overflow-hidden bg-gradient-to-b from-pure via-mist to-brand/10 py-20 text-brand"
+  aria-labelledby="blogHeroTitle"
+>
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute -left-10 top-6 h-40 w-40 rounded-full bg-accent/30 blur-3xl md:h-56 md:w-56"></div>
+    <div class="absolute -right-8 bottom-6 h-48 w-48 rounded-full bg-brand/20 blur-3xl md:h-64 md:w-64"></div>
+  </div>
+
+  <div class="relative z-10 mx-auto flex w-[min(1180px,92%)] md:w-[80%] flex-col gap-10 text-center md:text-left">
+    <div class="space-y-5">
+      <span class="inline-flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-brand/70 md:justify-start">
+        <span class="h-2 w-2 rounded-full bg-accent"></span>
+        Insights & Updates
+      </span>
+      <h1
+        id="blogHeroTitle"
+        class="font-serif text-4xl font-semibold leading-tight text-brand md:text-5xl"
+      >
+        AS Haven Journal
+      </h1>
+      <p class="mx-auto max-w-2xl text-base text-brand/70 md:mx-0">
+        Explore polished stories from our developments, the people behind each home, and the milestones that move Ashaven forward.
+      </p>
+    </div>
+
+    <nav class="flex items-center justify-center gap-3 text-sm text-brand/60 md:justify-start" aria-label="Breadcrumb">
+      <a routerLink="/" class="transition hover:text-brand focus-visible:text-brand">Home</a>
+      <span aria-hidden="true">/</span>
+      <span class="text-brand">Journal</span>
+    </nav>
+  </div>
+</section>
+
+@let blogs = blogs$ | async;
+@let isLoading = isLoading$ | async;
+@let loadError = loadError$ | async;
+
+<app-blog-list
+  [blogs]="blogs"
+  [isLoading]="isLoading ?? false"
+  [loadError]="loadError ?? false"
+  [baseUrl]="baseUrl"
+  (retry)="loadBlogs()"
+></app-blog-list>

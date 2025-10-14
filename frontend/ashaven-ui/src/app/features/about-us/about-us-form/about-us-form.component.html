@@ -1,15 +1,15 @@
 <div
-  class="relative w-full max-w-md sm:max-w-2xl md:max-w-3xl border-emerald-50/10 bg-brand rounded-xl shadow-2xl p-4 sm:p-5 md:p-6 transform transition-all duration-300 scale-100 max-h-[90vh] overflow-y-auto"
+  class="relative w-full max-w-md sm:max-w-2xl md:max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl border border-slate-200 bg-white p-5 shadow-xl transition-all"
 >
   <!-- Header -->
   <div class="flex justify-between items-center mb-4 sm:mb-5">
-    <h3 class="text-base sm:text-lg font-bold text-dark">
+    <h3 class="text-base sm:text-lg font-semibold text-slate-900">
       {{ mode === 'create' ? 'Add About Us' : 'Edit About Us' }}
     </h3>
     <button
       type="button"
       (click)="closeModal()"
-      class="text-lightDark hover:text-dark hover:bg-brand/95 rounded-full p-1.5 sm:p-2 transition-colors duration-200"
+      class="rounded-full p-1.5 sm:p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
     >
       <svg class="w-4 sm:w-5 h-4 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -24,7 +24,7 @@
 
       <!-- History -->
       <div>
-        <label for="history" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="history" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-book mr-1 sm:mr-1.5"></i>History
         </label>
         <textarea
@@ -32,7 +32,7 @@
           [(ngModel)]="_aboutUs.history"
           name="history"
           rows="2"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Write company history here"
           required
         ></textarea>
@@ -40,7 +40,7 @@
 
       <!-- Vision -->
       <div>
-        <label for="vision" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="vision" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-eye mr-1 sm:mr-1.5"></i>Vision
         </label>
         <textarea
@@ -48,7 +48,7 @@
           [(ngModel)]="_aboutUs.vision"
           name="vision"
           rows="2"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Write company vision here"
           required
         ></textarea>
@@ -57,7 +57,7 @@
 
       <!-- Mission -->
       <div>
-        <label for="mission" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="mission" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-bullseye mr-1 sm:mr-1.5"></i>Mission
         </label>
         <textarea
@@ -65,7 +65,7 @@
           [(ngModel)]="_aboutUs.mission"
           name="mission"
           rows="2"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Write company mission here"
           required
         ></textarea>
@@ -73,7 +73,7 @@
 
       <!-- Owner Name -->
       <div class="sm:col-span-1">
-        <label for="ownerName" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="ownerName" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-user mr-1 sm:mr-1.5"></i>Owner Name
         </label>
         <input
@@ -81,7 +81,7 @@
           [(ngModel)]="_aboutUs.ownerName"
           name="ownerName"
           type="text"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Enter owner name"
           required
         />
@@ -89,7 +89,7 @@
 
       <!-- Owner Designation -->
       <div class="sm:col-span-1">
-        <label for="ownerDesignation" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="ownerDesignation" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-briefcase mr-1 sm:mr-1.5"></i>Owner Designation
         </label>
         <input
@@ -97,7 +97,7 @@
           [(ngModel)]="_aboutUs.ownerDesignation"
           name="ownerDesignation"
           type="text"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Enter owner designation"
           required
         />
@@ -105,7 +105,7 @@
 
       <!-- Owner Speech -->
       <div class="sm:col-span-2 md:col-span-3">
-        <label for="ownerSpeech" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="ownerSpeech" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-comment-alt mr-1 sm:mr-1.5"></i>Owner Speech
         </label>
         <textarea
@@ -113,14 +113,14 @@
           [(ngModel)]="_aboutUs.ownerSpeech"
           name="ownerSpeech"
           rows="3"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="Write owner speech here"
           required
         ></textarea>
       </div>
 
       <div>
-        <label for="facebook" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="facebook" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fab fa-facebook mr-1 sm:mr-1.5"></i>Facebook
         </label>
         <input
@@ -128,14 +128,14 @@
           name="facebook"
           [(ngModel)]="_aboutUs.facebook"
           type="text"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="https://facebook.com/username"
           required
         />
       </div>
 
       <div>
-        <label for="twitter" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="twitter" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fab fa-twitter mr-1 sm:mr-1.5"></i>Twitter
         </label>
         <input
@@ -143,14 +143,14 @@
           name="twitter"
           [(ngModel)]="_aboutUs.twitter"
           type="text"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="https://twitter.com/username"
           required
         />
       </div>
 
       <div>
-        <label for="linkedIn" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="linkedIn" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fab fa-linkedin mr-1 sm:mr-1.5"></i>LinkedIn
         </label>
         <input
@@ -158,7 +158,7 @@
           name="linkedIn"
           [(ngModel)]="_aboutUs.linkedIn"
           type="text"
-          class="w-full p-2 sm:p-3 bg-brand/95 border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand sm:p-3 sm:text-sm"
           placeholder="https://linkedin.com/username"
           required
         />
@@ -166,7 +166,7 @@
 
       <!-- Images -->
       <div>
-        <label for="image" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="image" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-image mr-1 sm:mr-1.5"></i>Owner Image
         </label>
         <input
@@ -174,12 +174,12 @@
           name="image"
           type="file"
           (change)="onOwnerImageChange($event)"
-          class="w-full p-2 sm:p-2.5 bg-brand/95 border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 file:mr-2 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-brand transition hover:file:bg-brand/20 sm:p-2.5 sm:text-sm"
         />
       </div>
 
       <div>
-        <label for="visionImage" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="visionImage" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-image mr-1 sm:mr-1.5"></i>Vision Image
         </label>
         <input
@@ -187,12 +187,12 @@
           name="visionImage"
           type="file"
           (change)="onVisionImageChange($event)"
-          class="w-full p-2 sm:p-2.5 bg-brand/95 border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 file:mr-2 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-brand transition hover:file:bg-brand/20 sm:p-2.5 sm:text-sm"
         />
       </div>
 
       <div>
-        <label for="missionImage" class="block mb-1 text-xs sm:text-sm font-medium text-dark">
+        <label for="missionImage" class="block mb-1 text-xs sm:text-sm font-medium text-slate-600">
           <i class="fas fa-image mr-1 sm:mr-1.5"></i>Mission Image
         </label>
         <input
@@ -200,23 +200,23 @@
           name="missionImage"
           type="file"
           (change)="onMissionImageChange($event)"
-          class="w-full p-2 sm:p-2.5 bg-brand/95 border border-lightDark rounded-lg text-dark file:mr-2 sm:file:mr-3 file:py-1 sm:file:py-1.5 file:px-2 sm:file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-xs sm:text-sm"
+          class="w-full rounded-xl border border-slate-200 bg-slate-50 p-2 text-xs text-slate-700 file:mr-2 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-brand transition hover:file:bg-brand/20 sm:p-2.5 sm:text-sm"
         />
       </div>
 
       <!-- Submit Button -->
-      <div class="mt-6 sm:mt-10 flex justify-center sm:col-span-3">
+      <div class="mt-6 flex justify-center sm:col-span-3 sm:mt-10">
         <button
           type="submit"
-          class="relative inline-flex items-center px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300 w-full sm:w-auto"
+          class="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-full bg-brand px-4 py-2 text-xs font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand/90 sm:w-auto sm:px-5 sm:py-2.5 sm:text-sm"
         >
-          <span class="relative z-10 flex items-center">
-            <svg class="mr-1 sm:mr-2 w-3 sm:w-4 h-3 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <span class="relative z-10 flex items-center gap-2">
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
             </svg>
-            {{ mode === 'create' ? 'Save' : 'Update' }}
+            {{ mode === 'create' ? 'Save entry' : 'Update entry' }}
           </span>
-          <span class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
+          <span class="absolute inset-0 -z-0 translate-x-full bg-slate-900/10 transition-transform duration-300 ease-out group-hover:translate-x-0"></span>
         </button>
       </div>
 

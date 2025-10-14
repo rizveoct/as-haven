@@ -124,6 +124,20 @@
         <span>Testimonials</span>
       </a>
       <a
+        routerLink="/dashboard/blogs"
+        routerLinkActive
+        #blogsRla="routerLinkActive"
+        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
+        [ngClass]="
+          blogsRla.isActive
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+        "
+      >
+        <i class="fas fa-newspaper"></i>
+        <span>Journal</span>
+      </a>
+      <a
         routerLink="/dashboard/gallery"
         routerLinkActive
         #galleryRla="routerLinkActive"
@@ -259,6 +273,21 @@
         >
           <i class="fas fa-comment-dots"></i>
           <span>Testimonials</span>
+        </a>
+        <a
+          routerLink="/dashboard/blogs"
+          routerLinkActive
+          #mobileBlogs="routerLinkActive"
+          (click)="closeSidebar()"
+          class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
+          [ngClass]="
+            mobileBlogs.isActive
+              ? 'bg-brand text-white'
+              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+          "
+        >
+          <i class="fas fa-newspaper"></i>
+          <span>Journal</span>
         </a>
         <a
           routerLink="/dashboard/gallery"

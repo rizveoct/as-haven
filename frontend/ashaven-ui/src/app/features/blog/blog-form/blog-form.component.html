@@ -1,0 +1,126 @@
+<div
+  class="flex min-h-full w-full items-center justify-center px-4 py-8"
+  role="dialog"
+  aria-modal="true"
+>
+  <div class="relative w-full max-w-3xl rounded-3xl border border-slate-200 bg-white shadow-xl">
+    <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4">
+      <div>
+        <h3 class="text-lg font-semibold text-slate-900">
+          {{ mode === 'create' ? 'Create article' : 'Edit article' }}
+        </h3>
+        <p class="text-sm text-slate-500">
+          Share a polished update for the public journal.
+        </p>
+      </div>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="rounded-full p-2 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
+      >
+        <span class="sr-only">Close</span>
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <form (ngSubmit)="saveBlog()" enctype="multipart/form-data" class="grid gap-6 px-6 py-6">
+      <div class="grid gap-4 md:grid-cols-2">
+        <label class="md:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-slate-600">Title</span>
+          <input
+            type="text"
+            name="title"
+            [(ngModel)]="_blog.title"
+            required
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+            placeholder="Headline for the update"
+          />
+        </label>
+
+        <label class="md:col-span-2">
+          <span class="mb-1.5 block text-sm font-medium text-slate-600">Summary</span>
+          <textarea
+            rows="4"
+            name="description"
+            [(ngModel)]="_blog.description"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+            placeholder="Share the story in a few sentences"
+          ></textarea>
+        </label>
+
+        <label>
+          <span class="mb-1.5 block text-sm font-medium text-slate-600">Publish date</span>
+          <input
+            type="datetime-local"
+            name="postedDate"
+            [(ngModel)]="postedDateInput"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+          />
+        </label>
+
+        <label>
+          <span class="mb-1.5 block text-sm font-medium text-slate-600">Highlight event (optional)</span>
+          <input
+            type="datetime-local"
+            name="offerDateTime"
+            [(ngModel)]="offerDateInput"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+          />
+        </label>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-[1fr_auto] md:items-start">
+        <label>
+          <span class="mb-1.5 block text-sm font-medium text-slate-600">Feature image</span>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onImageChange($event)"
+            class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition file:mr-3 file:rounded-lg file:border-0 file:bg-brand/10 file:px-3 file:py-1.5 file:text-brand hover:file:bg-brand/20 focus:border-brand focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand"
+          />
+          <p class="mt-2 text-xs text-slate-500">JPG or PNG up to 2MB works best.</p>
+        </label>
+
+        <div class="flex flex-col items-center gap-3">
+          <div class="h-28 w-40 overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+            <img *ngIf="previewUrl" [src]="previewUrl" alt="Selected image preview" class="h-full w-full object-cover" />
+            <div *ngIf="!previewUrl" class="flex h-full w-full items-center justify-center text-xs text-slate-400">
+              No image
+            </div>
+          </div>
+          <span class="text-xs text-slate-500">Preview</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-slate-50 p-4 text-xs text-slate-500">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand/10 text-brand">
+            <i class="ri-information-line"></i>
+          </span>
+          <p>
+            Articles go live instantly after saving. Toggle visibility from the journal list when you're ready to draft privately again.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end">
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="inline-flex items-center gap-2 rounded-full border border-slate-200 px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:-translate-y-0.5 hover:border-slate-300 hover:text-slate-900"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
+        >
+          <i class="ri-check-line" aria-hidden="true"></i>
+          {{ mode === 'create' ? 'Publish article' : 'Update article' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

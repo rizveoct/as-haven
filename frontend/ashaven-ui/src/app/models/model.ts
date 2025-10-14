@@ -142,3 +142,26 @@ export interface ProjectGallery {
   projectId: string;
   isActive: boolean;
 }
+
+export interface Blog {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  isActive: boolean;
+  createdDate?: string;
+  postedDate?: string;
+  offerDateTime?: string;
+  userId?: string;
+}
+
+export interface BlogSummary {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  name?: string;
+  picture?: string;
+  postedDate?: string;
+  offerDate?: string;
+}

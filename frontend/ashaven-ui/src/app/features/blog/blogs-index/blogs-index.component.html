@@ -1,0 +1,158 @@
+<div class="space-y-6">
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <h6 class="text-xl font-semibold text-slate-900">Journal posts</h6>
+      <p class="text-sm text-slate-500">Publish and curate every update that appears on the public blog.</p>
+    </div>
+    <button
+      type="button"
+      (click)="openCreateModal()"
+      class="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
+    >
+      Create article
+    </button>
+  </div>
+
+  <div *ngIf="showCreateModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+    <app-blog-form mode="create" [blog]="null" (close)="closeModal()" (saved)="onBlogSaved()" />
+  </div>
+
+  <div *ngIf="showEditModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm">
+    <app-blog-form mode="edit" [blog]="selectedBlog" (close)="closeModal()" (saved)="onBlogSaved()" />
+  </div>
+
+  <div *ngIf="loadError" class="rounded-2xl border border-dashed border-accent/40 bg-white p-8 text-center text-slate-600">
+    <h3 class="text-lg font-semibold text-slate-900">We couldn't load the articles.</h3>
+    <p class="mt-2 text-sm">Check your connection and try again.</p>
+    <button
+      type="button"
+      (click)="loadBlogs()"
+      class="mt-4 inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
+    >
+      <i class="ri-refresh-line" aria-hidden="true"></i>
+      Retry
+    </button>
+  </div>
+
+  <div
+    *ngIf="!loadError"
+    class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+  >
+    <ng-container *ngIf="!isLoading; else loadingState">
+      <ng-container *ngIf="blogs.length; else emptyState">
+        <table class="min-w-full table-fixed divide-y divide-slate-100 text-left text-sm text-slate-600">
+          <thead class="bg-slate-100/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <tr>
+              <th class="px-6 py-3">Title</th>
+              <th class="px-6 py-3">Published</th>
+              <th class="px-6 py-3">Highlight date</th>
+              <th class="px-6 py-3">Preview</th>
+              <th class="px-6 py-3">Status</th>
+              <th class="px-6 py-3 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr *ngFor="let blog of blogs; trackBy: trackById" class="transition hover:bg-slate-50">
+              <td class="px-6 py-4 align-top font-medium text-slate-900">
+                <div class="space-y-1">
+                  <p class="text-sm font-semibold text-slate-900">{{ blog.title }}</p>
+                  <p class="text-xs text-slate-500 line-clamp-2">{{ blog.description }}</p>
+                </div>
+              </td>
+              <td class="px-6 py-4 align-top">{{ blog.postedDate | date: 'MMM d, y' }}</td>
+              <td class="px-6 py-4 align-top">{{ blog.offerDateTime | date: 'MMM d, y, h:mm a' }}</td>
+              <td class="px-6 py-4 align-top">
+                <img
+                  [src]="imageUrl(blog.image)"
+                  [alt]="blog.title || 'Blog preview'"
+                  class="h-16 w-24 rounded-xl object-cover"
+                />
+              </td>
+              <td class="px-6 py-4 align-top">
+                <span
+                  *ngIf="blog.isActive"
+                  class="inline-flex items-center gap-1 rounded-full bg-brand/10 px-3 py-1 text-xs font-medium text-brand"
+                >
+                  <i class="fas fa-check-circle"></i>
+                  Active
+                </span>
+                <span
+                  *ngIf="!blog.isActive"
+                  class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-500"
+                >
+                  <i class="fas fa-times-circle"></i>
+                  Inactive
+                </span>
+              </td>
+              <td class="px-6 py-4 align-top text-right">
+                <div class="flex flex-wrap justify-end gap-2">
+                  <button
+                    type="button"
+                    (click)="openEditModal(blog)"
+                    class="rounded-full border border-brand/20 px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand hover:text-white"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    *ngIf="blog.isActive"
+                    (click)="toggleBlogActive(blog.id, false)"
+                    class="rounded-full border border-amber-200 px-4 py-2 text-xs font-semibold text-amber-600 transition hover:bg-amber-50"
+                  >
+                    Deactivate
+                  </button>
+                  <button
+                    type="button"
+                    *ngIf="!blog.isActive"
+                    (click)="toggleBlogActive(blog.id, true)"
+                    class="rounded-full border border-brand/20 px-4 py-2 text-xs font-semibold text-brand transition hover:bg-brand hover:text-white"
+                  >
+                    Activate
+                  </button>
+                  <button
+                    type="button"
+                    (click)="deleteBlog(blog.id)"
+                    class="rounded-full border border-rose-200 px-4 py-2 text-xs font-semibold text-rose-600 transition hover:bg-rose-50"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #loadingState>
+      <div class="divide-y divide-slate-100">
+        <div class="animate-pulse px-6 py-6">
+          <div class="h-4 w-2/3 rounded-full bg-slate-200"></div>
+        </div>
+        <div class="space-y-4 px-6 py-6" *ngFor="let _ of [1,2,3,4]">
+          <div class="h-4 w-full rounded-full bg-slate-100"></div>
+          <div class="h-4 w-5/6 rounded-full bg-slate-100"></div>
+          <div class="h-4 w-4/6 rounded-full bg-slate-100"></div>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template #emptyState>
+      <div class="flex flex-col items-center justify-center gap-4 px-10 py-16 text-center">
+        <span class="inline-flex items-center gap-2 rounded-full bg-brand/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-brand">
+          Journal queue is empty
+        </span>
+        <p class="max-w-md text-sm text-slate-600">
+          Start the story by creating the first article. Once published, it will appear instantly on the website.
+        </p>
+        <button
+          type="button"
+          (click)="openCreateModal()"
+          class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
+        >
+          Write first article
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</div>

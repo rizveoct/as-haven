@@ -1,43 +1,34 @@
 <div
-  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 transition-opacity duration-300 fade-up animate"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4 backdrop-blur-sm"
   role="dialog"
   aria-modal="true"
 >
-  <div
-    class="relative w-full max-w-2xl bg-brand rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
-  >
-    <!-- Header -->
-    <div class="flex justify-between items-center mb-5">
-      <h3 class="text-lg font-bold text-dark">
-        {{ mode === 'create' ? 'Add New Team Member' : 'Edit Team Member' }}
+  <div class="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
+    <div class="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+      <h3 class="text-lg font-semibold text-slate-900">
+        {{ mode === 'create' ? 'Add advisor' : 'Edit advisor' }}
       </h3>
       <button
         type="button"
         (click)="close.emit()"
-        class="text-lightDark hover:text-dark hover:bg-light rounded-full p-2 transition-colors duration-200"
+        class="rounded-full p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+        aria-label="Close"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-        <span class="sr-only">Close modal</span>
+        <i class="fas fa-times"></i>
       </button>
     </div>
 
-    <!-- Form -->
-    <form (ngSubmit)="saveTeam()" enctype="multipart/form-data" class="space-y-5">
-      <div class="grid gap-4 sm:grid-cols-2">
-        <!-- Name -->
+    <form (ngSubmit)="saveTeam()" enctype="multipart/form-data" class="space-y-6 px-6 py-6">
+      <div class="grid gap-5 sm:grid-cols-2">
         <div class="sm:col-span-2">
-          <label for="name" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fas fa-user mr-1.5"></i>Name
-          </label>
+          <label for="name" class="mb-1.5 block text-sm font-medium text-slate-700">Full name</label>
           <input
             id="name"
             name="name"
             [(ngModel)]="_team.name"
             type="text"
-            class="w-full p-3 border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
-            placeholder="Enter team member name"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+            placeholder="e.g. Eleanor Maxwell"
             required
           />
           <input
@@ -50,126 +41,108 @@
           />
         </div>
 
-        <!-- Designation -->
         <div class="sm:col-span-2">
-          <label for="designation" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fas fa-briefcase mr-1.5"></i>Designation
-          </label>
+          <label for="designation" class="mb-1.5 block text-sm font-medium text-slate-700">Designation</label>
           <textarea
             id="designation"
             name="designation"
             [(ngModel)]="_team.designation"
             rows="2"
-            class="w-full p-3 bg-brand border border-lightDark rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
-            placeholder="Enter designation (e.g., Real Estate Agent)"
+            class="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+            placeholder="e.g. Senior investment specialist"
           ></textarea>
         </div>
 
-        <!-- Description -->
         <div class="sm:col-span-2">
-          <label for="description" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fas fa-info-circle mr-1.5"></i>Description
-          </label>
+          <label for="description" class="mb-1.5 block text-sm font-medium text-slate-700">Short bio</label>
           <textarea
             id="description"
             name="description"
             [(ngModel)]="_team.description"
-            rows="3"
-            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
-            placeholder="Describe the team member's role or bio"
+            rows="4"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+            placeholder="Introduce the advisor's expertise and role"
           ></textarea>
         </div>
 
-        <!-- Social Media Links -->
         <div>
-          <label for="facebook" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fab fa-facebook-f mr-1.5"></i>Facebook
-          </label>
+          <label for="facebook" class="mb-1.5 block text-sm font-medium text-slate-700">Facebook</label>
           <input
             id="facebook"
             name="facebook"
             [(ngModel)]="_team.facebook"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
             placeholder="https://facebook.com/username"
             required
           />
         </div>
+
         <div>
-          <label for="twitter" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fab fa-twitter mr-1.5"></i>Twitter
-          </label>
+          <label for="twitter" class="mb-1.5 block text-sm font-medium text-slate-700">Twitter / X</label>
           <input
             id="twitter"
             name="twitter"
             [(ngModel)]="_team.twiter"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
             placeholder="https://twitter.com/username"
             required
           />
         </div>
+
         <div>
-          <label for="linkedin" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fab fa-linkedin-in mr-1.5"></i>LinkedIn
-          </label>
+          <label for="linkedin" class="mb-1.5 block text-sm font-medium text-slate-700">LinkedIn</label>
           <input
             id="linkedin"
             name="linkedin"
             [(ngModel)]="_team.linkthen"
             type="text"
-            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
             placeholder="https://linkedin.com/in/username"
             required
           />
         </div>
 
-        <!-- Image -->
         <div>
-          <label for="image" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fas fa-image mr-1.5"></i>Profile Image
-          </label>
+          <label for="image" class="mb-1.5 block text-sm font-medium text-slate-700">Profile image</label>
           <input
             id="image"
             name="image"
             type="file"
             (change)="onFileChange($event)"
-            class="w-full p-2.5 bg-light border border-lightDark bg-brand rounded-lg text-dark file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200 text-sm"
+            class="w-full cursor-pointer rounded-xl border border-dashed border-slate-300 bg-white px-4 py-3 text-sm text-slate-600 file:mr-3 file:cursor-pointer file:rounded-full file:border-0 file:bg-brand/10 file:px-4 file:py-2 file:text-brand hover:border-brand/40"
           />
         </div>
 
-        <!-- Order -->
         <div>
-          <label for="order" class="block mb-1.5 text-sm font-medium text-dark">
-            <i class="fas fa-sort-numeric-up mr-1.5"></i>Order
-          </label>
+          <label for="order" class="mb-1.5 block text-sm font-medium text-slate-700">Order</label>
           <input
             id="order"
             name="order"
             [(ngModel)]="_team.order"
             type="number"
-            class="w-full p-3 bg-light border border-lightDark bg-brand rounded-lg text-dark focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200 text-sm"
-            placeholder="Enter display order"
+            class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
+            placeholder="Display priority"
             required
           />
         </div>
       </div>
 
-      <!-- Submit Button -->
-      <div class="flex justify-end">
+      <div class="flex items-center justify-end gap-3">
+        <button
+          type="button"
+          (click)="close.emit()"
+          class="rounded-full border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+        >
+          Cancel
+        </button>
         <button
           type="submit"
-          class="relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
+          class="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
         >
-          <span class="relative z-10 flex items-center">
-            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-            </svg>
-            {{ mode === 'create' ? 'Create' : 'Update' }}
-          </span>
-          <span
-            class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
-          ></span>
+          <i class="fas fa-check"></i>
+          {{ mode === 'create' ? 'Create' : 'Update' }}
         </button>
       </div>
     </form>

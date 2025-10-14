@@ -1,7 +1,9 @@
 <button
-  [@buttonState]="isVisible ? 'visible' : 'hidden'"
-  (click)="scrollToTop()"
+  type="button"
   class="scroll-to-top"
+  [class.scroll-to-top--visible]="isVisible"
+  (click)="scrollToTop()"
+  aria-label="Scroll back to top"
 >
-  ↑
+  <span aria-hidden="true">↑</span>
 </button>

@@ -1,3 +1,6 @@
 :host {
   display: block;
 }
+a.bg-brand:hover {
+  @apply text-accent;
+}

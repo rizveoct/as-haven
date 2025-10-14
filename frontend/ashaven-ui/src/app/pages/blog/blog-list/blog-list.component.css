@@ -1,0 +1,17 @@
+.headering {
+  background: url('/images/banner/banner-3.png') no-repeat center center;
+  background-size: cover;
+}
+
+.blog_card_box:hover .blog_title h2 {
+  color: #1c7df8 !important;
+}
+
+.blog_image img {
+  transform-origin: center center;
+  transition: ease-in-out 500ms;
+}
+
+.blog_card_box:hover .blog_image img {
+  transform: scale(1.1);
+}

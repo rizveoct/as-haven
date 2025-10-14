@@ -42,18 +42,31 @@
       </thead>
       <tbody class="divide-y divide-slate-100 text-slate-600">
         <tr *ngFor="let item of aboutUsList" class="transition-colors duration-150 hover:bg-slate-50">
-          <td class="px-6 py-4 text-slate-900" title="{{ item.history }}">{{ item.history }}</td>
-          <td class="px-6 py-4" title="{{ item.vision }}">{{ item.vision }}</td>
+          <!-- Limit words; keep full text in title for hover -->
+          <td class="px-6 py-4 text-slate-900" [title]="item.history">
+            {{ item.history | truncateWords:25:'...' }}
+          </td>
+          <td class="px-6 py-4" [title]="item.vision">
+            {{ item.vision | truncateWords:18:'...' }}
+          </td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.visionImage" alt="Vision Image" />
           </td>
-          <td class="px-6 py-4" title="{{ item.mission }}">{{ item.mission }}</td>
+          <td class="px-6 py-4" [title]="item.mission">
+            {{ item.mission | truncateWords:18:'...' }}
+          </td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.missionImage" alt="Mission Image" />
           </td>
-          <td class="px-6 py-4 text-slate-900">{{ item.ownerName }}</td>
-          <td class="px-6 py-4">{{ item.ownerDesignation }}</td>
-          <td class="px-6 py-4" title="{{ item.ownerSpeech }}">{{ item.ownerSpeech }}</td>
+          <td class="px-6 py-4 text-slate-900">
+            {{ item.ownerName }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.ownerDesignation }}
+          </td>
+          <td class="px-6 py-4" [title]="item.ownerSpeech">
+            {{ item.ownerSpeech | truncateWords:22:'...' }}
+          </td>
           <td class="px-6 py-4">
             <img class="w-12 h-12 rounded object-cover" [src]="apiBaseUrl + '/api/attachment/get/' + item.ownerImage" alt="Owner Image" />
           </td>

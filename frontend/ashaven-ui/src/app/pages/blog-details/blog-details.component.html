@@ -1,134 +1,67 @@
-<section class="relative overflow-hidden bg-gradient-to-b from-pure via-mist to-brand/10 text-brand" aria-labelledby="blogDetailTitle">
-  <div class="absolute inset-0 opacity-40" *ngIf="(blog$ | async) as blog">
-    <div
-      class="h-full w-full bg-cover bg-center"
-      [style.background-image]="backgroundImage(blog.image)"
-    ></div>
+<div>
+  <div
+    class="relative bg-cover bg-center w-full h-[60vh] md:h-[80vh] flex items-center justify-center"
+    style="background-image: url('/images/banner/banner-3.png')"
+  >
   </div>
-  <div class="absolute inset-0 bg-gradient-to-t from-brand/70 via-brand/60 to-transparent"></div>
 
-  <div class="relative z-10 mx-auto flex w-[min(1180px,92%)] md:w-[80%] flex-col gap-8 py-24">
-    <nav class="flex items-center gap-3 text-sm text-white/80" aria-label="Breadcrumb">
-      <a routerLink="/" class="transition hover:text-white focus-visible:text-white">Home</a>
-      <span aria-hidden="true">/</span>
-      <a routerLink="/blogs" class="transition hover:text-white focus-visible:text-white">Journal</a>
-      <span aria-hidden="true">/</span>
-      <span class="text-white" *ngIf="(blog$ | async) as blog">{{ blog.title }}</span>
-    </nav>
-
-    <div *ngIf="(blog$ | async) as blog" class="max-w-3xl space-y-7 text-white">
-      <span class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.35em] text-white/80">
-        <span class="h-2 w-2 rounded-full bg-accent"></span>
-        {{ blog.postedDate | date: 'MMM d, y' || 'Latest dispatch' }}
-      </span>
-      <h1 id="blogDetailTitle" class="font-serif text-4xl font-semibold sm:text-5xl">
-        {{ blog.title }}
-      </h1>
-      <p class="text-base text-white/80">
-        {{ blog.description }}
-      </p>
-      <div class="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur">
-        <img
-          *ngIf="blog.picture; else placeholderAvatar"
-          [src]="imageUrl(blog.picture)"
-          alt="Author portrait"
-          class="h-12 w-12 rounded-full object-cover"
-        />
-        <ng-template #placeholderAvatar>
-          <span class="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-lg font-semibold">
-            {{ blog.name ? (blog.name | slice:0:1) : 'A' }}
-          </span>
-        </ng-template>
-        <div>
-          <p class="text-sm font-semibold text-white">{{ blog.name || 'Ashaven Editorial' }}</p>
-          <p class="text-xs uppercase tracking-[0.28em] text-white/70">Insights team</p>
-        </div>
-      </div>
+  <!-- Offer Countdown -->
+  <div
+    class="offer_time_bar absolute top-24 sm:top-28 md:top-40 lg:top-1/4 xl:top-1/3 left-0 right-0 mt-14 fade-up"
+    *ngIf="offerActive()"
+    data-animate="offer"
+  >
+    <h2
+      class="text-slate-200 text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold text-center"
+    >
+      Offer Time
+    </h2>
+    <div class="mt-8 text-center" *ngIf="countdown()">
+      <span class="count-badge">{{ countdown()?.days }}</span>
+      <span class="count-badge">{{ countdown()?.hours }}</span>
+      <span class="count-badge">{{ countdown()?.minutes }}</span>
+      <span class="count-badge">{{ countdown()?.seconds }}</span>
     </div>
   </div>
-</section>
 
-<section class="bg-slate-50 py-16 text-slate-900">
-  <div class="mx-auto flex w-[min(1180px,92%)] md:w-[70%] flex-col gap-12">
-    @let isLoading = isLoading$ | async;
-    @let loadError = loadError$ | async;
-    @let blog = blog$ | async;
+<!-- Blog Content -->
+<div class="blog_details_section py-14 px-4 max-w-5xl ">
+  <div class="flex flex-col lg:flex-row gap-10 items-start" id="blogRow">
+    
+    <!-- Left Side: Title & Description -->
+    <div class="lg:w-1/6 sticky top-24 text-right">
+      <!-- <h2 class="text-4xl font-extrabold text-slate-900 mb-6">
+        {{ data()?.title }}
+      </h2>
+      <p class="text-slate-500 text-sm mb-8">
+        {{ data()?.createdAt | date : "mediumDate" }}
+      </p> -->
+      
+    </div>
 
-    @if (isLoading) {
-      <div class="space-y-6">
-        <div class="h-8 w-1/2 animate-pulse rounded-full bg-white"></div>
-        <div class="h-96 animate-pulse rounded-3xl bg-white"></div>
-        <div class="h-8 w-2/3 animate-pulse rounded-full bg-white"></div>
-      </div>
-    } @else if (loadError) {
-      <div class="rounded-3xl border border-dashed border-accent/40 bg-white p-10 text-center text-slate-600">
-        <h2 class="text-xl font-semibold text-slate-900">This story is currently unavailable.</h2>
-        <p class="mt-3 text-sm text-slate-500">Please head back to the journal to explore other updates.</p>
-        <a
-          routerLink="/blogs"
-          class="mt-5 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-brand/90"
-        >
-          Return to journal
-        </a>
-      </div>
-    } @else if (blog) {
-      <article class="space-y-10">
-        <div class="rounded-3xl border border-brand/10 bg-white p-8 shadow-[0_22px_55px_rgba(32,71,38,0.12)]">
-          <p class="text-lg leading-relaxed text-slate-700 whitespace-pre-line">
-            {{ blog.description }}
-          </p>
-        </div>
-        <div *ngIf="blog.offerDate" class="rounded-3xl border border-brand/20 bg-white px-6 py-5 text-sm text-brand/80 shadow-sm">
-          <div class="flex flex-col gap-1">
-            <span class="text-xs font-semibold uppercase tracking-[0.32em] text-brand/60">Upcoming feature</span>
-            <span class="text-base font-semibold text-brand">
-              {{ blog.offerDate | date: 'fullDate' }}
-            </span>
-            <p>
-              Join us as we unveil the next chapter. Save the date to experience the launch first.
-            </p>
-          </div>
-        </div>
-      </article>
-    }
+    <!-- Right Side: Image -->
+    <div class="lg:w-5/6">
+      <h2 class="text-4xl font-extrabold text-slate-900 mb-6 fade-up">
+        {{ data()?.title }}
+      </h2>
+      <p class="text-slate-500 text-sm mb-8">
+        Blogs / {{ data()?.postedDate | date : 'MMM d, y' }}
+      </p>
+      <img
+        *ngIf="data()?.image"
+        [src]="data()?.image"
+        alt="Blog Image"
+        id="blogImage"
+        class="w-full h-[50vh] md:h-[80vh] shadow-lg transition-transform duration-300 transform"
+        loading="lazy"
+      />
+      <div
+        class="prose prose-lg max-w-none text-slate-800 leading-relaxed tracking-wide fade-up"
+        [innerHTML]="data()?.description"
+      ></div>
+    </div>
 
-    <section class="space-y-6" aria-label="More articles" *ngIf="(relatedBlogs$ | async)?.length">
-      <div class="flex items-center justify-between gap-4">
-        <h2 class="text-lg font-semibold text-brand">More from the journal</h2>
-        <a routerLink="/blogs" class="text-sm font-semibold text-brand/70 transition hover:text-brand">View all</a>
-      </div>
-      <div class="grid gap-6 md:grid-cols-3">
-        <article
-          *ngFor="let item of relatedBlogs$ | async; trackBy: trackById"
-          class="group flex flex-col overflow-hidden rounded-3xl border border-brand/10 bg-white shadow-sm transition hover:-translate-y-1 hover:border-brand/20 hover:shadow-[0_25px_60px_rgba(32,71,38,0.14)]"
-        >
-          <a [routerLink]="['/blogs', item.id]" class="flex h-full flex-col">
-            <div class="relative overflow-hidden">
-              <img
-                [src]="imageUrl(item.image)"
-                [alt]="item.title || 'Related blog image'"
-                loading="lazy"
-                class="h-44 w-full object-cover transition duration-700 group-hover:scale-105"
-              />
-              <span class="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.28em] text-brand">
-                {{ item.postedDate | date: 'MMM d' || 'New' }}
-              </span>
-            </div>
-            <div class="flex flex-1 flex-col gap-3 px-6 py-5">
-              <h3 class="font-serif text-lg font-semibold text-brand">
-                {{ item.title }}
-              </h3>
-              <p class="text-sm text-slate-600 line-clamp-3">
-                {{ item.description }}
-              </p>
-              <span class="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-brand">
-                Read article
-                <i class="ri-arrow-right-line" aria-hidden="true"></i>
-              </span>
-            </div>
-          </a>
-        </article>
-      </div>
-    </section>
   </div>
-</section>
+</div>
+
+</div>

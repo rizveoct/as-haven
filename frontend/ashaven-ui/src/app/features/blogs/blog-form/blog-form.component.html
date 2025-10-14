@@ -1,0 +1,125 @@
+<div
+  class="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-60 transition-opacity duration-300 fade-up animate"
+  role="dialog"
+  aria-modal="true"
+>
+  <div
+    class="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl p-5 sm:p-6 transform transition-all duration-300 scale-100"
+  >
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-5">
+      <h3 class="text-lg font-bold text-dark">
+        {{ mode === 'create' ? 'Add New Blog' : 'Edit Blog' }}
+      </h3>
+      <button
+        type="button"
+        (click)="closeModal()"
+        class="text-lightDark hover:text-dark hover:bg-light rounded-full p-2 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+        <span class="sr-only">Close modal</span>
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form (ngSubmit)="saveBlog()" enctype="multipart/form-data" class="space-y-5">
+      <div class="grid gap-4 sm:grid-cols-2">
+        <!-- Title -->
+        <div class="sm:col-span-2">
+          <label for="title" class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-heading mr-1.5"></i> Title
+          </label>
+          <input
+            id="title"
+            [(ngModel)]="_blog.title"
+            name="title"
+            type="text"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            placeholder="Enter blog title"
+            required
+          />
+          <input *ngIf="mode === 'edit'" id="id" [(ngModel)]="_blog.id" name="id" type="text" class="hidden" />
+        </div>
+
+        <!-- Description -->
+        <div class="sm:col-span-2">
+          <label for="description" class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-align-left mr-1.5"></i> Description
+          </label>
+          <textarea
+            id="description"
+            [(ngModel)]="_blog.description"
+            name="description"
+            rows="3"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            placeholder="Write blog description here"
+          ></textarea>
+        </div>
+
+        <!-- Image -->
+        <div class="sm:col-span-2">
+          <label for="image" class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-image mr-1.5"></i> Image
+          </label>
+          <input
+            id="image"
+            name="image"
+            type="file"
+            (change)="onFileChange($event)"
+            class="w-full p-2.5 bg-light border border-lightDark rounded-lg text-dark text-sm file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-accent/20 file:text-accent hover:file:bg-accent/30 transition-colors duration-200"
+          />
+        </div>
+
+        <!-- Post Date -->
+        <div>
+          <label for="postedDate" class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-calendar-alt mr-1.5"></i> Post Date
+          </label>
+          <input
+            id="postedDate"
+            [(ngModel)]="_blog.postedDate"
+            name="postedDate"
+            type="date"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            required
+          />
+        </div>
+
+        <!-- Offer Date Time -->
+        <div>
+          <label for="offerDateTime" class="block mb-1.5 text-sm font-medium text-dark">
+            <i class="fas fa-clock mr-1.5"></i> Offer Date & Time
+          </label>
+          <input
+            id="offerDateTime"
+            [(ngModel)]="_blog.offerDateTime"
+            name="offerDateTime"
+            type="datetime-local"
+            class="w-full p-3 bg-light border border-lightDark rounded-lg text-dark text-sm focus:ring-2 focus:ring-accent focus:border-accent transition-colors duration-200"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex justify-end">
+        <button
+          type="submit"
+          class="relative inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-accent rounded-lg overflow-hidden group transition-all duration-300"
+        >
+          <span class="relative z-10 flex items-center">
+            <svg class="mr-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            {{ mode === 'create' ? 'Save Blog' : 'Update Blog' }}
+          </span>
+          <span
+            class="absolute inset-0 bg-dark transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"
+          ></span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

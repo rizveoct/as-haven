@@ -106,6 +106,21 @@
         "
       >
         <i class="fas fa-comment-dots"></i>
+        <span>Blogs</span>
+      </a>
+
+      <a
+        routerLink="/dashboard/testimonials"
+        routerLinkActive
+        #testimonialsRla="routerLinkActive"
+        class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition"
+        [ngClass]="
+          testimonialsRla.isActive
+            ? 'bg-brand text-white shadow-md'
+            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+        "
+      >
+        <i class="fas fa-comment-dots"></i>
         <span>Testimonials</span>
       </a>
       <a

@@ -1,7 +1,4 @@
-<section
-  id="connect"
-  class="relative overflow-hidden bg-gradient-to-br py-16"
->
+<section id="connect" class="relative overflow-hidden bg-gradient-to-br py-16">
   <!-- background decoration (unchanged) -->
   <div
     class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,119,27,0.28),transparent_60%),radial-gradient(circle_at_bottom_left,rgba(47,118,68,0.28),transparent_55%)] pointer-events-none"
@@ -21,9 +18,9 @@
     <div class="flex flex-col items-start gap-12 lg:gap-16">
       <div class="space-y-6 lg:w-2/3">
         <span
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ff771b]/20 border border-[#ff9952]/35 text-xs uppercase tracking-wider"
-              >TELL US ABOUT YOUR VISION</span
-            >
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#ff771b]/20 border border-[#ff9952]/35 text-xs uppercase tracking-wider"
+          >TELL US ABOUT YOUR VISION</span
+        >
         <h2 class="text-3xl md:text-4xl font-semibold leading-snug">
           We orchestrate every detail—simply share your aspirations.
         </h2>
@@ -63,7 +60,11 @@
           </p>
         </div>
 
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <form
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmit()"
+          class="space-y-6"
+        >
           <!-- MESSAGE SECTION MOVED TO TOP -->
           <div class="space-y-2">
             <label
@@ -198,41 +199,47 @@
           </div>
 
           <div
-  class="relative rounded-2xl border border-[#ff9952]/25 flex-1 min-h-[320px] overflow-hidden"
->
-  <div
-    class="absolute inset-0 bg-gradient-to-br from-[rgba(47,118,68,0.25)] to-[rgba(255,119,27,0.25)] flex items-center justify-center animate-[shimmer_1.2s_ease-in-out_infinite] z-10"
-    [class.hidden]="isMapLoaded"
-  ></div>
-  <iframe
-    title="Office location on map"
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3634.4565222014585!2d88.63948298340911!3d24.365417322189778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39fbf0303e5de2a9%3A0xa52f9edf660f1286!2sProshanti%2C%20Shaheed%20Jahan%20Ali%20Biswas%20Rd%2C%20Rajshahi!5e0!3m2!1sen!2sbd!4v1757905362847!5m2!1sen!2sbd"
-    class="absolute inset-0 w-full h-full border-0 z-0"
-    allowfullscreen
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    (load)="onMapLoad()"
-  ></iframe>
-</div>
+            class="relative rounded-2xl border border-[#ff9952]/25 flex-1 min-h-[320px] overflow-hidden"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-br from-[rgba(47,118,68,0.25)] to-[rgba(255,119,27,0.25)] flex items-center justify-center animate-[shimmer_1.2s_ease-in-out_infinite] z-10"
+              [class.hidden]="isMapLoaded"
+            ></div>
+            <iframe
+              title="Office location on map"
+              src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d1816.9133006603704!2d88.60534652694886!3d24.387334802924492!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sas%20haven%20developer%20rajshahi!5e0!3m2!1sen!2sbd!4v1760330603927!5m2!1sen!2sbd"
+              class="absolute inset-0 w-full h-full border-0 z-0"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              (load)="onMapLoad()"
+            ></iframe>
+          </div>
 
           <ul class="grid gap-4 list-none p-0">
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-accent"
                 >Parking</span
               >
-              <span class="block text-white/88">Complimentary valet on arrival</span>
+              <span class="block text-white/88"
+                >Complimentary valet on arrival</span
+              >
             </li>
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-accent"
                 >Weekend Hours</span
               >
-              <span class="block text-white/88">Friday visits by appointment only</span>
+              <span class="block text-white/88"
+                >Friday visits by appointment only</span
+              >
             </li>
             <li class="space-y-1">
               <span class="block text-xs uppercase tracking-wider text-accent"
                 >Virtual Access</span
               >
-              <span class="block text-white/88">Live video tours available globally</span>
+              <span class="block text-white/88"
+                >Live video tours available globally</span
+              >
             </li>
           </ul>
         </div>

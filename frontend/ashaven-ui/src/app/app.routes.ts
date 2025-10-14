@@ -23,7 +23,6 @@ import { GalleryPageComponent } from './pages/gallery-page/gallery-page.componen
 import { ClientComponent } from './features/client/client.component';
 import { BlogComponent } from './pages/blog/blog.component';
 import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
-import { BlogsIndexComponent } from './features/blog/blogs-index/blogs-index.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +34,8 @@ export const routes: Routes = [
   { path: 'projects', component: ProjectsComponent },
   { path: 'projectdetails/:id', component: ProjectDetailsComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'blogs', component: BlogComponent },
+  { path: 'blogDetails/:id', component: BlogDetailsComponent },
   { path: 'login', component: LoginComponent },
   {
     path: 'dashboard',

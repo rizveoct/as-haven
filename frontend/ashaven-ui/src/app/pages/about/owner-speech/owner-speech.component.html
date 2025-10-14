@@ -30,7 +30,7 @@
           <p class="text-sm uppercase tracking-[0.4em] text-dark/60">{{ ownerDesignation }}</p>
         </div>
 
-        <blockquote class="relative rounded-3xl border border-dark/5 bg-dark/95 px-8 py-10 text-lg leading-relaxed text-white shadow-xl">
+        <blockquote class="relative rounded-3xl border border-dark/5 bg-dark/95 px-8 py-10 text-lg leading-relaxed text-dark/70 shadow-xl">
           <span class="owner-speech__quote">“</span>
           <p *ngIf="ownerSpeech; else noSpeech">{{ ownerSpeech }}</p>
           <ng-template #noSpeech>

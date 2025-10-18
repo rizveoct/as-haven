@@ -1,11 +1,16 @@
 import { Injectable, NgZone } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, fromEvent, of } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  shareReplay,
+  startWith,
+} from 'rxjs/operators';
 import Lenis from '@studio-freight/lenis';
 
 type ScrollEvent = { scroll: number };
-
 type ScrollTarget = Parameters<Lenis['scrollTo']>[0];
 type LenisScrollToOptions = Parameters<Lenis['scrollTo']>[1];
 
@@ -24,6 +29,11 @@ export class LenisService {
   private routerSubscription?: Subscription;
   private fallbackScrollSubscription?: Subscription;
 
+  // ✅ Missing fields added
+  private lastEmittedScroll = 0;
+  private loopStartEvents?: string[];
+  private loopStarter?: (ev: Event) => void;
+
   readonly scroll$: Observable<number> = this.scrollSubject.asObservable();
 
   constructor(private router: Router, private ngZone: NgZone) {
@@ -34,6 +44,7 @@ export class LenisService {
 
     this.motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     this.viewportQuery = window.matchMedia('(max-width: 768px)');
+
     this.windowScroll$ = fromEvent(window, 'scroll', { passive: true }).pipe(
       startWith(window.scrollY || window.pageYOffset || 0),
       map(() => window.scrollY || window.pageYOffset || 0),
@@ -54,7 +65,10 @@ export class LenisService {
     };
 
     if (typeof this.motionQuery.addEventListener === 'function') {
-      this.motionQuery.addEventListener('change', this.motionPreferenceListener);
+      this.motionQuery.addEventListener(
+        'change',
+        this.motionPreferenceListener
+      );
     } else if (typeof this.motionQuery.addListener === 'function') {
       this.motionQuery.addListener(this.motionPreferenceListener);
     }
@@ -69,7 +83,10 @@ export class LenisService {
 
     if (this.viewportQuery) {
       if (typeof this.viewportQuery.addEventListener === 'function') {
-        this.viewportQuery.addEventListener('change', this.viewportPreferenceListener);
+        this.viewportQuery.addEventListener(
+          'change',
+          this.viewportPreferenceListener
+        );
       } else if (typeof this.viewportQuery.addListener === 'function') {
         this.viewportQuery.addListener(this.viewportPreferenceListener);
       }
@@ -83,7 +100,6 @@ export class LenisService {
           this.emitScroll(0);
           return;
         }
-
         this.lenis.scrollTo(0, { immediate: true });
       });
 
@@ -92,9 +108,7 @@ export class LenisService {
   }
 
   init(): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
+    if (typeof window === 'undefined') return;
 
     if (!this.shouldUseLenis()) {
       this.stopLenis();
@@ -106,7 +120,7 @@ export class LenisService {
     root.style.scrollBehavior = 'auto';
     body.style.scrollBehavior = 'auto';
 
-    this.stopLenis();
+    this.stopLenis(); // ensure clean state
 
     this.lenis = new Lenis({
       duration: 1.05,
@@ -122,7 +136,6 @@ export class LenisService {
     this.lenisScrollCallback = (event: ScrollEvent) => {
       this.emitScroll(event.scroll);
     };
-
     this.lenis.on('scroll', this.lenisScrollCallback);
 
     this.startAnimationLoop();
@@ -135,9 +148,7 @@ export class LenisService {
   }
 
   scrollTo(target: ScrollTarget, options?: LenisScrollToOptions): void {
-    if (typeof window === 'undefined') {
-      return;
-    }
+    if (typeof window === 'undefined') return;
 
     if (this.lenis) {
       this.scheduleAnimationFrame();
@@ -146,43 +157,44 @@ export class LenisService {
     }
 
     const top = this.resolveTarget(target);
-    const behavior: ScrollBehavior = this.motionQuery?.matches ? 'auto' : 'smooth';
+    const behavior: ScrollBehavior = this.motionQuery?.matches
+      ? 'auto'
+      : 'smooth';
     window.scrollTo({ top, behavior });
   }
 
   private resolveTarget(target: ScrollTarget): number {
-    if (typeof target === 'number') {
-      return target;
-    }
+    if (typeof target === 'number') return target;
 
     if (typeof target === 'string') {
       const element = document.querySelector(target);
       if (element instanceof HTMLElement) {
-        return element.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+        return (
+          element.getBoundingClientRect().top +
+          (window.scrollY || window.pageYOffset || 0)
+        );
       }
       return 0;
     }
 
     if (target instanceof HTMLElement) {
-      return target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+      return (
+        target.getBoundingClientRect().top +
+        (window.scrollY || window.pageYOffset || 0)
+      );
     }
 
     return 0;
   }
 
   private shouldUseLenis(): boolean {
-    if (typeof window === 'undefined') {
-      return false;
-    }
+    if (typeof window === 'undefined') return false;
 
-    const prefersReducedMotion = this.motionQuery ?? window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (prefersReducedMotion.matches) {
-      return false;
-    }
+    const prefersReducedMotion =
+      this.motionQuery ?? window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) return false;
 
-    if (this.viewportQuery?.matches) {
-      return false;
-    }
+    if (this.viewportQuery?.matches) return false;
 
     return true;
   }
@@ -211,12 +223,16 @@ export class LenisService {
     }
   }
 
+  // ✅ keep a single cleanup() implementation
   cleanup(): void {
     this.stopLenis();
 
     if (this.motionQuery && this.motionPreferenceListener) {
       if (typeof this.motionQuery.removeEventListener === 'function') {
-        this.motionQuery.removeEventListener('change', this.motionPreferenceListener);
+        this.motionQuery.removeEventListener(
+          'change',
+          this.motionPreferenceListener
+        );
       } else if (typeof this.motionQuery.removeListener === 'function') {
         this.motionQuery.removeListener(this.motionPreferenceListener);
       }
@@ -225,7 +241,10 @@ export class LenisService {
 
     if (this.viewportQuery && this.viewportPreferenceListener) {
       if (typeof this.viewportQuery.removeEventListener === 'function') {
-        this.viewportQuery.removeEventListener('change', this.viewportPreferenceListener);
+        this.viewportQuery.removeEventListener(
+          'change',
+          this.viewportPreferenceListener
+        );
       } else if (typeof this.viewportQuery.removeListener === 'function') {
         this.viewportQuery.removeListener(this.viewportPreferenceListener);
       }
@@ -239,93 +258,67 @@ export class LenisService {
     this.fallbackScrollSubscription = undefined;
   }
 
+  // ✅ keep a single startAnimationLoop() that pairs with bind/unbind helpers
   private startAnimationLoop(): void {
     this.bindLoopStarters();
     this.scheduleAnimationFrame();
   }
 
   private scheduleAnimationFrame(): void {
-    if (this.rafId || !this.lenis) {
-      return;
-    }
+    if (this.rafId || !this.lenis) return;
 
     this.ngZone.runOutsideAngular(() => {
       const onFrame = (time: number) => {
         this.lenis?.raf(time);
-
-        if (this.lenis && this.isLenisActive()) {
+        // Keep looping as long as Lenis exists
+        if (this.lenis) {
           this.rafId = requestAnimationFrame(onFrame);
         } else {
           this.rafId = undefined;
         }
       };
-
       this.rafId = requestAnimationFrame(onFrame);
     });
   }
 
-  private isLenisActive(): boolean {
-    if (!this.lenis) {
-      return false;
+  // ✅ new helper to complement unbindLoopStarters()
+  private bindLoopStarters(): void {
+    if (typeof window === 'undefined') return;
+
+    this.loopStartEvents = this.loopStartEvents ?? [
+      'wheel',
+      'touchstart',
+      'keydown',
+      'scroll',
+    ];
+    if (!this.loopStarter) {
+      this.loopStarter = () => this.scheduleAnimationFrame();
     }
 
-    return this.lenis.isScrolling;
-  }
-
-  cleanup(): void {
-    this.stopLenis();
-
-    if (this.motionQuery && this.motionPreferenceListener) {
-      if (typeof this.motionQuery.removeEventListener === 'function') {
-        this.motionQuery.removeEventListener('change', this.motionPreferenceListener);
-      } else if (typeof this.motionQuery.removeListener === 'function') {
-        this.motionQuery.removeListener(this.motionPreferenceListener);
-      }
-    }
-    this.motionPreferenceListener = undefined;
-
-    if (this.viewportQuery && this.viewportPreferenceListener) {
-      if (typeof this.viewportQuery.removeEventListener === 'function') {
-        this.viewportQuery.removeEventListener('change', this.viewportPreferenceListener);
-      } else if (typeof this.viewportQuery.removeListener === 'function') {
-        this.viewportQuery.removeListener(this.viewportPreferenceListener);
-      }
-    }
-    this.viewportPreferenceListener = undefined;
-
-    this.routerSubscription?.unsubscribe();
-    this.routerSubscription = undefined;
-
-    this.fallbackScrollSubscription?.unsubscribe();
-    this.fallbackScrollSubscription = undefined;
-  }
-
-  private startAnimationLoop(): void {
-    this.ngZone.runOutsideAngular(() => {
-      const runRaf = (time: number) => {
-        this.lenis?.raf(time);
-        this.rafId = requestAnimationFrame(runRaf);
-      };
-
-      this.rafId = requestAnimationFrame(runRaf);
+    this.loopStartEvents.forEach((type) => {
+      window.addEventListener(type, this.loopStarter as EventListener, {
+        passive: true,
+      });
     });
   }
 
   private unbindLoopStarters(): void {
-    if (typeof window === 'undefined' || !this.loopStartEvents?.length || !this.loopStarter) {
+    if (
+      typeof window === 'undefined' ||
+      !this.loopStartEvents?.length ||
+      !this.loopStarter
+    )
       return;
-    }
 
-    this.loopStartEvents.forEach((type) => window.removeEventListener(type, this.loopStarter as EventListener));
+    this.loopStartEvents.forEach((type) =>
+      window.removeEventListener(type, this.loopStarter as EventListener)
+    );
     this.loopStartEvents = undefined;
   }
 
   private handleFallbackScroll(): void {
     const windowScroll$ = this.windowScroll$;
-
-    if (!windowScroll$) {
-      return;
-    }
+    if (!windowScroll$) return;
 
     this.ngZone.runOutsideAngular(() => {
       this.fallbackScrollSubscription?.unsubscribe();
@@ -337,19 +330,14 @@ export class LenisService {
 
   private emitScroll(scrollY: number): void {
     const roundedScroll = Math.round(scrollY);
-    if (roundedScroll === this.lastEmittedScroll) {
-      return;
-    }
+    if (roundedScroll === this.lastEmittedScroll) return;
 
     this.lastEmittedScroll = roundedScroll;
     this.scrollSubject.next(roundedScroll);
   }
 
   private getWindowScrollPosition(): number {
-    if (typeof window === 'undefined') {
-      return 0;
-    }
-
+    if (typeof window === 'undefined') return 0;
     return Math.round(window.scrollY || window.pageYOffset || 0);
   }
 }

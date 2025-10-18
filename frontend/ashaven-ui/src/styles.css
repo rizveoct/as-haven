@@ -56,7 +56,6 @@ html.has-lenis {
 
 body.has-lenis {
   min-height: 100vh;
-  overscroll-behavior: none;
   overflow: hidden;
   position: relative;
 }

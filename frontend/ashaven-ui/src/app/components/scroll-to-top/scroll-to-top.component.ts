@@ -6,8 +6,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { fromEvent, merge, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, map, startWith, takeUntil, throttleTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../../services/scroll.service';
 import { LenisService } from '../../services/lenis.service';
 
@@ -30,21 +30,21 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const fallbackScroll$ = this.createFallbackScroll$();
-    const scroll$ = fallbackScroll$
-      ? merge(this.scrollService.scrollY$, fallbackScroll$)
-      : this.scrollService.scrollY$;
-
     this.zone.runOutsideAngular(() => {
-      scroll$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((scrollY) => {
-          const shouldBeVisible = scrollY > 200;
-          if (shouldBeVisible !== this.isVisible) {
-            this.zone.run(() => {
-              this.isVisible = shouldBeVisible;
-            });
+      this.scrollService.scrollY$
+        .pipe(
+          map((scrollY) => scrollY > 200),
+          distinctUntilChanged(),
+          takeUntil(this.destroy$)
+        )
+        .subscribe((shouldBeVisible) => {
+          if (shouldBeVisible === this.isVisible) {
+            return;
           }
+
+          this.zone.run(() => {
+            this.isVisible = shouldBeVisible;
+          });
         });
     });
   }
@@ -56,18 +56,5 @@ export class ScrollToTopComponent implements OnInit, OnDestroy {
 
   scrollToTop() {
     this.lenisService.scrollTo(0, { duration: 0.8 });
-  }
-
-  private createFallbackScroll$(): Observable<number> | null {
-    if (typeof window === 'undefined') {
-      return null;
-    }
-
-    return fromEvent(window, 'scroll', { passive: true }).pipe(
-      startWith(window.scrollY || window.pageYOffset || 0),
-      map(() => window.scrollY || window.pageYOffset || 0),
-      throttleTime(50, undefined, { leading: true, trailing: true }),
-      distinctUntilChanged()
-    );
   }
 }

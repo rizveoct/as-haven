@@ -12,7 +12,7 @@ import { ScrollService } from '../../../services/scroll.service';
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './hero-section.component.html',
   styleUrl: './hero-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

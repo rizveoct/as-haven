@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   selector: 'app-at-glance',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './at-glance.component.html'
+  templateUrl: './at-glance.component.html',
 })
 export class AtGlanceComponent {
   @Input() project: any = null;
@@ -70,6 +70,7 @@ export class AtGlanceComponent {
 
   get detailRows(): { label: string; value: string }[] {
     const rows: { label: string; value: string | null | undefined }[] = [
+      { label: 'Project Name', value: this.project?.name },
       { label: 'Address', value: this.project?.address },
       { label: 'Land Area', value: this.project?.landArea },
       { label: 'Building Height', value: this.project?.height },
@@ -83,7 +84,8 @@ export class AtGlanceComponent {
 
     return rows.map((row) => ({
       label: row.label,
-      value: row.value && `${row.value}`.trim().length > 0 ? `${row.value}` : '—',
+      value:
+        row.value && `${row.value}`.trim().length > 0 ? `${row.value}` : '—',
     }));
   }
 }

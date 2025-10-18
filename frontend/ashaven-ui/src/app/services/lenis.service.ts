@@ -19,6 +19,8 @@ export class LenisService {
   private viewportQuery?: MediaQueryList;
   private rafId?: number;
   private lenisScrollCallback?: (event: ScrollEvent) => void;
+  private loopStarter?: () => void;
+  private loopStartEvents?: string[];
   private motionPreferenceListener?: (event: MediaQueryListEvent) => void;
   private viewportPreferenceListener?: (event: MediaQueryListEvent) => void;
   private routerSubscription?: Subscription;
@@ -141,6 +143,7 @@ export class LenisService {
     }
 
     if (this.lenis) {
+      this.scheduleAnimationFrame();
       this.lenis.scrollTo(target, options);
       return;
     }
@@ -193,6 +196,8 @@ export class LenisService {
       this.rafId = undefined;
     }
 
+    this.unbindLoopStarters();
+
     document.documentElement.classList.remove('has-lenis');
     document.body.classList.remove('has-lenis');
 
@@ -238,18 +243,68 @@ export class LenisService {
   }
 
   private startAnimationLoop(): void {
-    if (this.rafId) {
+    this.bindLoopStarters();
+    this.scheduleAnimationFrame();
+  }
+
+  private scheduleAnimationFrame(): void {
+    if (this.rafId || !this.lenis) {
       return;
     }
 
     this.ngZone.runOutsideAngular(() => {
-      const runRaf = (time: number) => {
+      const onFrame = (time: number) => {
         this.lenis?.raf(time);
-        this.rafId = requestAnimationFrame(runRaf);
+
+        if (this.lenis && this.isLenisActive()) {
+          this.rafId = requestAnimationFrame(onFrame);
+        } else {
+          this.rafId = undefined;
+        }
       };
 
-      this.rafId = requestAnimationFrame(runRaf);
+      this.rafId = requestAnimationFrame(onFrame);
     });
+  }
+
+  private isLenisActive(): boolean {
+    if (!this.lenis) {
+      return false;
+    }
+
+    return this.lenis.isScrolling;
+  }
+
+  private bindLoopStarters(): void {
+    if (typeof window === 'undefined' || this.loopStartEvents?.length) {
+      return;
+    }
+
+    this.loopStarter ??= () => this.scheduleAnimationFrame();
+
+    const events: Array<{ type: string; options?: AddEventListenerOptions }> = [
+      { type: 'wheel', options: { passive: true } },
+      { type: 'touchstart', options: { passive: true } },
+      { type: 'touchmove', options: { passive: true } },
+      { type: 'keydown' },
+    ];
+
+    this.loopStartEvents = events.map(({ type }) => type);
+
+    this.ngZone.runOutsideAngular(() => {
+      events.forEach(({ type, options }) => {
+        window.addEventListener(type, this.loopStarter as EventListener, options);
+      });
+    });
+  }
+
+  private unbindLoopStarters(): void {
+    if (typeof window === 'undefined' || !this.loopStartEvents?.length || !this.loopStarter) {
+      return;
+    }
+
+    this.loopStartEvents.forEach((type) => window.removeEventListener(type, this.loopStarter as EventListener));
+    this.loopStartEvents = undefined;
   }
 
   private handleFallbackScroll(): void {

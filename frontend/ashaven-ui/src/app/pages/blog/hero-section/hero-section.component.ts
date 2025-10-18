@@ -4,7 +4,7 @@ import {
   NgZone,
   OnDestroy,
 } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ScrollService } from '../../../services/scroll.service';
@@ -14,7 +14,7 @@ import { ScrollService } from '../../../services/scroll.service';
   standalone: true,
   imports: [CommonModule, NgOptimizedImage],
   templateUrl: './hero-section.component.html',
-  styleUrls: ['./hero-section.component.css'],
+  styleUrl: './hero-section.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroSectionComponent implements OnDestroy {

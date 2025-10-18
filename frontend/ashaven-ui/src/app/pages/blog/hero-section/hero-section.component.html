@@ -5,17 +5,11 @@
   aria-labelledby="aboutHeroTitle"
 >
   <div class="absolute inset-0">
-    <img
-      ngSrc="/images/banner/banner-3.png"
-      width="1920"
-      height="1080"
-      decoding="async"
-      priority
-      fetchpriority="high"
-      alt=""
-      class="absolute -top-16 left-0 h-[130%] w-full object-cover transition-transform duration-500 will-change-transform parallax-bg"
+    <div
+      class="absolute -top-16 left-0 h-[130%] w-full bg-cover bg-center transition-transform duration-500 parallax-bg"
+      style="background-image: url('/images/banner/banner-3.png')"
       [style.transform]="scrollTransform"
-    />
+    ></div>
     <div class="absolute inset-0 from-emerald-950/85 via-emerald-900/70 to-brand/70"></div>
   </div>
 

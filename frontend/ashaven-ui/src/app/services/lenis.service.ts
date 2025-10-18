@@ -19,13 +19,10 @@ export class LenisService {
   private viewportQuery?: MediaQueryList;
   private rafId?: number;
   private lenisScrollCallback?: (event: ScrollEvent) => void;
-  private loopStarter?: () => void;
-  private loopStartEvents?: string[];
   private motionPreferenceListener?: (event: MediaQueryListEvent) => void;
   private viewportPreferenceListener?: (event: MediaQueryListEvent) => void;
   private routerSubscription?: Subscription;
   private fallbackScrollSubscription?: Subscription;
-  private lastEmittedScroll = 0;
 
   readonly scroll$: Observable<number> = this.scrollSubject.asObservable();
 
@@ -275,26 +272,42 @@ export class LenisService {
     return this.lenis.isScrolling;
   }
 
-  private bindLoopStarters(): void {
-    if (typeof window === 'undefined' || this.loopStartEvents?.length) {
-      return;
+  cleanup(): void {
+    this.stopLenis();
+
+    if (this.motionQuery && this.motionPreferenceListener) {
+      if (typeof this.motionQuery.removeEventListener === 'function') {
+        this.motionQuery.removeEventListener('change', this.motionPreferenceListener);
+      } else if (typeof this.motionQuery.removeListener === 'function') {
+        this.motionQuery.removeListener(this.motionPreferenceListener);
+      }
     }
+    this.motionPreferenceListener = undefined;
 
-    this.loopStarter ??= () => this.scheduleAnimationFrame();
+    if (this.viewportQuery && this.viewportPreferenceListener) {
+      if (typeof this.viewportQuery.removeEventListener === 'function') {
+        this.viewportQuery.removeEventListener('change', this.viewportPreferenceListener);
+      } else if (typeof this.viewportQuery.removeListener === 'function') {
+        this.viewportQuery.removeListener(this.viewportPreferenceListener);
+      }
+    }
+    this.viewportPreferenceListener = undefined;
 
-    const events: Array<{ type: string; options?: AddEventListenerOptions }> = [
-      { type: 'wheel', options: { passive: true } },
-      { type: 'touchstart', options: { passive: true } },
-      { type: 'touchmove', options: { passive: true } },
-      { type: 'keydown' },
-    ];
+    this.routerSubscription?.unsubscribe();
+    this.routerSubscription = undefined;
 
-    this.loopStartEvents = events.map(({ type }) => type);
+    this.fallbackScrollSubscription?.unsubscribe();
+    this.fallbackScrollSubscription = undefined;
+  }
 
+  private startAnimationLoop(): void {
     this.ngZone.runOutsideAngular(() => {
-      events.forEach(({ type, options }) => {
-        window.addEventListener(type, this.loopStarter as EventListener, options);
-      });
+      const runRaf = (time: number) => {
+        this.lenis?.raf(time);
+        this.rafId = requestAnimationFrame(runRaf);
+      };
+
+      this.rafId = requestAnimationFrame(runRaf);
     });
   }
 

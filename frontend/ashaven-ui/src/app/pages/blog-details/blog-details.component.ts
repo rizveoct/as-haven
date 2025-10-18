@@ -1,15 +1,20 @@
 import {
   Component,
   OnInit,
+  OnDestroy,
+  AfterViewInit,
   ElementRef,
-  Renderer2,
   signal,
+  ChangeDetectionStrategy,
+  NgZone,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AnimationService } from '../../services/animation.service';
+import { fromEvent, Subject } from 'rxjs';
+import { auditTime, takeUntil } from 'rxjs/operators';
 
 
 
@@ -19,8 +24,9 @@ import { AnimationService } from '../../services/animation.service';
   imports: [CommonModule, RouterModule],
   templateUrl: './blog-details.component.html',
   styleUrls: ['./blog-details.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BlogDetailsComponent implements OnInit {
+export class BlogDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   baseURL = environment.baseUrl;
   blogId!: string;
 
@@ -29,13 +35,16 @@ export class BlogDetailsComponent implements OnInit {
   countdowns = signal<string[]>([]);
   countdown = signal<any>(null);
   offerActive = signal<boolean>(true);
+  private readonly destroy$ = new Subject<void>();
+  private countdownIntervalId: ReturnType<typeof setInterval> | null = null;
+  private resizeObserver?: ResizeObserver;
 
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private el: ElementRef,
-    private renderer: Renderer2,
-    private anim: AnimationService
+    private anim: AnimationService,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
@@ -46,8 +55,6 @@ export class BlogDetailsComponent implements OnInit {
 
 
   ngAfterViewInit() {
-    //this.animateOnScroll();
-
     this.anim.animateOnScroll('.fade-up');
     this.anim.animateOnScroll('.zoom-in');
     const blogRow = this.el.nativeElement.querySelector('#blogRow');
@@ -58,15 +65,18 @@ export class BlogDetailsComponent implements OnInit {
         blogRow.style.minHeight = image.offsetHeight + 'px';
       };
 
-      // Initial set
       updateHeight();
 
-      // Watch for image resize (responsive)
-      const observer = new ResizeObserver(() => updateHeight());
-      observer.observe(image);
+      this.zone.runOutsideAngular(() => {
+        this.resizeObserver = new ResizeObserver(() => updateHeight());
+        this.resizeObserver.observe(image);
+      });
 
-      // Also adjust on window resize
-      window.addEventListener('resize', updateHeight);
+      this.zone.runOutsideAngular(() => {
+        fromEvent(window, 'resize')
+          .pipe(auditTime(150), takeUntil(this.destroy$))
+          .subscribe(() => updateHeight());
+      });
     }
   }
 
@@ -75,7 +85,6 @@ export class BlogDetailsComponent implements OnInit {
       .get(`${this.baseURL}/api/website/getsingleblog?blogId=${this.blogId}`)
       .subscribe({
         next: (res: any) => {
-          console.log('Blog API Response:', res); // Debug response
           this.data.set({
             ...res,
             image: res.image
@@ -114,7 +123,15 @@ export class BlogDetailsComponent implements OnInit {
 
   startCountdown() {
     this.updateCountdowns();
-    setInterval(() => this.updateCountdowns(), 1000);
+    if (this.countdownIntervalId) {
+      return;
+    }
+
+    this.zone.runOutsideAngular(() => {
+      this.countdownIntervalId = setInterval(() => {
+        this.zone.run(() => this.updateCountdowns());
+      }, 1000);
+    });
   }
 
   updateCountdowns() {
@@ -172,5 +189,17 @@ export class BlogDetailsComponent implements OnInit {
     if (img && img.src !== fallback) {
       img.src = fallback;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    if (this.countdownIntervalId) {
+      clearInterval(this.countdownIntervalId);
+      this.countdownIntervalId = null;
+    }
+
+    this.resizeObserver?.disconnect();
   }
 }

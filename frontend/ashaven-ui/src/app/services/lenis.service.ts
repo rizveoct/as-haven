@@ -157,10 +157,7 @@ export class LenisService {
     }
 
     const top = this.resolveTarget(target);
-    const behavior: ScrollBehavior = this.motionQuery?.matches
-      ? 'auto'
-      : 'smooth';
-    window.scrollTo({ top, behavior });
+    window.scrollTo({ top, behavior: 'auto' });
   }
 
   private resolveTarget(target: ScrollTarget): number {
@@ -188,15 +185,7 @@ export class LenisService {
   }
 
   private shouldUseLenis(): boolean {
-    if (typeof window === 'undefined') return false;
-
-    const prefersReducedMotion =
-      this.motionQuery ?? window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (prefersReducedMotion.matches) return false;
-
-    if (this.viewportQuery?.matches) return false;
-
-    return true;
+    return false;
   }
 
   private stopLenis(): void {

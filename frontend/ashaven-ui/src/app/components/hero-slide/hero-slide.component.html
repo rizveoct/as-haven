@@ -93,8 +93,10 @@
             class="relative h-1 w-full overflow-hidden rounded-full bg-white/20"
           >
             <div
-              class="h-full rounded-full bg-gradient-to-r from-accent to-orange-500 transition-[width] duration-150 ease-linear"
-              [style.width.%]="progress"
+              class="h-full origin-left rounded-full bg-gradient-to-r from-accent to-orange-500 transition-transform duration-150 ease-linear"
+              [style.transform]="'scaleX(' + progress / 100 + ')'"
+              [style.willChange]="'transform'"
+              aria-hidden="true"
             ></div>
           </div>
           <span class="font-mono text-xs text-white/70">

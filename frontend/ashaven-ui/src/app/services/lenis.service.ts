@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject, Observable, fromEvent, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, fromEvent, of } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs/operators';
 import Lenis from '@studio-freight/lenis';
 
@@ -19,6 +19,10 @@ export class LenisService {
   private viewportQuery?: MediaQueryList;
   private rafId?: number;
   private lenisScrollCallback?: (event: ScrollEvent) => void;
+  private motionPreferenceListener?: (event: MediaQueryListEvent) => void;
+  private viewportPreferenceListener?: (event: MediaQueryListEvent) => void;
+  private routerSubscription?: Subscription;
+  private fallbackScrollSubscription?: Subscription;
 
   readonly scroll$: Observable<number> = this.scrollSubject.asObservable();
 
@@ -39,7 +43,7 @@ export class LenisService {
 
     this.scrollSubject.next(window.scrollY || window.pageYOffset || 0);
 
-    const handleMotionPreference = (event: MediaQueryListEvent) => {
+    this.motionPreferenceListener = (event: MediaQueryListEvent) => {
       if (event.matches) {
         this.stopLenis();
       } else {
@@ -48,12 +52,12 @@ export class LenisService {
     };
 
     if (typeof this.motionQuery.addEventListener === 'function') {
-      this.motionQuery.addEventListener('change', handleMotionPreference);
+      this.motionQuery.addEventListener('change', this.motionPreferenceListener);
     } else if (typeof this.motionQuery.addListener === 'function') {
-      this.motionQuery.addListener(handleMotionPreference);
+      this.motionQuery.addListener(this.motionPreferenceListener);
     }
 
-    const handleViewportPreference = (event: MediaQueryListEvent) => {
+    this.viewportPreferenceListener = (event: MediaQueryListEvent) => {
       if (event.matches) {
         this.stopLenis();
       } else {
@@ -63,13 +67,13 @@ export class LenisService {
 
     if (this.viewportQuery) {
       if (typeof this.viewportQuery.addEventListener === 'function') {
-        this.viewportQuery.addEventListener('change', handleViewportPreference);
+        this.viewportQuery.addEventListener('change', this.viewportPreferenceListener);
       } else if (typeof this.viewportQuery.addListener === 'function') {
-        this.viewportQuery.addListener(handleViewportPreference);
+        this.viewportQuery.addListener(this.viewportPreferenceListener);
       }
     }
 
-    this.router.events
+    this.routerSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         if (!this.lenis) {
@@ -119,12 +123,7 @@ export class LenisService {
 
     this.lenis.on('scroll', this.lenisScrollCallback);
 
-    const runRaf = (time: number) => {
-      this.lenis?.raf(time);
-      this.scheduleRaf(runRaf);
-    };
-
-    this.scheduleRaf(runRaf);
+    this.startAnimationLoop();
   }
 
   onScroll(callback: (scroll: number) => void): void {
@@ -207,9 +206,42 @@ export class LenisService {
     }
   }
 
-  private scheduleRaf(callback: FrameRequestCallback): void {
+  cleanup(): void {
+    this.stopLenis();
+
+    if (this.motionQuery && this.motionPreferenceListener) {
+      if (typeof this.motionQuery.removeEventListener === 'function') {
+        this.motionQuery.removeEventListener('change', this.motionPreferenceListener);
+      } else if (typeof this.motionQuery.removeListener === 'function') {
+        this.motionQuery.removeListener(this.motionPreferenceListener);
+      }
+    }
+    this.motionPreferenceListener = undefined;
+
+    if (this.viewportQuery && this.viewportPreferenceListener) {
+      if (typeof this.viewportQuery.removeEventListener === 'function') {
+        this.viewportQuery.removeEventListener('change', this.viewportPreferenceListener);
+      } else if (typeof this.viewportQuery.removeListener === 'function') {
+        this.viewportQuery.removeListener(this.viewportPreferenceListener);
+      }
+    }
+    this.viewportPreferenceListener = undefined;
+
+    this.routerSubscription?.unsubscribe();
+    this.routerSubscription = undefined;
+
+    this.fallbackScrollSubscription?.unsubscribe();
+    this.fallbackScrollSubscription = undefined;
+  }
+
+  private startAnimationLoop(): void {
     this.ngZone.runOutsideAngular(() => {
-      this.rafId = requestAnimationFrame(callback);
+      const runRaf = (time: number) => {
+        this.lenis?.raf(time);
+        this.rafId = requestAnimationFrame(runRaf);
+      };
+
+      this.rafId = requestAnimationFrame(runRaf);
     });
   }
 
@@ -221,7 +253,8 @@ export class LenisService {
     }
 
     this.ngZone.runOutsideAngular(() => {
-      windowScroll$
+      this.fallbackScrollSubscription?.unsubscribe();
+      this.fallbackScrollSubscription = windowScroll$
         .pipe(filter(() => !this.lenis))
         .subscribe((scrollY) => this.scrollSubject.next(scrollY));
     });

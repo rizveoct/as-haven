@@ -11,6 +11,7 @@
         public string? OfferTile { get; set; }
         public DateTime CreateDate { get; set; }
         public bool IsActive { get; set; }
+        public bool ForHeading { get; set; }
         //Image,Video
         public string? ContentType { get; set; }
         public string? Content { get; set; }
@@ -18,11 +19,11 @@
         public string? LandArea { get; set; }
         public string? BuiltUpArea { get; set; }
         public string? Height { get; set; }
-        public int NumberOfApartments { get; set; } 
-        public int NumberOfParking { get; set; } 
-        public string? UnitPerFloors { get; set; } 
-        public string? SizeOfEachApartment { get; set; } 
-        public string? Category { get; set; } 
+        public int NumberOfApartments { get; set; }
+        public int NumberOfParking { get; set; }
+        public string? UnitPerFloors { get; set; }
+        public string? SizeOfEachApartment { get; set; }
+        public string? Category { get; set; }
         public string? Type { get; set; }
         public string? pdfFile { get; set; }
         public string? MapLink { get; set; }

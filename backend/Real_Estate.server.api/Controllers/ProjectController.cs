@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Real_Estate.server.api.Data;
 using Real_Estate.server.api.Models;
-using System.Diagnostics;
-using System.Net;
 
 namespace Real_Estate.server.api.Controllers
 {
@@ -77,6 +73,7 @@ namespace Real_Estate.server.api.Controllers
                 Category = model.category,
                 Type = model.type,
                 ContentType = model.contentType,
+                ForHeading = model.forHeading,
                 MapLink = model.mapLink,
                 VideoLink = model.videoLink,
                 Order = model.order
@@ -163,6 +160,8 @@ namespace Real_Estate.server.api.Controllers
                 exModel.MapLink = model.mapLink;
                 exModel.VideoLink = model.videoLink;
                 exModel.Order = model.order;
+                exModel.IsActive = model.isActive;
+                exModel.ForHeading = model.forHeading;
 
                 if (model.thumbnail != null && model.thumbnail.Length > 0)
                 {
@@ -413,6 +412,7 @@ namespace Real_Estate.server.api.Controllers
         public string? address { get; set; }
         public string? offerTile { get; set; }
         public bool isActive { get; set; }
+        public bool forHeading { get; set; }
         public string? contentType { get; set; }
         public IFormFile? content { get; set; }
         public string? landArea { get; set; }
